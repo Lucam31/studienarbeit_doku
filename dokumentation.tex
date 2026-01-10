@@ -1,0 +1,162 @@
+%%**************************************************************
+%% Vorlage fuer Bachelorarbeiten (o.ä.) der DHBW
+%%
+%% Autor: Tobias Dreher, Yves Fischer
+%% Datum: 06.07.2011
+%%
+%% Autor: Michael Gruben
+%% Datum: 15.05.2013
+%%**************************************************************
+\documentclass[%
+	enabledeprecatedfontcommands,
+	pdftex,
+	oneside,		% Einseitiger Druck.
+	12pt,			% Schriftgroesse
+	parskip=half,	% Halbe Zeile Abstand zwischen Absätzen.
+	headsepline,	% Linie nach Kopfzeile.
+	footsepline,	% Linie vor Fusszeile.
+	abstracton,	    % Abstract Überschriften
+	ngerman,		% Translator
+	bibliography=totoc
+]{scrreprt}
+
+
+\input{ads/header}
+
+\makeglossaries
+\input{ads/glossary}
+\pgfplotsset{compat=1.18} 
+
+\begin{document}
+    \hyphenation{Mini}%Nicht trennen
+	% Deckblatt
+	\begin{spacing}{1}
+		\input{ads/deckblatt}
+	\end{spacing}
+	\newpage
+
+	
+	% Abstract
+	\input{ads/abstract}
+	\newpage
+
+	\renewcommand{\thepage}{\Roman{page}}
+
+	
+	% Erklärung
+	\input{ads/erklaerung}
+	\newpage
+	
+	\pagenumbering{Roman}
+	\setcounter{page}{1}
+
+	%\pagestyle{plain}
+	\pagestyle{scrheadings}
+
+
+	% Inhaltsverzeichnis
+	\begin{spacing}{1.2}
+		\setcounter{tocdepth}{2} %Wie viele Unterkapitel werden angezeigt?
+		\tableofcontents
+	\end{spacing}
+	\newpage
+    
+    
+    % Verzeichnisse
+	\clearpage
+	% \pagenumbering{Roman}
+	% \setcounter{page}{8}
+	
+    % Abbildungsverzeichnis
+	\cleardoublepage
+	
+	\begin{minipage}[b]{1\linewidth}
+		\phantomsection \label{listoffig}
+		\addcontentsline{toc}{chapter}{Abbildungsverzeichnis}
+		\listoffigures
+	\end{minipage}
+
+	\begin{minipage}[b]{1\linewidth}
+		\phantomsection \label{listoftab}
+		\addcontentsline{toc}{chapter}{Tabellenverzeichnis}
+		\listoftables
+	\end{minipage}
+
+	\begin{minipage}[b]{1\linewidth}
+		\phantomsection \label{listoflist}
+		\addcontentsline{toc}{chapter}{Listings}
+		% Fix listings alignment right before generating the list
+		\makeatletter
+		\renewcommand*{\l@lstlisting}[2]{%
+			\@dottedtocline{1}{0em}{2.3em}{#1}{#2}%
+		}
+		\makeatother
+		\lstlistoflistings
+	\end{minipage}
+
+    %Tabellenverzeichnis
+	% \cleardoublepage % Abb. Verz. und Tab. Verz. auf eine Seite wenn so kurz
+
+    % Quellcodeverzeichnis
+	% \cleardoublepage
+	% \phantomsection \label{listoflist}
+	% \addcontentsline{toc}{chapter}{Listings}
+	% \lstlistoflistings
+
+    % Abkürzungsverzeichnis
+	\cleardoublepage
+	\phantomsection \label{listofacs}
+	\addcontentsline{toc}{chapter}{Abkürzungsverzeichnis}
+	\input{ads/acronyms}
+	
+    % Symbolverzeichnis
+	% \cleardoublepage
+	% \input{ads/formelgroesseneinheiten}
+	\newpage
+
+	\newcounter{romanpages}
+	\setcounter{romanpages}{\value{page}}
+
+    % Inhalt
+	\clearpage
+	\pagenumbering{arabic}
+	\setcounter{page}{1}
+
+        \input{content/01Einleitung.tex}
+        \input{content/02Grundlagen.tex}
+        \input{content/03AnalyseAnforderungen.tex}
+        \input{content/04Architektur.tex}
+		\input{content/05Umsetzung.tex}
+		\input{content/06Testing.tex}
+		\input{content/07Fazit.tex}
+
+    % ---- Literaturverzeichnis
+        \cleardoublepage
+        \pagenumbering{Roman}           % Römische Seitenzahlen
+        \setcounter{page}{\value{romanpages}}
+    
+    %Quellen
+        %Literatur
+			\sloppy
+            \printbibliography[title={Literaturverzeichnis}, notkeyword={datenblatt}, notkeyword={bild}, notkeyword={bib}]
+            \label{chap:literaturverzeichnis}
+        %Datenblätter
+            \printbibliography[title={Datenblätter}, keyword={datenblatt}, heading=subbibliography]
+        %Bibliotheken
+            \printbibliography[title={Softwarebibliotheken}, keyword={bib}, heading=subbibliography]
+            \label{bib:bib}
+        %Bilder
+            \printbibliography[title={Abbildungen}, keyword={bild}, heading=subbibliography]
+            %\footnote{Abbildungen ohne Quellenangabe wurden selbst erstellt.}
+        
+
+    
+    %Anhang
+%    \cleardoublepage
+%	\phantomsection \label{anhang}
+%	\addcontentsline{toc}{chapter}{Anhang}
+% 
+%    \appendix
+%        \input{content/Anhang}
+		
+\end{document}
