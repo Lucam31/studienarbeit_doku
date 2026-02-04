@@ -1,6 +1,17 @@
-\chapter{Hardware Aufbau}
+\chapter{Hardware}
 \label{chap:analyse}
-In diesem Kapitel wird der Aufbau der Hardware beschrieben
+In diesem Kapitel wird der Aufbau der Hardware und die Funktionsweise der einzelnen Komponenten beschrieben.
+
+\section{Ultraschallsensor}
+    Ein Ultraschallsensor nutzt hochfrequente Schallwellen, um die Entfernung zu einem Objekt zu messen. Der Sensor besteht aus einem Sender, sowie einem Empfänger. Der Sender sendet Schallwellen aus, die von einem Objekt reflektiert werden und nach deren Rückkehr vom Empfänger aufgenommen werden. Daraufhin wird die Zeit gemessen, die die Schallwellen benötigt haben, um zum Objekt und zurück zum Sensor zu gelangen. Anhand dieser Zeit und der bekannten Schallgeschwindigkeit kann die Entfernung zum Objekt berechnet werden. %\cite{ultraschall} (this bitch ain't existing yet)
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.48\textwidth]{images/02Grundlagen/ultraschallsensor.png}
+        %\vspace{-0.3cm}
+        \caption{Funktionsweise Ultraschallsensor}
+        \vspace{-0.3cm}
+        \label{fig:ultraschallsensor}
+    \end{figure}
 
 \section{Raspberry Pi}
     \subsection{Aufbau des Raspberry Pi}
@@ -11,7 +22,20 @@ In diesem Kapitel wird der Aufbau der Hardware beschrieben
     Als Steuergerät für das Fahrzeug wird ein Raspberry Pi verwendet. Der Raspberry Pi verfügt über ausreichend Leistung und Schnittstellen, um die Anforderungen des Projekts zu erfüllen. Ein Mikrocontroller wurde aufgrund der benötigten Rechenleistung und geplanten Features wie der Bildverarbeitung nicht in Betracht gezogen. \\
     Der Raspberry Pi ermöglicht die Ansteuerung der Motoren mit mithilfe der \ac{GPIO} Pins, die Verarbeitung der Sensordaten und die Kommunikation mit der Weboberfläche. Zudem bietet er die Möglichkeit, verschiedene Bibliotheken und Frameworks zu nutzen, um die Implementierung
 
+    
+\section{Motoren}
 
+
+\section{Raspberry Pi Camera Module}
+Was über MP, FOV, autofokus und so schreiben?
+
+\section{Stromversorgung}
+glaub nicht nötig
+
+\section{Gehäuse}
+
+
+\section{Aufbau des Fahrzeugs?}
 
 
 % \cite[vgl.][Kapitel 1.3 Getting Started - What is Git?]{gitbook}
