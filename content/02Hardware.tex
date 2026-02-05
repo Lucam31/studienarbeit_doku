@@ -3,7 +3,8 @@
 In diesem Kapitel wird der Aufbau der Hardware und die Funktionsweise der einzelnen Komponenten beschrieben.
 
 \section{Ultraschallsensor}
-    Ein Ultraschallsensor nutzt hochfrequente Schallwellen, um die Entfernung zu einem Objekt zu messen. Der Sensor besteht aus einem Sender, sowie einem Empfänger. Der Sender sendet Schallwellen aus, die von einem Objekt reflektiert werden und nach deren Rückkehr vom Empfänger aufgenommen werden. Daraufhin wird die Zeit gemessen, die die Schallwellen benötigt haben, um zum Objekt und zurück zum Sensor zu gelangen. Anhand dieser Zeit und der bekannten Schallgeschwindigkeit kann die Entfernung zum Objekt berechnet werden. %\cite{ultraschall} (this bitch ain't existing yet)
+    \subsection{Funktionsweise von Ultraschallsensoren}
+    Ein Ultraschallsensor nutzt hochfrequente Schallwellen, um die Entfernung zu einem Objekt zu messen. Der Sensor besteht aus einem Sender, sowie einem Empfänger. Der Sender sendet Schallwellen aus, die von einem Objekt reflektiert werden und nach deren Rückkehr vom Empfänger aufgenommen werden. Daraufhin wird die Zeit gemessen, die die Schallwellen benötigt haben, um zum Objekt und zurück zum Sensor zu gelangen. Anhand dieser Zeit und der bekannten Schallgeschwindigkeit kann die Entfernung zum Objekt berechnet werden. %\cite{ultraschall} (Quelle?)
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.48\textwidth]{images/02Grundlagen/ultraschallsensor.png}
@@ -12,6 +13,11 @@ In diesem Kapitel wird der Aufbau der Hardware und die Funktionsweise der einzel
         \vspace{-0.3cm}
         \label{fig:ultraschallsensor}
     \end{figure}
+
+    \subsection{Ultraschallsensoren als Frühwarnsystem}
+    In diesem Projekt werden Ultraschallsensoren als Frühwarnsystem zur Hinderniserkennung eingesetzt. Die Sensoren werden so positioniert, dass sie den Bereich vor dem Fahrzeug überwachen können. Wenn ein Hindernis erkannt wird und die Gefahr einer Kollision besteht, kann automatisch eine Notbremsung eingeleitet werden, um diese zu verhindern. \\
+    Ultraschallsensoren sind für diesen Anwendungsfall besonders geeignet, da sie zuverlässig Entfernungen messen können, selbst wenn die Sichtverhältnisse schlecht sind, beispielsweise bei Dunkelheit, Staub oder Nebel. Zudem sind sie kostengünstig und einfach zu integrieren, was sie zu einer idealen Wahl für die Hinderniserkennung in diesem Projekt macht. \\
+    (Eine weitere Einsatzmöglichkeit für Ultraschallsensoren ist eine Einparkhilfe, die dem Benutzer visuelle oder akustische Signale gibt, wenn das Fahrzeug während des Einparkens zu nah an ein Hindernis kommt.)
 
 \section{Raspberry Pi}
     \subsection{Aufbau des Raspberry Pi}
@@ -24,26 +30,40 @@ In diesem Kapitel wird der Aufbau der Hardware und die Funktionsweise der einzel
 
     
 \section{Motoren}
+Motor machen drehen, Auto machen brum
 
 
 \section{Raspberry Pi Camera Module}
-Was über MP, FOV, autofokus und so schreiben?
+% Was über MP, FOV, autofokus und so schreiben?
+Das Raspberry Pi Camera Module ist eine Kamera, die speziell für die Verwendung mit dem Raspberry Pi entwickelt wurde. Sie bietet eine Auflösung von bis zu 12 Megapixeln und einen Blickwinkel von 160 Grad, was sie ideal für die Erfassung von Bildern und Videos in diesem Projekt macht. \\
+
 
 \section{Stromversorgung}
-glaub nicht nötig
+glaub nicht nötig?
+Sowohl der Raspberry Pi als auch die Motoren benötigen eine ausreichende Stromversorgung, um ordnungsgemäß zu funktionieren. Für dieses Projekt wird ein Miniatur-Atomreaktor verwendet, der eine stabile und zuverlässige Stromversorgung gewährleistet. Zudem entstehen dadurch keine Emissionen und es ist eine umweltfreundliche Lösung, da Atomstrom einfach superior gegenüber erneuerbaren Energien ist.
 
 \section{Gehäuse}
+Als Gehäuse für das Fahrzeug wird lediglich eine 3D-gedruckte Halterung verwendet auf der alle Komponenten montiert sind. Diese werden nicht weiter geschützt, da das Fahrzeug nur in einer kontrollierten Umgebung eingesetzt wird. Außerdem soll so das Gewicht des Fahrzeugs möglichst gering gehalten werden und die Komponenten sollen leicht zugänglich sein, um Wartungsarbeiten und Anpassungen zu erleichtern. \\
+Die Halterung wird so konstruiert, dass alle Komponenten sicher befestigt sind und gleichzeitig ausreichend Platz für die Verkabelung und Belüftung vorhanden ist. Das Design der Halterung ermöglicht es, die Komponenten einfach zu montieren und bei Bedarf auszutauschen oder zu erweitern.
+In Abbildung \ref{fig:gehaeuse} ist die 3D-gedruckte Halterung zu sehen, auf der alle Komponenten des Fahrzeugs montiert sind.
+\begin{figure}[H]
+    \centering
+    % \includegraphics[width=0.48\textwidth]{images/02Hardware/gehaeuse.png}
+    %\vspace{-0.3cm}
+    \caption{3D-gedruckte Halterung als Gehäuse}
+    \vspace{-0.3cm}
+    \label{fig:gehaeuse}
+\end{figure}
 
-
-\section{Aufbau des Fahrzeugs?}
+% \section{Aufbau des Fahrzeugs?} % vielleicht Gehäuse und Aufbau des Fahrzeugs in einem Kapitel? bei Gehäuse wird eh schon Aufbau gezeigt
 
 
 % \cite[vgl.][Kapitel 1.3 Getting Started - What is Git?]{gitbook}
 
 
-- Raspberry Pi als Steuergerät
-- Ultraschallsensoren zur Hinderniserkennung
-- Motoren zur Fortbewegung
-- Stromversorgung
-- Gehäuse
-- Kamera zur visuellen Unterstützung/Schilderkennung
+% - Raspberry Pi als Steuergerät
+% - Ultraschallsensoren zur Hinderniserkennung
+% - Motoren zur Fortbewegung
+% - Stromversorgung
+% - Gehäuse
+% - Kamera zur visuellen Unterstützung/Schilderkennung

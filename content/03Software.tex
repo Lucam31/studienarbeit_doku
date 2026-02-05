@@ -3,15 +3,34 @@
 
 \section{Übersicht und Aufbau der Architektur}
 
-\section{Python}
-    \subsection{Programmiersprache Python}
+\section{Programmiersprachen}
+Als Programmiersprache für die Softwareentwicklung wird Python verwendet, da diese eine gute Kompatibilität mit dem Raspberry Pi bietet und eine Vielzahl an Bibliotheken und Frameworks bietet.
+    \subsection{Python}
+    Python ist eine interpretierte, objektorientierte Programmiersprache, die gute Lesbarkeit und einfache Syntax bietet. Durch die umfangreiche Standardbibliothek und die Vielzahl an Drittanbieter-Bibliotheken eignet sich Python besonders gut für sowohl die Entwicklung von Anwendungen mit Hardware-Interaktion als auch für die Implementierung von Video-Übertragung. Dadurch ist Python ideal für die Entwicklung der Software für das ferngesteuerte Fahrzeug.
+
+    \subsection{Weboberfläche}
+
     \subsection{Verwendete Bibliotheken und Frameworks}
+    Für die Entwicklung der Software werden verschiedene Bibliotheken und Frameworks verwendet, um die geplanten Funktionalitäten umzusetzen und die Entwicklung zu erleichtern. Dazu gehören beispielsweise:
+    \begin{itemize} % die Liste hier is grad komplett KI generiert, überarbeiten wir dann, wenn wir wissen welche Bibliotheken wir tatsächlich verwenden
+        \item \textbf{OpenCV}: Eine Bibliothek für die Bildverarbeitung, die für die Implementierung der Schilderkennung und Hinderniserkennung verwendet wird.
+        \item \textbf{RPi.GPIO}: Eine Bibliothek zur Steuerung der GPIO-Pins des Raspberry Pi, die für die Ansteuerung der Motoren und Sensoren verwendet wird.
+        \item \textbf{gRPC}: Ein Framework für die Remote Procedure Call (RPC) Kommunikation, das für die Kommunikation zwischen der GUI-Anwendung und der Backend-Anwendung genutzt wird.
+    \end{itemize}
 
 \section{Verwendete Technologien und Tools}
-    \subsection{IDEs}
+In diesem Abschnitt werden die Technologien und Tools beschrieben, die für die Entwicklung der Software verwendet werden. Dazu gehören beispielsweise die Entwicklungsumgebung und Versionsverwaltungssysteme.
+
+    \subsection{Entwicklungsumgebung}
+    Als \ac{IDE} wird Visual Studio Code verwendet, da diese eine gute Unterstützung für Python bietet und eine große Auswahl an Erweiterungen zur Verfügung stellt, die die Entwicklung erleichtern. Zudem ist Visual Studio Code plattformübergreifend verfügbar und kann somit sowohl auf einem Laptop als auch auf dem Raspberry Pi genutzt werden, unabhängig vom Betriebssystem.
+
     \subsection{Versionsverwaltung mit Git}
-    \subsection{Protokolle}
-        \subsubsection{gRPC}
+    Für die Versionsverwaltung des Quellcodes wird GitHub verwendet. GitHub bietet umfangreiche Funktionen zur Zusammenarbeit mit anderen Entwicklern, um Quellcodeänderungen zu verfolgen und zu verwalten. Durch die Nutzung von GitHub können mehrere Entwickler gleichzeitig am Projekt arbeiten und Änderungen einfach zusammengeführt und nachverfolgt werden. (mehr über Git/GitHub? Brauchen wir diesen Abschnitt überhaupt?)
+    \subsection{Protokolle und Frameworks}
+    Für die Kommunikation zwischen den Softwarekomponenten werden verschiedene Protokolle verwendet, um eine zuverlässige Datenübertragung zu gewährleisten.
+        \subsubsection{gRPC Remote Procedure Call}
+        Das \ac{gRPC} Framework wird für die Kommunikation zwischen der \ac{GUI}-Anwendung und der Backend-Anwendung genutzt. (nutzt RPC, Protocol Buffer?, vorteile von gRPC?)
+
         \subsubsection{HTTP}
         Protokolle als eigene section?
     
@@ -21,8 +40,12 @@
     \subsection{Kommunikation zwischen GUI und Backend über gRPC}
 
 \section{Implementierte Features}
+In diesem Abschnitt werden die für das Fahrzeug geplanten Features beschrieben.
+    \subsection{Notbremsung durch Hinderniserkennung}
+    Das Fahrzeug soll in der Lage sein, eine Notbremsung durchzuführen, wenn es ein Hindernis erkennt. Hierzu werden Ultraschallsensoren verwendet, die den Bereich vor dem Fahrzeug überwachen und die Entfernung zu Hindernissen messen. Wird ein Hindernis erkannt, das eine Kollision verursachen könnte, wird automatisch eine Notbremsung eingeleitet. Um zu ermitteln, ob eine Kollision wahrscheinlich ist, wird die gemessene Entfernung unter Berücksichtigung der aktuellen Geschwindigkeit des Fahrzeugs ausgewertet. 
+
     \subsection{Schilderkennung}
-    \subsection{Hinderniserkennung}
+
     \subsection{Follow the line}
     \subsection{Fernsteuerung}
     \subsection{etc.}

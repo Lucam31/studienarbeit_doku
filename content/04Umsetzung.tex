@@ -5,3 +5,26 @@
 \section{Hardware}
 
 \section{Software}
+
+    \subsection{Notbremsung} % wir könnten den Scheiß richtig kompliziert machen, wenn wir berechnen wie schnell sich der Abstand zum Hindernis reduziert, wie schnell das Fahrzeug ist und wie weit das Hindernis entfernt ist. Weil wenn man hinter einem fahrenden Auto fährt und man nur Geschwindigkeit und Abstand misst, wird die Notbremsung vielleicht ungewollt ausgelöst. Oder wir sagen wir beachten nur 
+    Eine Notbremsung wird durchgeführt, wenn ein Hindernis erkannt wird. Die gemessene Entfernung zu diesem Hindernis wird unter Berücksichtigung der aktuellen Geschwindigkeit des Fahrzeugs ausgewertet. Dadurch kann ermittelt werden, ob eine Kollision wahrscheinlich ist. \\
+    Die Auswertung der gemessenen Entfernung erfolgt durch die Berechnung des Bremswegs, der anhand der aktuellen Geschwindigkeit berechnet wird. Hierzu wird sowohl die Formel für eine normale Bremsung als auch für eine Notbremsung herangezogen. Die Formel für die Berechnung des Bremswegs bei einer normalen Bremsung lautet: \\
+\begin{equation}
+    s = \frac{v}{10} \cdot \frac{v}{10}
+\end{equation}
+    wobei \( s \) der Bremsweg in Metern und \( v \) die Geschwindigkeit in km/h ist. \\
+    Für eine Notbremsung wird die folgende Formel verwendet: \\
+\begin{equation}
+    s = \frac{v}{10} \cdot \frac{v}{10} \cdot 0.5
+\end{equation} 
+    Dabei wird der Bremsweg um 50 \% reduziert, um die schnellere Reaktion und stärkere Betätigung des Bremspedals bei einer Notbremsung zu berücksichtigen \cite{BremswegBerechnen}. \\
+    Basierend auf diesen Formeln wird eine weitere Formel für die tatsächliche Berechnung der Notbremsung erstellt: \\
+\begin{equation}
+    s = \frac{v}{10} \cdot \frac{v}{10} \cdot 0.75
+\end{equation}
+    Hierbei wird der Bremsweg lediglich um 25 \% reduziert, da es sich zwar um eine Notbremsung handelt, aber dadurch eine mögliche Bremsverzögerung berücksichtigt wird. 
+
+    \subsection{Schilderkennung}
+    \subsection{Follow the line}
+    \subsection{Fernsteuerung}
+    \subsection{etc.}
