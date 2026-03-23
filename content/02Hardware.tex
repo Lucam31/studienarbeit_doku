@@ -30,8 +30,12 @@ In diesem Kapitel wird der Aufbau der Hardware und die Funktionsweise der einzel
 
     
 \section{Motoren}
-Motor machen drehen, Auto machen brum
+Als Motoren werden zwei Gleichstrommotoren verwendet, welche direkt an die beiden Räder des Fahrzeugs montiert werden. Die Motoren verfügen über eine interne Getriebeübersetzung, welche die Drehzahl reduziert und das Drehmoment erhöht. Dies ermöglicht eine präzisere Steuerung des Fahrzeugs und ein im Vergleich zu einem Motor ohne Getriebe höheres Drehmoment, was insbesondere bei niedrigen Geschwindigkeiten von Vorteil ist. 
 
+Um das Fahrzeug zu bewegen, werden die Motoren jeweils in die gleiche Richtung beweget. Das Lenken erfolgt durch die Ansteuerung der Motoren in unterschiedliche Richtungen. Wenn beispielsweise der linke Motor vorwärts und der rechte Motor rückwärts angetrieben wird, dreht sich das Fahrzeug nach rechts und umgekehrt. Durch die Möglichkeit, die Motoren unabhängig voneinander zu steuern, kann das Fahrzeug präzise manövriert werden, was insbesondere bei der Umsetzung von Fahrassistenzsystemen von Vorteil ist. 
+
+Wie aus dem Datenblatt zu entnehmen ist (einfügen), haben die Motoren eine Nennspannung von 6 Volt und eine maximale Stromaufnahme von 1,8 Ampere. Um die Motoren zu steuern wird ein \textit{TB6612FNG} Motortreiber verwendet. Dieser besitzt intern eine H-Brücke, welche die Ansteuerung der Motoren in beide Richtungen ermöglicht. Zudem bietet er die Möglichkeit, die Geschwindigkeit der Motoren durch 
+\ac{PWM} zu steuern.
 
 \section{Raspberry Pi Camera Module}
 % Was über MP, FOV, autofokus und so schreiben?
@@ -39,8 +43,11 @@ Das Raspberry Pi Camera Module ist eine Kamera, die speziell für die Verwendung
 
 
 \section{Stromversorgung}
-glaub nicht nötig?
-Sowohl der Raspberry Pi als auch die Motoren benötigen eine ausreichende Stromversorgung, um ordnungsgemäß zu funktionieren. Für dieses Projekt wird ein Miniatur-Atomreaktor verwendet, der eine stabile und zuverlässige Stromversorgung gewährleistet. Zudem entstehen dadurch keine Emissionen und es ist eine umweltfreundliche Lösung, da Atomstrom einfach superior gegenüber erneuerbaren Energien ist.
+Zur Stromversorgung des Fahrzeugs wird ein \ac{LiPo} Akku verwendet. Auf Grund der hohen Energiedichte ist ein \ac{LiPo} Akku eine solide Wahl für den Anwendungszweck (Hier vergleich mit lipefo akkus). Jedoch gibt es auch einige Nachteile. Die Zellchemie des Akkus ist sehr empfindlich gegenüber Tiefenentladung sowie mechanischen Beschädigungen, weshalb eine sorgfältige Handhabung und Überwachung der Akkus notwendig ist. 
+
+Der Akku verfügt über eine Kapazität von 5000 mAh und eine Nennspannung von 7,4 Volt, was ausreichend ist, um das Fahrzeug für mindestens eine Stunde mit Strom zu versorgen. Da die Motoren eine Nennspannung von 6 Volt und der Raspberry Pi eine Nennspannung von 5 Volt haben, werden mehrere Spannungsregler verwendet, um die benötigten Spannungen für die verschiedenen Komponenten bereitzustellen. Ein Step-Down Spannungsregler wird verwendet, um die Spannung von 7,4 Volt auf 5 Volt zu reduzieren, um den Raspberry Pi mit Strom zu versorgen. Zwei weitere Step-Down Spannungsregler werden verwendet, um die Spannung von 7,4 Volt auf 6 Volt zu reduzieren, um die Motoren mit Strom zu versorgen.
+
+Da ein einzelner Spannungswandler nur maximal 5 Ampere ausgeben kann, ist es notwendig, mehrere Spannungswandler zu verwenden, da der Raspberry Pi alleine bereits unter Volllast 5 Ampere aufnehmen kann. 
 
 \section{Gehäuse}
 Als Gehäuse für das Fahrzeug wird lediglich eine 3D-gedruckte Halterung verwendet auf der alle Komponenten montiert sind. Diese werden nicht weiter geschützt, da das Fahrzeug nur in einer kontrollierten Umgebung eingesetzt wird. Außerdem soll so das Gewicht des Fahrzeugs möglichst gering gehalten werden und die Komponenten sollen leicht zugänglich sein, um Wartungsarbeiten und Anpassungen zu erleichtern. \\
