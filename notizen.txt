@@ -1,0 +1,7 @@
+Ideen:
+- Vergleich RPi4 vs RPi5 (warum RPi5 gewählt)
+    - HW encoder (RPi5 hat spezielle HW encoder für Bildverarbeitung, über cpu sehr ineffizient)
+- Stromversorgung über Akku (Akku-technik) DC-DC-Wandler
+- Motoren: Motorsteuerung, PWM, welche Arten von Motoren
+- 3D-Druck
+- 
