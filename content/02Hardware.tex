@@ -3,8 +3,9 @@
 In diesem Kapitel wird der Aufbau der Hardware und die Funktionsweise der einzelnen Komponenten beschrieben.
 
 \section{Ultraschallsensor}
+Ein Ultraschallsensor nutzt hochfrequente Schallwellen, um die Entfernung zu einem Objekt zu messen.
     \subsection{Funktionsweise von Ultraschallsensoren}
-    Ein Ultraschallsensor nutzt hochfrequente Schallwellen, um die Entfernung zu einem Objekt zu messen. Der Sensor besteht aus einem Sender, sowie einem Empfänger. Der Sender sendet Schallwellen aus, die von einem Objekt reflektiert werden und nach deren Rückkehr vom Empfänger aufgenommen werden. Daraufhin wird die Zeit gemessen, die die Schallwellen benötigt haben, um zum Objekt und zurück zum Sensor zu gelangen. Anhand dieser Zeit und der bekannten Schallgeschwindigkeit kann die Entfernung zum Objekt berechnet werden. %\cite{ultraschall} (Quelle?)
+    Der Sensor besteht aus einem Sender, sowie einem Empfänger. Der Sender sendet Schallwellen aus, die von einem Objekt reflektiert werden und nach deren Rückkehr vom Empfänger aufgenommen werden. Daraufhin wird die Zeit gemessen, die die Schallwellen benötigt haben, um zum Objekt und zurück zum Sensor zu gelangen. Anhand dieser Zeit und der bekannten Schallgeschwindigkeit kann die Entfernung zum Objekt berechnet werden. %\cite{ultraschall} (Quelle?)
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.48\textwidth]{images/02Grundlagen/ultraschallsensor.png}
@@ -14,10 +15,6 @@ In diesem Kapitel wird der Aufbau der Hardware und die Funktionsweise der einzel
         \label{fig:ultraschallsensor}
     \end{figure}
 
-    \subsection{Ultraschallsensoren als Frühwarnsystem}
-    In diesem Projekt werden Ultraschallsensoren als Frühwarnsystem zur Hinderniserkennung eingesetzt. Die Sensoren werden so positioniert, dass sie den Bereich vor dem Fahrzeug überwachen können. Wenn ein Hindernis erkannt wird und die Gefahr einer Kollision besteht, kann automatisch eine Notbremsung eingeleitet werden, um diese zu verhindern. \\
-    Ultraschallsensoren sind für diesen Anwendungsfall besonders geeignet, da sie zuverlässig Entfernungen messen können, selbst wenn die Sichtverhältnisse schlecht sind, beispielsweise bei Dunkelheit, Staub oder Nebel. Zudem sind sie kostengünstig und einfach zu integrieren, was sie zu einer idealen Wahl für die Hinderniserkennung in diesem Projekt macht. \\
-    (Eine weitere Einsatzmöglichkeit für Ultraschallsensoren ist eine Einparkhilfe, die dem Benutzer visuelle oder akustische Signale gibt, wenn das Fahrzeug während des Einparkens zu nah an ein Hindernis kommt.)
 
 \section{Hall-Sensor}
 Ein Hall-Sensor erkennt die Anwesenheit eines magnetischen Feldes. Er besteht aus einem dünnen Halbleiterplättchen, das von einem Magnetfeld beeinflusst wird. Wenn ein Magnetfeld in die Nähe des Sensors kommt, erzeugt es eine Spannung, die vom Sensor gemessen werden kann. \\
@@ -35,26 +32,29 @@ Der Vorteil eines Hall-Sensors gegenüber einer Spule besteht darin, dass auch e
 
     
 \section{Motoren}
-Als Motoren werden zwei Gleichstrommotoren verwendet, welche direkt an die beiden Räder des Fahrzeugs montiert werden. Die Motoren verfügen über eine interne Getriebeübersetzung, welche die Drehzahl reduziert und das Drehmoment erhöht. Dies ermöglicht eine präzisere Steuerung des Fahrzeugs und ein im Vergleich zu einem Motor ohne Getriebe höheres Drehmoment, was insbesondere bei niedrigen Geschwindigkeiten von Vorteil ist. 
+    %\subsection{Motoren?}
+    Als Motoren werden zwei Gleichstrommotoren verwendet, welche direkt an die beiden Räder des Fahrzeugs montiert werden. Die Motoren verfügen über eine interne Getriebeübersetzung, welche die Drehzahl reduziert und das Drehmoment erhöht. Dies ermöglicht eine präzisere Steuerung des Fahrzeugs und im Vergleich zu einem Motor ohne Getriebe ein höheres Drehmoment, was insbesondere bei niedrigen Geschwindigkeiten von Vorteil ist. 
 
-Um das Fahrzeug zu bewegen, werden die Motoren jeweils in die gleiche Richtung beweget. Das Lenken erfolgt durch die Ansteuerung der Motoren in unterschiedliche Richtungen. Wenn beispielsweise der linke Motor vorwärts und der rechte Motor rückwärts angetrieben wird, dreht sich das Fahrzeug nach rechts und umgekehrt. Durch die Möglichkeit, die Motoren unabhängig voneinander zu steuern, kann das Fahrzeug präzise manövriert werden, was insbesondere bei der Umsetzung von Fahrassistenzsystemen von Vorteil ist. 
+    Um das Fahrzeug zu bewegen, werden die Motoren jeweils in die gleiche Richtung bewegt. Das Lenken erfolgt durch die Ansteuerung der Motoren in unterschiedliche Richtungen. Wenn beispielsweise der linke Motor vorwärts und der rechte Motor rückwärts angetrieben wird, dreht sich das Fahrzeug nach rechts und umgekehrt. Durch die Möglichkeit, die Motoren unabhängig voneinander zu steuern, kann das Fahrzeug präzise manövriert werden, was insbesondere bei der Umsetzung von Fahrassistenzsystemen von Vorteil ist. % in Umsetzung schieben
 
-Wie aus dem Datenblatt zu entnehmen ist (einfügen), haben die Motoren eine Nennspannung von 6 Volt und eine maximale Stromaufnahme von 1,8 Ampere. Um die Motoren zu steuern wird ein \textit{TB6612FNG} Motortreiber verwendet. Dieser besitzt intern eine H-Brücke, welche die Ansteuerung der Motoren in beide Richtungen ermöglicht. Zudem bietet er die Möglichkeit, die Geschwindigkeit der Motoren durch 
-\ac{PWM} zu steuern.
+    \subsection{Motortreiber}
+    Wie aus dem Datenblatt zu entnehmen ist (einfügen), haben die Motoren eine Nennspannung von 6 Volt und eine maximale Stromaufnahme von 1,8 Ampere. Um die Motoren zu steuern wird ein \textit{TB6612FNG} Motortreiber verwendet. Dieser besitzt intern eine H-Brücke, welche die Ansteuerung der Motoren in beide Richtungen ermöglicht. Zudem bietet er die Möglichkeit, die Geschwindigkeit der Motoren durch 
+    \ac{PWM} zu steuern.
 
 \section{Raspberry Pi Camera Module}
 % Was über MP, FOV, autofokus und so schreiben?
 Das Raspberry Pi Camera Module ist eine Kamera, die speziell für die Verwendung mit dem Raspberry Pi entwickelt wurde. Sie bietet eine Auflösung von bis zu 12 Megapixeln und einen Blickwinkel von 160 Grad, was sie ideal für die Erfassung von Bildern und Videos in diesem Projekt macht. \\
 
 
-\section{Stromversorgung}
-Zur Stromversorgung des Fahrzeugs wird ein \ac{LiPo} Akku verwendet. Auf Grund der hohen Energiedichte ist ein \ac{LiPo} Akku eine solide Wahl für den Anwendungszweck (Hier vergleich mit lipefo akkus). Jedoch gibt es auch einige Nachteile. Die Zellchemie des Akkus ist sehr empfindlich gegenüber Tiefenentladung sowie mechanischen Beschädigungen, weshalb eine sorgfältige Handhabung und Überwachung der Akkus notwendig ist. 
+\section{Stromversorgung} % in Umsetzung Lipo Warner erwähnen, für höhere Sicherheit oder so n scheiß
+    \subsection{Akku}
+    Zur Stromversorgung des Fahrzeugs wird ein \ac{LiPo} Akku verwendet. Aufgrund der hohen Energiedichte ist ein \ac{LiPo} Akku eine solide Wahl für den Anwendungszweck (Hier vergleich mit lipefo akkus). Jedoch gibt es auch einige Nachteile. Die Zellchemie des Akkus ist sehr empfindlich gegenüber Tiefenentladung sowie mechanischen Beschädigungen, weshalb eine sorgfältige Handhabung und Überwachung der Akkus notwendig ist. 
 
-Der Akku verfügt über eine Kapazität von 5000 mAh und eine Nennspannung von 7,4 Volt, was ausreichend ist, um das Fahrzeug für mindestens eine Stunde mit Strom zu versorgen. Da die Motoren eine Nennspannung von 6 Volt und der Raspberry Pi eine Nennspannung von 5 Volt haben, werden mehrere Spannungsregler verwendet, um die benötigten Spannungen für die verschiedenen Komponenten bereitzustellen. Ein Step-Down Spannungsregler wird verwendet, um die Spannung von 7,4 Volt auf 5 Volt zu reduzieren, um den Raspberry Pi mit Strom zu versorgen. Zwei weitere Step-Down Spannungsregler werden verwendet, um die Spannung von 7,4 Volt auf 6 Volt zu reduzieren, um die Motoren mit Strom zu versorgen.
+    Der Akku verfügt über eine Kapazität von 5000 mAh und eine Nennspannung von 7,4 Volt, was ausreichend ist, um das Fahrzeug für mindestens eine Stunde mit Strom zu versorgen. 
 
-Da ein einzelner Spannungswandler nur maximal 5 Ampere ausgeben kann, ist es notwendig, mehrere Spannungswandler zu verwenden, da der Raspberry Pi alleine bereits unter Volllast 5 Ampere aufnehmen kann. 
+    \subsection{Spannungswandler}
 
-\section{Gehäuse}
+\section{Gehäuse} % nicht mehr 3d-gedruckt
 Als Gehäuse für das Fahrzeug wird lediglich eine 3D-gedruckte Halterung verwendet auf der alle Komponenten montiert sind. Diese werden nicht weiter geschützt, da das Fahrzeug nur in einer kontrollierten Umgebung eingesetzt wird. Außerdem soll so das Gewicht des Fahrzeugs möglichst gering gehalten werden und die Komponenten sollen leicht zugänglich sein, um Wartungsarbeiten und Anpassungen zu erleichtern. \\
 Die Halterung wird so konstruiert, dass alle Komponenten sicher befestigt sind und gleichzeitig ausreichend Platz für die Verkabelung und Belüftung vorhanden ist. Das Design der Halterung ermöglicht es, die Komponenten einfach zu montieren und bei Bedarf auszutauschen oder zu erweitern.
 In Abbildung \ref{fig:gehaeuse} ist die 3D-gedruckte Halterung zu sehen, auf der alle Komponenten des Fahrzeugs montiert sind.

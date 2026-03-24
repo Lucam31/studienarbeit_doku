@@ -2,7 +2,18 @@
 \label{chap:implementierung}
 
 
-\section{Hardware}
+\section{Hardware} % vielleicht überflüssig da alles in Konzept genannt
+    
+    \subsection{Motoren}
+
+    \subsection{Hall-Sensor?}
+    
+    \subsection{Stromversorgung}
+    Da die Motoren eine Nennspannung von 6 Volt und der Raspberry Pi eine Nennspannung von 5 Volt haben, werden mehrere Spannungsregler verwendet, um die benötigten Spannungen für die verschiedenen Komponenten bereitzustellen. Ein Step-Down Spannungsregler wird verwendet, um die Spannung von 7,4 Volt auf 5 Volt zu reduzieren, um den Raspberry Pi mit Strom zu versorgen. Zwei weitere Step-Down Spannungsregler werden verwendet, um die Spannung von 7,4 Volt auf 6 Volt zu reduzieren, um die Motoren mit Strom zu versorgen.
+
+    Ein einzelner Spannungswandler kann nur maximal 5 Ampere ausgeben. Da der Raspberry Pi unter Volllast alleine bereits 5 Ampere aufnehmen kann, ist es notwendig, mehrere Spannungswandler zu verwenden, um die benötigten Spannungen für die verschiedenen Komponenten bereitstellen zu können.
+    
+    \subsection{Montage}
 
 \section{Software}
 
@@ -12,7 +23,12 @@
     % noch schreiben, dass Websocket in lokalem Netzwerk läuft und feste IP-Adresse hat, damit die Weboberfläche immer weiß, wie sie das Backend erreichen kann?
     %noch erwähnen, dass weboberfläche auf laptop läuft?
 
+    \subsection{Videoübertragung} % wie aufgenommen? wie gesendet? etc.
+
     \subsection{Notbremsung} % wir könnten den Scheiß richtig kompliziert machen, wenn wir berechnen wie schnell sich der Abstand zum Hindernis reduziert, wie schnell das Fahrzeug ist und wie weit das Hindernis entfernt ist. Weil wenn man hinter einem fahrenden Auto fährt und man nur Geschwindigkeit und Abstand misst, wird die Notbremsung vielleicht ungewollt ausgelöst. Oder wir sagen wir beachten nur 
+    In diesem Projekt werden Ultraschallsensoren als Frühwarnsystem zur Hinderniserkennung eingesetzt. Die Sensoren werden so positioniert, dass sie den Bereich vor dem Fahrzeug überwachen können. Wenn ein Hindernis erkannt wird und die Gefahr einer Kollision besteht, kann automatisch eine Notbremsung eingeleitet werden, um diese zu verhindern. \\
+    Ultraschallsensoren sind für diesen Anwendungsfall besonders geeignet, da sie zuverlässig Entfernungen messen können, selbst wenn die Sichtverhältnisse schlecht sind, beispielsweise bei Dunkelheit, Staub oder Nebel. Zudem sind sie kostengünstig und einfach zu integrieren, was sie zu einer idealen Wahl für die Hinderniserkennung in diesem Projekt macht. \\
+
     Eine Notbremsung wird durchgeführt, wenn ein Hindernis eine potenzielle Kollisionsgefahr darstellt. Die gemessene Entfernung zu diesem Hindernis wird unter Berücksichtigung der aktuellen Geschwindigkeit des Fahrzeugs ausgewertet. Dadurch kann ermittelt werden, ob eine Kollision wahrscheinlich ist. \\
     Die Auswertung der gemessenen Entfernung erfolgt durch die Berechnung des Bremswegs, der anhand der aktuellen Geschwindigkeit berechnet wird. Hierzu wird die Formel für eine Notbremsung herangezogen. Die Formel für die Berechnung des Bremswegs bei einer normalen Bremsung kann in diesem Fall vernachlässigt werden, da es sich um die Implementierung einer Notbremsung handelt. Für eine Notbremsung wird folgende Formel verwendet: \\
     \begin{equation}
@@ -26,10 +42,10 @@
     %!!!! Fahrzeug hat viel kürzeren Bremsweg, weil kein Gewicht
     % aber wir nehmen einfach die normale Formel für Notbremsung und sagen, dass die Differenz zwischen Bremsung eines echten Fahrzeug und unseres Fahrzeus als Puffer für Reaktionszeit und Bremsverzögerung etc. dient, damit die Notbremsung nicht zu spät ausgelöst wird.
 
-    \subsection{Geschwindigkeitsmessung}
+    \subsection{Geschwindigkeitsmessung} % oben hall sensor kapitel raus?
     Um die Geschwindigkeit des Fahrzeugs zu messen, wird ein Hall-Sensor verwendet, der die Drehung eines Rades erfasst. Dabei werden Magneten im Rad verbaut, welche vom Hall-Sensor erkannt werden. Sobald ein Magnet in der Nähe des Sensors ist, wird ein Signal generiert. Durch die Messung der Zeit, die für eine vollständige Umdrehung des Rades benötigt wird und dem bekannten Radumfang, kann die Geschwindigkeit des Fahrzeugs berechnet werden. \\
 
     \subsection{Schilderkennung}
-    \subsection{Follow the line}
     \subsection{Fernsteuerung}
+    \subsection{Follow the line}
     \subsection{etc.}

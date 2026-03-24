@@ -6,18 +6,21 @@ In diesem Kapitel wird die Softwarearchitektur, sowie Grundlagen und verwendete 
 
 
 \section{Programmiersprachen}
-Als Programmiersprache für die Softwareentwicklung wird Python verwendet, da diese eine gute Kompatibilität mit dem Raspberry Pi und eine Vielzahl an Bibliotheken und Frameworks bietet.
-    \subsection{Python}
+In diesem Abschnitt werden die verwendeten Programmiersprachen beschrieben, sowie die Gründe für deren Auswahl erläutert. Zudem werden die wichtigsten Bibliotheken und Frameworks vorgestellt, die in diesem Projekt verwendet werden.
+    \subsection{Backend-Entwicklung mit Python}
+    Für die Entwicklung des Backends wird die Programmiersprache Python verwendet.
     Python ist eine interpretierte, objektorientierte Programmiersprache, die gute Lesbarkeit und einfache Syntax bietet. Durch die umfangreiche Standardbibliothek und die Vielzahl an Drittanbieter-Bibliotheken eignet sich Python besonders gut für sowohl die Entwicklung von Anwendungen mit Hardware-Interaktion als auch für die Implementierung von Video-Übertragung. Dadurch ist Python ideal für die Entwicklung der Software für das ferngesteuerte Fahrzeug.
+    % Warum Python gewählt
 
     \subsection{Weboberfläche}
+    % Javascript, Typescript, React, etc. Warum? Was genau verwenden wir? 
 
     \subsection{Verwendete Bibliotheken und Frameworks}
     Für die Entwicklung der Software werden verschiedene Bibliotheken und Frameworks verwendet, um die geplanten Funktionalitäten umzusetzen und die Entwicklung zu erleichtern. Dazu gehören beispielsweise:
-    \begin{itemize} % die Liste hier is grad komplett KI generiert, überarbeiten wir dann, wenn wir wissen welche Bibliotheken wir tatsächlich verwenden
+    \begin{itemize} % diese Punkte erweitern, vor allem React
         \item \textbf{OpenCV}: Eine Bibliothek für die Bildverarbeitung, die für die Implementierung der Schilderkennung und Hinderniserkennung verwendet wird.
         \item \textbf{RPi.GPIO}: Eine Bibliothek zur Steuerung der GPIO-Pins des Raspberry Pi, die für die Ansteuerung der Motoren und Sensoren verwendet wird.
-        \item \textbf{gRPC}: Ein Framework für die Remote Procedure Call (RPC) Kommunikation, das für die Kommunikation zwischen der GUI-Anwendung und der Backend-Anwendung genutzt wird.
+        \item \textbf{React}: Ein JavaScript-Framework für die Entwicklung der Weboberfläche, das eine effiziente und flexible Möglichkeit bietet, Benutzeroberflächen zu erstellen.
     \end{itemize}
 
 \section{Verwendete Technologien und Tools}
@@ -28,13 +31,8 @@ In diesem Abschnitt werden die Technologien und Tools beschrieben, die für die 
 
     \subsection{Versionsverwaltung mit Git}
     Für die Versionsverwaltung des Quellcodes wird GitHub verwendet. GitHub bietet umfangreiche Funktionen zur Zusammenarbeit mit anderen Entwicklern, um Quellcodeänderungen zu verfolgen und zu verwalten. Durch die Nutzung von GitHub können mehrere Entwickler gleichzeitig am Projekt arbeiten und Änderungen einfach zusammengeführt und nachverfolgt werden. (mehr über Git/GitHub? Brauchen wir diesen Abschnitt überhaupt?)
-    \subsection{Protokolle und Frameworks}
-    Für die Kommunikation zwischen den Softwarekomponenten werden verschiedene Protokolle verwendet, um eine zuverlässige Datenübertragung zu gewährleisten.
-        \subsubsection{gRPC Remote Procedure Call}
-        Das \ac{gRPC} Framework wird für die Kommunikation zwischen der \ac{GUI}-Anwendung und der Backend-Anwendung genutzt. (nutzt RPC, Protocol Buffer?, vorteile von gRPC?)
-
-        \subsubsection{HTTP}
-        Protokolle als eigene section?
+    
+    \subsection{Websockets zur Kommunikation}
     
 \section{Softwarekomponenten und deren Kommunikation}
 Im disem Abschnitt werden die verschiedenen Softwarekomponenten beschrieben, die für die Steuerung und Funktionalität des Fahrzeugs entwickelt werden, sowie die Kommunikation zwischen diesen Komponenten erläutert. 
@@ -48,6 +46,11 @@ Im disem Abschnitt werden die verschiedenen Softwarekomponenten beschrieben, die
     \subsection{Kommunikation zwischen GUI und Backend}
     Für die Kommunikation zwischen der GUI-Anwendung und der Backend-Anwendung wird ein Websocket verwendet. Ein Websocket ermöglicht eine bidirektionale Kommunikation zwischen einem Server und mehreren Clients. In diesem Projekt nimmt der Raspberry Pi die Rolle des Servers ein, während die Weboberfläche als Client fungiert. 
 
+\section{Videoübertragung}
+% WebRTC, H264, MJPEG, HLS
+% Hardwareencoder
+% In Umsetzung dann Vergleich und Begründung, warum wir uns für die gewählte Lösung entschieden haben
+
 \section{Implementierte Features} % vielleicht vor Softwarekomponenten? Weil da werden schon Features erwähnt
 In diesem Abschnitt werden die für das Fahrzeug geplanten Features beschrieben.
     \subsection{Notbremsung durch Hinderniserkennung}
@@ -55,8 +58,9 @@ In diesem Abschnitt werden die für das Fahrzeug geplanten Features beschrieben.
 
     \subsection{Schilderkennung}
 
-    \subsection{Follow the line}
     \subsection{Fernsteuerung}
+    
+    \subsection{Follow the line}
     \subsection{etc.}
 
 
