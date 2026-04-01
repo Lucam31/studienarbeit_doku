@@ -24,26 +24,40 @@
     %noch erwähnen, dass weboberfläche auf laptop läuft?
 
     \subsection{Videoübertragung} % wie aufgenommen? wie gesendet? etc.
+    
+    \subsection{Geschwindigkeitsmessung} % oben hall sensor kapitel raus?
+    Um die Geschwindigkeit des Fahrzeugs zu messen, wird ein Hall-Sensor verwendet, der die Drehung eines Rades erfasst. Dabei werden Magneten im Rad verbaut, welche vom Hall-Sensor erkannt werden. Sobald ein Magnet in der Nähe des Sensors ist, wird ein Signal generiert. Durch die Messung der Zeit, die für eine vollständige Umdrehung des Rades benötigt wird und dem bekannten Radumfang, kann die Geschwindigkeit des Fahrzeugs berechnet werden. \\
+    Die Magneten werden so weit außen am Rad wie möglich angebracht, um möglichst nah an den Radumfang zu kommen und eine genauere Messung der Geschwindigkeit zu ermöglichen.
 
     \subsection{Notbremsung} % wir könnten den Scheiß richtig kompliziert machen, wenn wir berechnen wie schnell sich der Abstand zum Hindernis reduziert, wie schnell das Fahrzeug ist und wie weit das Hindernis entfernt ist. Weil wenn man hinter einem fahrenden Auto fährt und man nur Geschwindigkeit und Abstand misst, wird die Notbremsung vielleicht ungewollt ausgelöst. Oder wir sagen wir beachten nur 
     In diesem Projekt werden Ultraschallsensoren als Frühwarnsystem zur Hinderniserkennung eingesetzt. Die Sensoren werden so positioniert, dass sie den Bereich vor dem Fahrzeug überwachen können. Wenn ein Hindernis erkannt wird und die Gefahr einer Kollision besteht, kann automatisch eine Notbremsung eingeleitet werden, um diese zu verhindern. \\
     Ultraschallsensoren sind für diesen Anwendungsfall besonders geeignet, da sie zuverlässig Entfernungen messen können, selbst wenn die Sichtverhältnisse schlecht sind, beispielsweise bei Dunkelheit, Staub oder Nebel. Zudem sind sie kostengünstig und einfach zu integrieren, was sie zu einer idealen Wahl für die Hinderniserkennung in diesem Projekt macht. \\
-
     Eine Notbremsung wird durchgeführt, wenn ein Hindernis eine potenzielle Kollisionsgefahr darstellt. Die gemessene Entfernung zu diesem Hindernis wird unter Berücksichtigung der aktuellen Geschwindigkeit des Fahrzeugs ausgewertet. Dadurch kann ermittelt werden, ob eine Kollision wahrscheinlich ist. \\
-    Die Auswertung der gemessenen Entfernung erfolgt durch die Berechnung des Bremswegs, der anhand der aktuellen Geschwindigkeit berechnet wird. Hierzu wird die Formel für eine Notbremsung herangezogen. Die Formel für die Berechnung des Bremswegs bei einer normalen Bremsung kann in diesem Fall vernachlässigt werden, da es sich um die Implementierung einer Notbremsung handelt. Für eine Notbremsung wird folgende Formel verwendet: \\
-    \begin{equation}
-        s = \frac{v}{10} \cdot \frac{v}{10} \cdot 0.5
-    \end{equation} 
-    wobei \( s \) dem Bremsweg in Metern und \( v \) der Geschwindigkeit in km/h entspricht. \\
-    Dabei wird der Bremsweg um 50 \% reduziert, um die schnellere Reaktion und stärkere Betätigung des Bremspedals bei einer Notbremsung zu berücksichtigen \cite{BremswegBerechnen}. 
     
-    Für gewöhnlich wird für den tatsächlichen Anhalteweg eines Fahrzeugs zusätzlich zum Bremsweg auch die Reaktionszeit berücksichtigt, die der Fahrer benötigt, um auf die Gefahr zu reagieren und die Bremsung einzuleiten. Da in diesem Fall jedoch eine Notbremsung durch die Software automatisch ausgelöst wird, fällt diese Reaktionszeit deutlich geringer aus. Ein weiterer Aspekt der berücksichtigt werden muss, ist die Tatsache, dass das Fahrzeug aufgrund seines geringen Gewichts einen deutlich kürzeren Bremsweg hat als ein echtes Fahrzeug. Daher wird die Differenz zwischen dem Bremsweg eines echten Fahrzeugs und diesen Fahrzeugs als Puffer für die Reaktionszeit und die Bremsverzögerung genutzt, um sicherzustellen, dass die Notbremsung nicht zu spät ausgelöst wird.
+        \subsubsection{Distanzberechnung}
+        Die Entfernung zu einem Hindernis wird durch die Ultraschallsensoren gemessen. Dabei wird die Zeit gemessen, die ein Ultraschallsignal benötigt, um von einem Sensor ausgesendet zu werden, auf ein Hindernis zu treffen und zum anderen Sensor zurückzukehren. Anhand dieser Zeit und der Schallgeschwindigkeit kann die Entfernung zum Hindernis berechnet werden. \\
+        Die Schallgeschwindigkeit beträgt etwa 343 Meter pro Sekunde. Für diesen Anwendungsfall kann dieser Wert jedoch in 34300 Zentimeter pro Sekunde umgerechnet werden, um die Berechnung der Entfernung in Zentimetern zu erleichtern. Die Formel zur Berechnung der Entfernung \( d \) in Zentimetern lautet: \\
+            \begin{equation}
+                d = \frac{t \cdot c}{2}
+            \end{equation}
+        wobei \( t \) die gemessene Zeit in Sekunden und \( c \) die Schallgeschwindigkeit in Zentimetern pro Sekunde ist. Die Division durch 2 erfolgt, da das Signal den Weg zum Hindernis und wieder zum Sensor zurücklegt. \\
+    
+        \subsubsection{Anhaltewegberechnung}
+        Wie auf die gemessene Entfernung reagiert werden soll, wird durch die Berechnung des Bremswegs bestimmt, der anhand der aktuellen Geschwindigkeit berechnet wird. Hierzu wird die Formel für eine Notbremsung herangezogen. Die Formel für die Berechnung des Bremswegs bei einer normalen Bremsung kann in diesem Fall vernachlässigt werden, da es sich um die Implementierung einer Notbremsung handelt. Für eine Notbremsung wird folgende Formel verwendet: \\
+        \begin{equation}
+            s = \frac{v}{10} \cdot \frac{v}{10} \cdot 0.5
+        \end{equation} 
+        wobei \( s \) dem Bremsweg in Metern und \( v \) der Geschwindigkeit in km/h entspricht. \\
+        Dabei wird der Bremsweg um 50 \% reduziert, um die schnellere Reaktion und stärkere Betätigung des Bremspedals bei einer Notbremsung zu berücksichtigen \cite{BremswegBerechnen}. 
+        
+        Für gewöhnlich wird für den tatsächlichen Anhalteweg eines Fahrzeugs zusätzlich zum Bremsweg auch die Reaktionszeit berücksichtigt, die der Fahrer benötigt, um auf die Gefahr zu reagieren und die Bremsung einzuleiten. Da in diesem Fall jedoch eine Notbremsung durch die Software automatisch ausgelöst wird, fällt diese Reaktionszeit deutlich geringer aus. Ein weiterer Aspekt der berücksichtigt werden muss, ist die Tatsache, dass das Fahrzeug aufgrund seines geringen Gewichts einen deutlich kürzeren Bremsweg hat als ein echtes Fahrzeug. Daher wird die Differenz zwischen dem Bremsweg eines echten Fahrzeugs und diesen Fahrzeugs als Puffer für die Reaktionszeit und die Bremsverzögerung genutzt, um sicherzustellen, dass die Notbremsung nicht zu spät ausgelöst wird.
+
+        \subsubsection{Bremsvorgang einleiten}
+        Da das Fahrzeug nicht direkt an der Wand stehenbleiben sollte, sondern ein gewisser Sicherheitsabstand eingehalten werden soll, wird die Notbremsung bereits ausgelöst, wenn die gemessene Entfernung zum Hindernis in etwa 20 cm größer ist als der berechnete Bremsweg. Dadurch wird sichergestellt, dass das Fahrzeug rechtzeitig zum Stillstand kommt, bevor es das Hindernis erreicht. \\
+        Ist diese Schwelle erreicht werden die Motoren sofort gestoppt % erklären was genau gemacht wird für bremsen
 
     %!!!! Fahrzeug hat viel kürzeren Bremsweg, weil kein Gewicht
     % aber wir nehmen einfach die normale Formel für Notbremsung und sagen, dass die Differenz zwischen Bremsung eines echten Fahrzeug und unseres Fahrzeus als Puffer für Reaktionszeit und Bremsverzögerung etc. dient, damit die Notbremsung nicht zu spät ausgelöst wird.
-
-    \subsection{Geschwindigkeitsmessung} % oben hall sensor kapitel raus?
-    Um die Geschwindigkeit des Fahrzeugs zu messen, wird ein Hall-Sensor verwendet, der die Drehung eines Rades erfasst. Dabei werden Magneten im Rad verbaut, welche vom Hall-Sensor erkannt werden. Sobald ein Magnet in der Nähe des Sensors ist, wird ein Signal generiert. Durch die Messung der Zeit, die für eine vollständige Umdrehung des Rades benötigt wird und dem bekannten Radumfang, kann die Geschwindigkeit des Fahrzeugs berechnet werden. \\
 
     \subsection{Schilderkennung}
     \subsection{Fernsteuerung}
