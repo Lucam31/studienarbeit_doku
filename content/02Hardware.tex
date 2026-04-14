@@ -19,12 +19,28 @@ Ein Ultraschallsensor nutzt hochfrequente Schallwellen, um die Entfernung zu ein
 \section{Hall-Sensor}
 Ein Hall-Sensor erkennt die Anwesenheit eines magnetischen Feldes. Er besteht aus einem dünnen Halbleiterplättchen, das von einem Magnetfeld beeinflusst wird. Wenn ein Magnetfeld in die Nähe des Sensors kommt, erzeugt es eine Spannung, die vom Sensor gemessen werden kann. \\
 Der Vorteil eines Hall-Sensors gegenüber einer Spule besteht darin, dass auch ein konstantes Magnetfeld erkannt wird, während die Spule nur Veränderungen im Magnetfeld registrieren kann. Daher eignet sich der Hall-Sensor besonders gut für die Erkennung von Positionen oder Bewegungen, beispielsweise zur Erkennung der Raddrehung oder der Position des Lenkrads.
-% Bild Hall-Sensor? (Quelle?)
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.48\textwidth]{images/02Grundlagen/hall_sensor.png}
+    %\vspace{-0.3cm}
+    \caption{Funktionsweise Hall-Sensor}
+    \vspace{-0.3cm}
+    \label{fig:hall_sensor}
+\end{figure}
 
 \section{Raspberry Pi}
     \subsection{Aufbau des Raspberry Pi}
     Ein Raspberry Pi ist ein Einplatinencomputer, der eine Brücke zwischen Hard- und Software bildet. Er verbindet einige der Vorteile eines herkömmlichen Computers und eines Mikrocontrollers. 
     Zum einen besitzt er konfigurierbare \ac{GPIO} Pins und Anschlüsse für Versorgungsspannung und Erdung, wodurch externe Hardwarekomponenten direkt an den Raspberry Pi angeschlossen werden können. Zum anderen ist er leistungsstärker als ein Mikrocontroller. Das neuste Modell ist ausgestattet mit bis zu 16 Gigabytes an RAM, einem Arm-basierten 2,4 GHz Prozessor und einigen Schnittstellen wie beispielsweise einem \ac{LAN} Port, einer \ac{PCIe} Schnittstelle und sowohl \ac{USB}-A als auch \ac{USB}-C Ports. 
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.48\textwidth]{images/02Grundlagen/rpi.png}
+        %\vspace{-0.3cm}
+        \caption{Aufbau Raspberry Pi}
+        \vspace{-0.3cm}
+        \label{fig:rpi}
+    \end{figure}
 
     \subsection{Raspberry Pi als Steuergerät}
     Als Steuergerät für das Fahrzeug wird ein Raspberry Pi verwendet. Der Raspberry Pi verfügt über ausreichend Leistung und Schnittstellen, um die Anforderungen des Projekts zu erfüllen. Ein Mikrocontroller wurde aufgrund der benötigten Rechenleistung und geplanten Features wie der Bildverarbeitung nicht in Betracht gezogen. \\
@@ -44,6 +60,15 @@ Der Vorteil eines Hall-Sensors gegenüber einer Spule besteht darin, dass auch e
 \section{Raspberry Pi Camera Module}
 % Was über MP, FOV, autofokus und so schreiben?
 Das Raspberry Pi Camera Module ist eine Kamera, die speziell für die Verwendung mit dem Raspberry Pi entwickelt wurde. Sie bietet eine Auflösung von bis zu 12 Megapixeln und einen Blickwinkel von 160 Grad, was sie ideal für die Erfassung von Bildern und Videos in diesem Projekt macht. \\
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.48\textwidth]{images/02Grundlagen/pi_camera.jpg}
+    %\vspace{-0.3cm}
+    \caption{Raspberry Pi Camera Module}
+    \vspace{-0.3cm}
+    \label{fig:pi_camera}
+\end{figure}
 
 
 \section{Stromversorgung} % in Umsetzung Lipo Warner erwähnen, für höhere Sicherheit oder so n scheiß
@@ -79,3 +104,7 @@ In Abbildung \ref{fig:gehaeuse} ist die 3D-gedruckte Halterung zu sehen, auf der
 % - Stromversorgung
 % - Gehäuse
 % - Kamera zur visuellen Unterstützung/Schilderkennung
+
+
+
+% LiPO Bedeutung erklären und auf Aufbau eingehen
