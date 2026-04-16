@@ -33,35 +33,12 @@ In diesem Abschnitt werden die Technologien und Tools beschrieben, die für die 
     Für die Versionsverwaltung des Quellcodes wird GitHub verwendet. GitHub bietet umfangreiche Funktionen zur Zusammenarbeit mit anderen Entwicklern, um Quellcodeänderungen zu verfolgen und zu verwalten. Durch die Nutzung von GitHub können mehrere Entwickler gleichzeitig am Projekt arbeiten und Änderungen einfach zusammengeführt und nachverfolgt werden. (mehr über Git/GitHub? Brauchen wir diesen Abschnitt überhaupt?)
     
     \subsection{Websockets zur Kommunikation}
-    
-\section{Softwarekomponenten und deren Kommunikation}
-Im disem Abschnitt werden die verschiedenen Softwarekomponenten beschrieben, die für die Steuerung und Funktionalität des Fahrzeugs entwickelt werden, sowie die Kommunikation zwischen diesen Komponenten erläutert. 
-    \subsection{Weboberfläche zur Steuerung und Überwachung}
-    Dem User wird eine Weboberfläche zur Verfügung über die das Fahrzeug gesteuert und überwacht werden kann. Hierzu werden Sensordaten und Kamerabilder in Echtzeit vom Fahrzeug an die Weboberfläche übertragen, um dem Benutzer die benötigten Informationen zur Steuerung des Fahrzeugs bereitzustellen. Über die Weboberfläche können zudem Steuerbefehle an das Fahrzeug gesendet werden, um beispielsweise die Geschwindigkeit zu regulieren oder die Richtung zu ändern.
-
-    \subsection{Backend-Anwendung zur Ansteuerung der Hardware}
-    Das Backend ist für die direkte Ansteuerung der Hardwarekomponenten des Fahrzeugs zuständig. Es empfängt die Steuerbefehle von der Weboberfläche und wertet diese aus, um die entsprechenden Vorgänge und Aktionen durchzuführen. Dazu gehört beispielsweise die Ansteuerung der Motoren bei Regulierung der Geschwindigkeit. \\
-    Zudem verarbeitet das Backend die Sensordaten und Kamerabilder, um die geplanten Fahrassistenzsysteme wie die Notbremsung oder Follow the line zu implementieren. Diese werden ohne direkte Interaktion des Benutzers automatisch ausgelöst, wenn die entsprechenden Bedingungen erfüllt sind, weshalb diese vollständig im Backend verarbeitet werden.
-
-    \subsection{Kommunikation zwischen GUI und Backend}
-    Für die Kommunikation zwischen der GUI-Anwendung und der Backend-Anwendung wird ein Websocket verwendet. Ein Websocket ermöglicht eine bidirektionale Kommunikation zwischen einem Server und mehreren Clients. In diesem Projekt nimmt der Raspberry Pi die Rolle des Servers ein, während die Weboberfläche als Client fungiert. 
 
 \section{Videoübertragung}
 % WebRTC, H264, MJPEG, HLS
 % Hardwareencoder
-% In Umsetzung dann Vergleich und Begründung, warum wir uns für die gewählte Lösung entschieden haben
+% In Konzept dann Vergleich und Begründung, warum wir uns für die gewählte Lösung entschieden haben
 
-\section{Implementierte Features} % vielleicht vor Softwarekomponenten? Weil da werden schon Features erwähnt
-In diesem Abschnitt werden die für das Fahrzeug geplanten Features beschrieben.
-    \subsection{Notbremsung durch Hinderniserkennung}
-    Das Fahrzeug soll in der Lage sein, eine Notbremsung durchzuführen, wenn es ein Hindernis erkennt. Hierzu werden Ultraschallsensoren verwendet, die den Bereich vor dem Fahrzeug überwachen und die Entfernung zu Hindernissen messen. Wird ein Hindernis erkannt, das eine Kollision verursachen könnte, wird automatisch eine Notbremsung eingeleitet. Um zu ermitteln, ob eine Kollision wahrscheinlich ist, wird die gemessene Entfernung unter Berücksichtigung der aktuellen Geschwindigkeit des Fahrzeugs ausgewertet. 
-
-    \subsection{Schilderkennung}
-
-    \subsection{Fernsteuerung}
-    
-    \subsection{Follow the line}
-    \subsection{etc.}
 
 
 Grundlagen:
