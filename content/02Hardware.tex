@@ -8,7 +8,7 @@ Ein Ultraschallsensor nutzt hochfrequente Schallwellen, um die Entfernung zu ein
     Der Sensor besteht aus einem Sender, sowie einem Empfänger. Der Sender sendet Schallwellen aus, die von einem Objekt reflektiert werden und nach deren Rückkehr vom Empfänger aufgenommen werden. Daraufhin wird die Zeit gemessen, die die Schallwellen benötigt haben, um zum Objekt und zurück zum Sensor zu gelangen. Anhand dieser Zeit und der bekannten Schallgeschwindigkeit kann die Entfernung zum Objekt berechnet werden. %\cite{ultraschall} (Quelle?)
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.48\textwidth]{images/02Grundlagen/ultraschallsensor.png}
+        \includegraphics[width=0.7\textwidth]{images/02Grundlagen/ultraschallsensor.png}
         %\vspace{-0.3cm}
         \caption{Funktionsweise Ultraschallsensor}
         \vspace{-0.3cm}
@@ -19,23 +19,32 @@ Ein Ultraschallsensor nutzt hochfrequente Schallwellen, um die Entfernung zu ein
 \section{Hall-Sensor}
 Ein Hall-Sensor erkennt die Anwesenheit eines magnetischen Feldes. Er besteht aus einem dünnen Halbleiterplättchen, das von einem Magnetfeld beeinflusst wird. Wenn ein Magnetfeld in die Nähe des Sensors kommt, erzeugt es eine Spannung, die vom Sensor gemessen werden kann. \\
 Der Vorteil eines Hall-Sensors gegenüber einer Spule besteht darin, dass auch ein konstantes Magnetfeld erkannt wird, während die Spule nur Veränderungen im Magnetfeld registrieren kann. Daher eignet sich der Hall-Sensor besonders gut für die Erkennung von Positionen oder Bewegungen, beispielsweise zur Erkennung der Raddrehung oder der Position des Lenkrads.
-% Bild Hall-Sensor? (Quelle?)
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/02Grundlagen/hall_sensor.png}
+    %\vspace{-0.3cm}
+    \caption{Funktionsweise Hall-Sensor}
+    \vspace{-0.3cm}
+    \label{fig:hall_sensor}
+\end{figure}
 
 \section{Raspberry Pi}
-    \subsection{Aufbau des Raspberry Pi}
     Ein Raspberry Pi ist ein Einplatinencomputer, der eine Brücke zwischen Hard- und Software bildet. Er verbindet einige der Vorteile eines herkömmlichen Computers und eines Mikrocontrollers. 
     Zum einen besitzt er konfigurierbare \ac{GPIO} Pins und Anschlüsse für Versorgungsspannung und Erdung, wodurch externe Hardwarekomponenten direkt an den Raspberry Pi angeschlossen werden können. Zum anderen ist er leistungsstärker als ein Mikrocontroller. Das neuste Modell ist ausgestattet mit bis zu 16 Gigabytes an RAM, einem Arm-basierten 2,4 GHz Prozessor und einigen Schnittstellen wie beispielsweise einem \ac{LAN} Port, einer \ac{PCIe} Schnittstelle und sowohl \ac{USB}-A als auch \ac{USB}-C Ports. 
-
-    \subsection{Raspberry Pi als Steuergerät}
-    Als Steuergerät für das Fahrzeug wird ein Raspberry Pi verwendet. Der Raspberry Pi verfügt über ausreichend Leistung und Schnittstellen, um die Anforderungen des Projekts zu erfüllen. Ein Mikrocontroller wurde aufgrund der benötigten Rechenleistung und geplanten Features wie der Bildverarbeitung nicht in Betracht gezogen. \\
-    Der Raspberry Pi ermöglicht die Ansteuerung der Motoren mit mithilfe der \ac{GPIO} Pins, die Verarbeitung der Sensordaten und die Kommunikation mit der Weboberfläche. Zudem bietet er die Möglichkeit, verschiedene Bibliotheken und Frameworks zu nutzen, um die Implementierung
-
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\textwidth]{images/02Grundlagen/rpi.png}
+        %\vspace{-0.3cm}
+        \caption{Aufbau Raspberry Pi}
+        \vspace{-0.3cm}
+        \label{fig:rpi}
+    \end{figure}
     
 \section{Motoren}
-    %\subsection{Motoren?}
-    Als Motoren werden zwei Gleichstrommotoren verwendet, welche direkt an die beiden Räder des Fahrzeugs montiert werden. Die Motoren verfügen über eine interne Getriebeübersetzung, welche die Drehzahl reduziert und das Drehmoment erhöht. Dies ermöglicht eine präzisere Steuerung des Fahrzeugs und im Vergleich zu einem Motor ohne Getriebe ein höheres Drehmoment, was insbesondere bei niedrigen Geschwindigkeiten von Vorteil ist. 
+    %\subsection{Motoren?} % zum motor an sich schreiben
+    Als Motoren werden zwei Gleichstrommotoren verwendet,  % in Umsetzung schieben
 
-    Um das Fahrzeug zu bewegen, werden die Motoren jeweils in die gleiche Richtung bewegt. Das Lenken erfolgt durch die Ansteuerung der Motoren in unterschiedliche Richtungen. Wenn beispielsweise der linke Motor vorwärts und der rechte Motor rückwärts angetrieben wird, dreht sich das Fahrzeug nach rechts und umgekehrt. Durch die Möglichkeit, die Motoren unabhängig voneinander zu steuern, kann das Fahrzeug präzise manövriert werden, was insbesondere bei der Umsetzung von Fahrassistenzsystemen von Vorteil ist. % in Umsetzung schieben
 
     \subsection{Motortreiber}
     Wie aus dem Datenblatt zu entnehmen ist (einfügen), haben die Motoren eine Nennspannung von 6 Volt und eine maximale Stromaufnahme von 1,8 Ampere. Um die Motoren zu steuern wird ein \textit{TB6612FNG} Motortreiber verwendet. Dieser besitzt intern eine H-Brücke, welche die Ansteuerung der Motoren in beide Richtungen ermöglicht. Zudem bietet er die Möglichkeit, die Geschwindigkeit der Motoren durch 
@@ -45,27 +54,23 @@ Der Vorteil eines Hall-Sensors gegenüber einer Spule besteht darin, dass auch e
 % Was über MP, FOV, autofokus und so schreiben?
 Das Raspberry Pi Camera Module ist eine Kamera, die speziell für die Verwendung mit dem Raspberry Pi entwickelt wurde. Sie bietet eine Auflösung von bis zu 12 Megapixeln und einen Blickwinkel von 160 Grad, was sie ideal für die Erfassung von Bildern und Videos in diesem Projekt macht. \\
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/02Grundlagen/pi_camera.jpg}
+    %\vspace{-0.3cm}
+    \caption{Raspberry Pi Camera Module}
+    \vspace{-0.3cm}
+    \label{fig:pi_camera}
+\end{figure}
+
 
 \section{Stromversorgung} % in Umsetzung Lipo Warner erwähnen, für höhere Sicherheit oder so n scheiß
     \subsection{Akku}
-    Zur Stromversorgung des Fahrzeugs wird ein \ac{LiPo} Akku verwendet. Aufgrund der hohen Energiedichte ist ein \ac{LiPo} Akku eine solide Wahl für den Anwendungszweck (Hier vergleich mit lipefo akkus). Jedoch gibt es auch einige Nachteile. Die Zellchemie des Akkus ist sehr empfindlich gegenüber Tiefenentladung sowie mechanischen Beschädigungen, weshalb eine sorgfältige Handhabung und Überwachung der Akkus notwendig ist. 
+    % hier einfach nur lipo erklären
 
     Der Akku verfügt über eine Kapazität von 5000 mAh und eine Nennspannung von 7,4 Volt, was ausreichend ist, um das Fahrzeug für mindestens eine Stunde mit Strom zu versorgen. 
 
     \subsection{Spannungswandler}
-
-\section{Gehäuse} % nicht mehr 3d-gedruckt
-Als Gehäuse für das Fahrzeug wird lediglich eine 3D-gedruckte Halterung verwendet auf der alle Komponenten montiert sind. Diese werden nicht weiter geschützt, da das Fahrzeug nur in einer kontrollierten Umgebung eingesetzt wird. Außerdem soll so das Gewicht des Fahrzeugs möglichst gering gehalten werden und die Komponenten sollen leicht zugänglich sein, um Wartungsarbeiten und Anpassungen zu erleichtern. \\
-Die Halterung wird so konstruiert, dass alle Komponenten sicher befestigt sind und gleichzeitig ausreichend Platz für die Verkabelung und Belüftung vorhanden ist. Das Design der Halterung ermöglicht es, die Komponenten einfach zu montieren und bei Bedarf auszutauschen oder zu erweitern.
-In Abbildung \ref{fig:gehaeuse} ist die 3D-gedruckte Halterung zu sehen, auf der alle Komponenten des Fahrzeugs montiert sind.
-\begin{figure}[H]
-    \centering
-    % \includegraphics[width=0.48\textwidth]{images/02Hardware/gehaeuse.png}
-    %\vspace{-0.3cm}
-    \caption{3D-gedruckte Halterung als Gehäuse}
-    \vspace{-0.3cm}
-    \label{fig:gehaeuse}
-\end{figure}
 
 % \section{Aufbau des Fahrzeugs?} % vielleicht Gehäuse und Aufbau des Fahrzeugs in einem Kapitel? bei Gehäuse wird eh schon Aufbau gezeigt
 
@@ -79,3 +84,7 @@ In Abbildung \ref{fig:gehaeuse} ist die 3D-gedruckte Halterung zu sehen, auf der
 % - Stromversorgung
 % - Gehäuse
 % - Kamera zur visuellen Unterstützung/Schilderkennung
+
+
+
+% LiPO Bedeutung erklären und auf Aufbau eingehen
