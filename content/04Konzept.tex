@@ -5,59 +5,74 @@ In diesem Kapitel wird das Konzept für die Entwicklung des ferngesteuerten Fahr
 \section{Anforderungen}
 In diesem Abschnitt werden die Anforderungen an das ferngesteuerte Fahrzeug beschrieben. Dazu gehören sowohl funktionale als auch nicht-funktionale Anforderungen, die für die Entwicklung des Fahrzeugs berücksichtigt werden müssen.
 
-\subsection{Funktionale Anforderungen}
-Das Fahrzeug soll in der Lage sein, über eine Weboberfläche gesteuert zu werden, um die Bewegungsrichtung und Geschwindigkeit zu regulieren. Zudem soll es Sensordaten und Kamerabilder in Echtzeit an die Weboberfläche übertragen können, um dem Benutzer die benötigten Informationen zur Steuerung des Fahrzeugs bereitzustellen.
+    \subsection{Funktionale Anforderungen}
+    Das Fahrzeug soll in der Lage sein, über eine Weboberfläche gesteuert zu werden, um die Bewegungsrichtung und Geschwindigkeit zu regulieren. Zudem soll es Sensordaten und Kamerabilder in Echtzeit an die Weboberfläche übertragen können.
+    Eine weitere Funktionalität ist die Steuerung des Fahrzeugs durch die Weboberfläche, um beispielsweise die Geschwindigkeit zu regulieren oder die Richtung zu ändern. \\
 
-\subsection{Nicht-funktionale Anforderungen}
-Die Videoübertragung soll eine geringe Latenz aufweisen und eine mindest Framerate von 30 Bildern pro Sekunde erreichen, um eine flüssige Steuerung des Fahrzeugs zu ermöglichen. Die Kommunikation zwischen der Weboberfläche und dem Backend soll zuverlässig und stabil sein und eine möglichst geringe Latenz aufweisen, um eine praäzise und zufriedenstellende Steuerung zu ermöglichen.
+    \subsection{Nicht-funktionale Anforderungen}
+    Die Videoübertragung soll eine geringe Latenz aufweisen und eine mindest Framerate von 30 Bildern pro Sekunde erreichen, um eine flüssige Steuerung des Fahrzeugs zu ermöglichen. Die Kommunikation zwischen der Weboberfläche und dem Backend soll zuverlässig und stabil sein und eine möglichst geringe Latenz aufweisen, um eine praäzise und zufriedenstellende Steuerung zu ermöglichen. \\
+    Außerdem soll die Bedienung der Weboberfläche intuitiv und benutzerfreundlich gestaltet sein, um eine einfache Steuerung des Fahrzeugs zu ermöglichen.
 
 \section{Hardwareaufbau}
+In diesem Abschnitt wird der geplante Hardwareaufbau des Fahrzeugs beschrieben. Es werden die verschiedenen Komponenten und deren Funktionen erläutert, sowie die geplante Anordnung und Verbindung dieser Komponenten.
     \subsection{Gehäuse}
     % anfangs 3d-gedruckt geplant, in umsetzung dann schreiben doch holz, weil stabiler, einfacher zu bearbeiten und leichter zu beschaffen/ersetzen 
     Zu Beginn des Projekts war geplant eine 3D-gedruckte Halterung zu verwenden, auf der alle Komponenten des Fahrzeugs montiert werden. Allerdings fiel die Entscheidung, stattdessen eine Halterung aus Holz zu verwenden. Dies liegt daran, dass Holz stabiler, einfacher zu bearbeiten und leichter zu beschaffen sowie zu ersetzen ist als 3D-gedrucktes Material. \\
-    Insbesondere die einfache Bearbeitung ist ein entscheidender Punkt, da die Halterung voraussichtlich im Laufe des Projekts einige Male bearbeitet werden muss, um Anpassungen für die verschiedenen Komponenten vorzunehmen.
+    Insbesondere die einfache Bearbeitung ist ein entscheidender Punkt, da die Halterung voraussichtlich im Laufe des Projekts einige Male bearbeitet werden muss, um Anpassungen für die Montage der verschiedenen Komponenten vorzunehmen.
 
     Die Komponenten des Fahrzeugs werden so angeordnet, dass sie leicht zugänglich sind für Wartungsarbeiten und Anpassungen. Zudem wird darauf geachtet, dass das Gewicht der Komponenten gleichmäßig verteilt ist, um die Stabilität des Fahrzeugs zu gewährleisten.
 
-    In Abbildung \ref{fig:gehaeuse} ist der Aufbau zu sehen, auf der alle Komponenten des Fahrzeugs montiert sind.
+    In Abbildung \ref{fig:halterung} ist der Aufbau zu sehen, auf der alle Komponenten des Fahrzeugs montiert sind.
     \begin{figure}[H]
         \centering
         % \includegraphics[width=0.48\textwidth]{images/02Hardware/gehaeuse.png}
         %\vspace{-0.3cm}
-        \caption{3D-gedruckte Halterung als Gehäuse}
+        \caption{Holzhalterung des Fahrzeugs}
         \vspace{-0.3cm}
-        \label{fig:gehaeuse}
+        \label{fig:halterung}
     \end{figure}
 
     \subsection{Komponenten}
+    Dieser Abschnitt beschreibt, welche Komponenten wie für die Umsetzung des Projekts verwendet werden.
 
         \subsubsection{Raspberry Pi}
         Als Steuergerät für das Fahrzeug wird ein Raspberry Pi verwendet. Der Raspberry Pi verfügt über ausreichend Leistung und Schnittstellen, um die Anforderungen des Projekts zu erfüllen. Ein Mikrocontroller wurde aufgrund der benötigten Rechenleistung und geplanten Features wie der Bildverarbeitung nicht in Betracht gezogen. \\
-        Der Raspberry Pi ermöglicht die Ansteuerung der Motoren mit mithilfe der \ac{GPIO} Pins, die Verarbeitung der Sensordaten und die Kommunikation mit der Weboberfläche. Zudem bietet er die Möglichkeit, verschiedene Bibliotheken und Frameworks zu nutzen, um die Implementierung
+        Der Raspberry Pi ermöglicht die Ansteuerung der Motoren mit mithilfe der \ac{GPIO} Pins, die Verarbeitung der Sensordaten und die Kommunikation mit der Weboberfläche. Zudem bietet er die Möglichkeit, verschiedene Bibliotheken und Frameworks zu nutzen, um die Implementierung der Software zu erleichtern.
 
         \subsubsection{Motoren}
-        Die beiden Motoren werden direkt an die beiden Räder des Fahrzeugs montiert. Um das Fahrzeug zu bewegen, werden die Motoren jeweils in die gleiche Richtung bewegt. Das Lenken erfolgt durch die Ansteuerung der Motoren in unterschiedliche Richtungen. Wenn beispielsweise der linke Motor vorwärts und der rechte Motor rückwärts angetrieben wird, dreht sich das Fahrzeug nach rechts und umgekehrt. Durch die Möglichkeit, die Motoren unabhängig voneinander zu steuern, kann das Fahrzeug präzise manövriert werden, was insbesondere bei der Umsetzung von Fahrassistenzsystemen von Vorteil ist.
+        Die beiden Räder werden direkt an die Motoren des Fahrzeugs montiert, welche wiederum an die Unterseite der Halterung befestigt werden. \\
+        Um das Fahrzeug zu bewegen, werden die Motoren jeweils in die gleiche Richtung bewegt. Das Lenken erfolgt indem jeweils nur einer der Motoren angetrieben wird. Wenn beispielsweise der linke Motor vorwärts angetrieben wird und der rechte Motor stehen bleibt, dreht sich das Fahrzeug nach rechts und umgekehrt. Durch die Möglichkeit, die Motoren unabhängig voneinander zu steuern, kann das Fahrzeug präzise manövriert werden, was insbesondere bei der Umsetzung von Fahrassistenzsystemen von Vorteil ist.
 
-        Die Motoren verfügen über eine interne Getriebeübersetzung, welche die Drehzahl reduziert und das Drehmoment erhöht. Dies ermöglicht eine präzisere Steuerung des Fahrzeugs und im Vergleich zu einem Motor ohne Getriebe ein höheres Drehmoment, was insbesondere bei niedrigen Geschwindigkeiten von Vorteil ist. 
+        Die Motoren werden mit einem \textit{TB6612FNG} Motortreiber angesteuert, welcher die Ansteuerung der Motoren in beide Richtungen ermöglicht. Zudem bietet er die Möglichkeit, die Geschwindigkeit der Motoren durch \ac{PWM} zu steuern.
 
-        \subsection{Akku}
-        Zur Stromversorgung des Fahrzeugs wird ein \ac{LiPo} Akku verwendet. Aufgrund der hohen Energiedichte ist ein \ac{LiPo} Akku eine solide Wahl für den Anwendungszweck. Jedoch gibt es auch einige Nachteile. Die Zellchemie des Akkus ist sehr empfindlich gegenüber Tiefenentladung sowie mechanischen Beschädigungen, weshalb eine sorgfältige Handhabung und Überwachung der Akkus notwendig ist. 
+        % Die Motoren verfügen über eine interne Getriebeübersetzung, welche die Drehzahl reduziert und das Drehmoment erhöht. Dies ermöglicht eine präzisere Steuerung des Fahrzeugs und im Vergleich zu einem Motor ohne Getriebe ein höheres Drehmoment, was insbesondere bei niedrigen Geschwindigkeiten von Vorteil ist. 
 
-        Eine Alternative Zell-Chemie wäre beispielsweise ein \ac{LiFePO} Akku, welcher eine höhere Sicherheit bietet, jedoch eine geringere Energiedichte aufweist. Da das geplante Gehäuse nur begrenzten PLatz für den Akku bietet, wurde die Entscheidung getroffen, einen \ac{LiPo} Akku zu verwenden, um eine ausreichende Kapazität zu gewährleisten.
+        \subsubsection{Akku}
+        Zur Stromversorgung des Fahrzeugs wird ein \ac{LiPo} Akku verwendet. Aufgrund der hohen Energiedichte ist ein \ac{LiPo} Akku eine geeignete Wahl für diesen Anwendungszweck. Jedoch gibt es auch einige Nachteile. Die Zellchemie des Akkus ist sehr empfindlich gegenüber Tiefenentladung sowie mechanischen Beschädigungen, weshalb eine sorgfältige Handhabung und Überwachung der Akkus notwendig ist. Dies wird mit einem \ac{LiPo} Warner gewährleistet, welcher die Spannung der Zellen überwacht und bei Unterschreitung einer bestimmten Spannung warnt, um eine Tiefenentladung zu verhindern.
 
-        \subsection{Hall-Sensor}
-        Zur Messung der Geschwindigkeit des Fahrzeugs wird ein Hall-Sensor verwendet. Dieser erkennt die Anwesenheit eines magnetischen Feldes, welches von einem Magneten erzeugt wird, der an einem der Räder befestigt ist. Durch die Erkennung der Umdrehungen des Rades kann die Geschwindigkeit des Fahrzeugs berechnet werden. 
+        Eine alternative Zell-Chemie wäre ein \ac{LiFePO} Akku, welcher eine höhere Sicherheit bietet, jedoch eine geringere Energiedichte aufweist. 
+        \ac{LiFePO} Akkus sind aufgrund der geringeren Energiedichte in der Regel schwerer und größer als \ac{LiPo} Akkus. Dadurch wird eine gleichmäßige Gewichtsverteilung des Fahrzeugs erschwert, was die Stabilität beeinträchtigen könnte. \\
+        Da die geplante Halterung nur begrenzten PLatz für den Akku bietet, wurde die Entscheidung getroffen, einen \ac{LiPo} Akku zu verwenden, um eine ausreichende Kapazität zu gewährleisten.
+
+        \subsubsection{Spannungswandler}
+        Die Motoren besitzen eine Nennspannung von \SI{6}{\volt} und der Raspberry Pi eine Nennspannung von \SI{5}{\volt}. Der Akku weist jedoch eine Spannung von \SI{7,4}{\volt} auf. Daher wird ein Abwärtswandler verwendet, um die Spannung von \SI{7,4}{\volt} auf \SI{5}{\volt} zu reduzieren, um den Raspberry Pi mit Strom zu versorgen. Zwei weitere Step-Down Spannungsregler werden verwendet, um die Spannung von \SI{7,4}{\volt} auf \SI{6}{\volt} zu reduzieren, um die Motoren zu versorgen.
+
+        Ein einzelner Spannungswandler kann nur maximal \SI{5}{\ampere} ausgeben. Da der Raspberry Pi unter Volllast alleine bereits \SI{5}{\ampere} aufnehmen kann, ist es notwendig, mehrere Spannungswandler zu verwenden, um die benötigte Stromversorgung für die verschiedenen Komponenten bereitstellen zu können.
+
+        \subsubsection{Hall-Sensor}
+        Zur Messung der Geschwindigkeit des Fahrzeugs wird ein Hall-Sensor verwendet. Dieser erkennt die Anwesenheit eines magnetischen Feldes, welches von einem Magneten erzeugt wird, der an einem der Räder befestigt ist. Durch die Erkennung der Umdrehungen des Rades und dessen bekannten Umfangs kann die Geschwindigkeit des Fahrzeugs berechnet werden. 
 
         Auf die Verwendung von Encodern wurde bewusst verzichtet, da diese in der Regel teurer und komplexer in der Ansteuerung sind als Hall-Sensoren. Zudem bieten Hall-Sensoren eine ausreichende Genauigkeit für die geplanten Fahrassistenzsysteme, weshalb die Entscheidung getroffen wurde, einen Hall-Sensor zu verwenden.
 
-        \subsection{Spannungswandler}
-        Da die Motoren eine Nennspannung von 6 Volt und der Raspberry Pi eine Nennspannung von 5 Volt haben, werden mehrere Spannungsregler verwendet, um die benötigten Spannungen für die verschiedenen Komponenten bereitzustellen. Ein Abwärtswandler wird verwendet, um die Spannung von 7,4 Volt auf 5 Volt zu reduzieren, um den Raspberry Pi mit Strom zu versorgen. Zwei weitere Step-Down Spannungsregler werden verwendet, um die Spannung von 7,4 Volt auf 6 Volt zu reduzieren, um die Motoren mit Strom zu versorgen.
+        \subsubsection{Raspberry Pi Camera Module}
+        Das Raspberry Pi Camera Module ist eine Kamera, die speziell für die Verwendung mit dem Raspberry Pi entwickelt wurde. Mit einer Auflösung von \SI{12}{\mega\pixel} und einem Blickwinkel von \SI{160}{\degree} ist sie ideal für die Erfassung von Bildern und Videos in diesem Projekt. Die Kamera wird an der Vorderseite des Fahrzeugs montiert, um die Umgebung zu erfassen und die geplanten Fahrassistenzsysteme wie Follow the line zu ermöglichen.
 
-        Ein einzelner Spannungswandler kann nur maximal 5 Ampere ausgeben. Da der Raspberry Pi unter Volllast alleine bereits 5 Ampere aufnehmen kann, ist es notwendig, mehrere Spannungswandler zu verwenden, um die benötigten Spannungen für die verschiedenen Komponenten bereitstellen zu können.
+        \subsubsection{Ultraschallsensor}
+        Ultraschallsensoren werden als Frühwarnsystem zur Hinderniserkennung eingesetzt. Die Sensoren werden vorne an der Unterseite des Fahrzeugs positioniert, dass sie den Bereich vor dem Fahrzeug überwachen können. Wenn ein Hindernis erkannt wird und die Gefahr einer Kollision besteht, kann automatisch eine Notbremsung eingeleitet werden, um diese zu verhindern.
 
 % motoren
 \section{Softwarearchitektur}
-
+Dieses Kapitel beschreibt die geplante Softwarearchitektur des Fahrzeugs. 
      \begin{figure}[H]
         \centering
          \includegraphics[width=0.7\textwidth]{images/04Konzept/software_overview.drawio.pdf}
