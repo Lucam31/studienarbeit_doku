@@ -42,13 +42,13 @@ Der Vorteil eines Hall-Sensors gegenüber einer Spule besteht darin, dass auch e
     \end{figure}
     
 \section{Motoren}
-    %\subsection{Motoren?} % zum motor an sich schreiben
-    Als Motoren werden zwei Gleichstrommotoren verwendet,  % in Umsetzung schieben
+    \subsection{Gleichstrommotoren} % zum motor an sich schreiben
+    Zum Antreiben des Fahrzeugs werden zwei Gleichstrommotoren verwendet. Sie besitzen eine Nennspannung von 6 Volt und eine maximale Stromaufnahme von 1,8 Ampere. Die Motoren besitzen bereits ein Getriebe und sind mit dem Verhältnis 1:50 übersetzt, was bedeutet, dass die Ausgangswelle 50 mal langsamer dreht als die Eingangswelle. Dies hat den Vorteil, dass die Motoren damit mehr Drehmoment liefern können, und somit das Fahrzeug auch bei höheren Lastanforderungen bewegt werden kann.
 
+    Durch die hohen Ströme die ein Gleichstrommotor zur Fortbewegung benötigt, kann dieser nicht einfach an die \ac{GPIO} Pins des Raspberry Pi angeschlossen werden, da diese nur Ströme von bis zu 16 mA liefern können. Daher wird ein Motortreiber benötigt, um die Motoren mit ausreichend Strom zu versorgen und gleichzeitig die Steuerung durch den Raspberry Pi zu ermöglichen.
 
     \subsection{Motortreiber}
-    Wie aus dem Datenblatt zu entnehmen ist (einfügen), haben die Motoren eine Nennspannung von 6 Volt und eine maximale Stromaufnahme von 1,8 Ampere. Um die Motoren zu steuern wird ein \textit{TB6612FNG} Motortreiber verwendet. Dieser besitzt intern eine H-Brücke, welche die Ansteuerung der Motoren in beide Richtungen ermöglicht. Zudem bietet er die Möglichkeit, die Geschwindigkeit der Motoren durch 
-    \ac{PWM} zu steuern.
+    Zur Steuerung der beiden Motoren wird der Motortreiber \textit{TB6612FNG} verwendet. Der \textit{TB6612FNG} besitzt zwei Kanäle sowie jeweils eine H-Brücke. Somit können mit einem Motortreiber zwei Gleichstrommotoren parallel und unabhängig voneinander betrieben werden. Die H-Brücke ermöglicht, die Drehrichtung der Motoren zu drehen, indem es die Polartität der Versorgungsspannung ändert. Dadurch können die Motoren sowohl vorwärts als auch rückwärts drehen.
 
 \section{Raspberry Pi Camera Module}
 % Was über MP, FOV, autofokus und so schreiben?
@@ -71,6 +71,9 @@ Das Raspberry Pi Camera Module ist eine Kamera, die speziell für die Verwendung
     Der Akku verfügt über eine Kapazität von 5000 mAh und eine Nennspannung von 7,4 Volt, was ausreichend ist, um das Fahrzeug für mindestens eine Stunde mit Strom zu versorgen. 
 
     \subsection{Spannungswandler}
+    Oft kann eine Spannungsquelle nicht die für die Komponenten benötigte Spannung liefern. In diesem Fall muss die Spannung geregelt werden.
+
+    Zum regeln von Gleichspannung bieten sich sogenannte \textit{Buck-Converter} an. 
 
 % \section{Aufbau des Fahrzeugs?} % vielleicht Gehäuse und Aufbau des Fahrzeugs in einem Kapitel? bei Gehäuse wird eh schon Aufbau gezeigt
 
@@ -80,7 +83,6 @@ Das Raspberry Pi Camera Module ist eine Kamera, die speziell für die Verwendung
 
 % - Raspberry Pi als Steuergerät
 % - Ultraschallsensoren zur Hinderniserkennung
-% - Motoren zur Fortbewegung
 % - Stromversorgung
 % - Gehäuse
 % - Kamera zur visuellen Unterstützung/Schilderkennung
