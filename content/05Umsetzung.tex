@@ -1,20 +1,6 @@
 \chapter{Implementierung und Integration}
 \label{chap:implementierung}
 
-
-\section{Hardware} % vielleicht überflüssig da alles in Konzept genannt
-    
-    \subsection{Motoren}
-
-    \subsection{Hall-Sensor?}
-    
-    \subsection{Stromversorgung}
-    Da die Motoren eine Nennspannung von 6 Volt und der Raspberry Pi eine Nennspannung von 5 Volt haben, werden mehrere Spannungsregler verwendet, um die benötigten Spannungen für die verschiedenen Komponenten bereitzustellen. Ein Step-Down Spannungsregler wird verwendet, um die Spannung von 7,4 Volt auf 5 Volt zu reduzieren, um den Raspberry Pi mit Strom zu versorgen. Zwei weitere Step-Down Spannungsregler werden verwendet, um die Spannung von 7,4 Volt auf 6 Volt zu reduzieren, um die Motoren mit Strom zu versorgen.
-
-    Ein einzelner Spannungswandler kann nur maximal 5 Ampere ausgeben. Da der Raspberry Pi unter Volllast alleine bereits 5 Ampere aufnehmen kann, ist es notwendig, mehrere Spannungswandler zu verwenden, um die benötigten Spannungen für die verschiedenen Komponenten bereitstellen zu können.
-    
-    \subsection{Montage}
-
 \section{Software}
 
     \subsection{Websocket}
