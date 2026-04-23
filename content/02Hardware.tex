@@ -42,13 +42,13 @@ Der Vorteil eines Hall-Sensors gegenüber einer Spule besteht darin, dass auch e
     \end{figure}
     
 \section{Motoren}
-    %\subsection{Motoren?} % zum motor an sich schreiben
-    Als Motoren werden zwei Gleichstrommotoren verwendet,  % in Umsetzung schieben
+    \subsection{Gleichstrommotoren} % zum motor an sich schreiben
+    Zum Antreiben des Fahrzeugs werden zwei Gleichstrommotoren verwendet. Sie besitzen eine Nennspannung von 6 Volt und eine maximale Stromaufnahme von 1,8 Ampere. Die Motoren besitzen bereits ein Getriebe und sind mit dem Verhältnis 1:50 übersetzt, was bedeutet, dass die Ausgangswelle 50 mal langsamer dreht als die Eingangswelle. Dies hat den Vorteil, dass die Motoren damit mehr Drehmoment liefern können, und somit das Fahrzeug auch bei höheren Lastanforderungen bewegt werden kann.
 
+    Durch die hohen Ströme die ein Gleichstrommotor zur Fortbewegung benötigt, kann dieser nicht einfach an die \ac{GPIO} Pins des Raspberry Pi angeschlossen werden, da diese nur Ströme von bis zu 16 mA liefern können. Daher wird ein Motortreiber benötigt, um die Motoren mit ausreichend Strom zu versorgen und gleichzeitig die Steuerung durch den Raspberry Pi zu ermöglichen.
 
     \subsection{Motortreiber}
-    Wie aus dem Datenblatt zu entnehmen ist (einfügen), haben die Motoren eine Nennspannung von 6 Volt und eine maximale Stromaufnahme von 1,8 Ampere. Um die Motoren zu steuern wird ein \textit{TB6612FNG} Motortreiber verwendet. Dieser besitzt intern eine H-Brücke, welche die Ansteuerung der Motoren in beide Richtungen ermöglicht. Zudem bietet er die Möglichkeit, die Geschwindigkeit der Motoren durch 
-    \ac{PWM} zu steuern.
+    Zur Steuerung der beiden Motoren wird der Motortreiber \textit{TB6612FNG} verwendet. Der \textit{TB6612FNG} besitzt zwei Kanäle sowie jeweils eine H-Brücke. Somit können mit einem Motortreiber zwei Gleichstrommotoren parallel und unabhängig voneinander betrieben werden. Die H-Brücke ermöglicht, die Drehrichtung der Motoren zu drehen, indem es die Polartität der Versorgungsspannung ändert. Dadurch können die Motoren sowohl vorwärts als auch rückwärts drehen.
 
 \section{Raspberry Pi Camera Module}
 % Was über MP, FOV, autofokus und so schreiben?
@@ -66,13 +66,29 @@ Das Raspberry Pi Camera Module ist eine Kamera, die speziell für die Verwendung
 
 \section{Stromversorgung} % in Umsetzung Lipo Warner erwähnen, für höhere Sicherheit oder so n scheiß
     \subsection{Akku}
-    % hier einfach nur lipo erklären
+    Zur Stromversorgung des Fahrzeugs wird ein \ac{LiPo} Akku verwendet. Der Akku besitzt eine Spannung von 7,4 Volt und eine Kapazität von 5000 mAh. Er besteht aus zwei Zellen, die in Reihe geschaltet sind, um die Gesamtspannung zu erhöhen.
+    
+    Der Vorteil von \ac{LiPo}-Akkus liegt in ihrer hohen Energiedichte, was bedeutet, dass sie viel Energie in einem relativ kleinen und leichten Paket speichern können. Dies ist besonders wichtig für mobile Anwendungen wie dieses Projekt, da es die Gesamtgröße und das Gewicht des Fahrzeugs reduziert. Nachteil ist, dass \ac{LiPo} Akkus empfindlich gegenüber Überladung, Tiefenentladung und mechanischen Beschädigungen sind, was zu Sicherheitsrisiken führen kann. Daher ist es wichtig, geeignete Schutzmaßnahmen zu ergreifen, um die Sicherheit bei der Verwendung von \ac{LiPo} Akkus zu gewährleisten. So dürfen dürfen die Zellen keinen starken mechanischen Belastungen wie Stößen ausgesetzt werden, da dies zum Brand oder zur Explosion führen kann. Außerdem sollten sie nicht überladen oder tiefenentladen werden, da dies die Lebensdauer des Akkus erheblich verkürzen und ebenfalls zu Sicherheitsrisiken führen kann. Daher ist es wichtig, geeignete Ladegeräte und Schuutzmechanismen wie \textit{LiPo-Warner}, welche bei Tiefenentladung ein akustisches Signal abgeben, zu verwenden, um die Sicherheit bei der Verwendung von \ac{LiPo} Akkus zu gewährleisten.
 
-    Der Akku verfügt über eine Kapazität von 5000 mAh und eine Nennspannung von 7,4 Volt, was ausreichend ist, um das Fahrzeug für mindestens eine Stunde mit Strom zu versorgen. 
+    Eine andere Option wäre die Verwendung von \ac{LiFePO4} Akkus, welche eine höhere Sicherheit bieten, da sie weniger empfindlich gegenüber Überladung, Tiefenentladung und mechanischen Beschädigungen sind. Allerdings haben sie eine geringere Energiedichte als \ac{LiPo} Akkus, was bedeutet, dass sie größer und schwerer sein können, um die gleiche Menge an Energie zu speichern. Daher müssen bei der Auswahl des Akkus die Anforderungen an die Energieversorgung und die Sicherheitsaspekte sorgfältig abgewogen werden.
 
-    \subsection{Spannungswandler}
+    \subsection{Spannungsregler}
+    Oft kann eine Spannungsquelle nicht die für die Komponenten passende Spannung liefern. In solchen Fällen muss die Spannung geregelt werden.
 
-% \section{Aufbau des Fahrzeugs?} % vielleicht Gehäuse und Aufbau des Fahrzeugs in einem Kapitel? bei Gehäuse wird eh schon Aufbau gezeigt
+    Hierfür bieten sich bei Gleichspannung sogenannte \textit{Buck-Converter} an. Diese können eine höhere Eingangsspannung in eine niedrigere Ausgangsspannung umwandeln. Wobei sich der Prozess im Vergleich zu Wechselstrom grundlegend unterscheidet. Bei Wechselstrom werden zwei Spulen genutzt, um die Spannung zu transformieren. Durch die sich ständig ändernde Stromrichtung wird in der Spule ein Magnetfeld erzeugt, das wiederum eine Spannung in der zweiten Spule induziert.
+    
+    Dies funktioniert bei Gleichstrom nicht, da die Stromrichtung konstant ist und es somit kein sich permanent änderndes Magnetfeld gibt. Stattdessen verwendet ein \textit{Buck-Converter} eine Schaltung, die aus einem Schalter, einer Diode, einer Spule und einem Kondensator besteht (s. Abbildung \ref{fig:buck}). Zum regelen der Spannung besitzt der Wandler zwei Zustände, zwischen denen er schnell wechselt. Im ersten Zustand ist der Schalter geschlossen, wodurch Strom zum Verbraucher und durch die Spule fließt und ein Magnetfeld aufbaut. Im zweiten Zustand öffnet sich der Schalter, wodurch das Magnetfeld der Spule zusammenbricht und eine Spannung induziert wird. Dieser Strom fließt durch die Diode, welche den Stromkreis schließt, den Verbraucher und den Kondensator, der die Ausgangsspannung glättet und somit eine konstante Ausgangsspannung liefert.
+    
+    Durch das schnelle Wechseln zwischen diesen beiden Zuständen kann der \textit{Buck-Converter} eine stabile Ausgangsspannung erzeugen, die niedriger als die Eingangsspannung ist.
+   
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{images/02Grundlagen/buck.png}
+        %\vspace{-0.3cm}
+        \caption{Schaltung eines Buck-Converters}
+        \vspace{-0.3cm}
+        \label{fig:buck}
+    \end{figure}
 
 
 % \cite[vgl.][Kapitel 1.3 Getting Started - What is Git?]{gitbook}
@@ -80,11 +96,4 @@ Das Raspberry Pi Camera Module ist eine Kamera, die speziell für die Verwendung
 
 % - Raspberry Pi als Steuergerät
 % - Ultraschallsensoren zur Hinderniserkennung
-% - Motoren zur Fortbewegung
-% - Stromversorgung
-% - Gehäuse
 % - Kamera zur visuellen Unterstützung/Schilderkennung
-
-
-
-% LiPO Bedeutung erklären und auf Aufbau eingehen
