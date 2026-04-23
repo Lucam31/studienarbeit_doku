@@ -31,7 +31,8 @@ Der Vorteil eines Hall-Sensors gegenüber einer Spule besteht darin, dass auch e
 
 \section{Raspberry Pi}
     Ein Raspberry Pi ist ein Einplatinencomputer, der eine Brücke zwischen Hard- und Software bildet. Er verbindet einige der Vorteile eines herkömmlichen Computers und eines Mikrocontrollers. 
-    Zum einen besitzt er konfigurierbare \ac{GPIO} Pins und Anschlüsse für Versorgungsspannung und Erdung, wodurch externe Hardwarekomponenten direkt an den Raspberry Pi angeschlossen werden können. Zum anderen ist er leistungsstärker als ein Mikrocontroller. Das neuste Modell ist ausgestattet mit bis zu 16 Gigabytes an RAM, einem Arm-basierten 2,4 GHz Prozessor und einigen Schnittstellen wie beispielsweise einem \ac{LAN} Port, einer \ac{PCIe} Schnittstelle und sowohl \ac{USB}-A als auch \ac{USB}-C Ports. 
+    Zum einen besitzt er konfigurierbare \ac{GPIO} Pins und Anschlüsse für Versorgungsspannung und Erdung, wodurch externe Hardwarekomponenten direkt an den Raspberry Pi angeschlossen werden können. Insgesamt besitzt er 40 Pins, von welchen 26 als \ac{GPIO} Pins konfiguriert werden können. Diese können sowohl als Eingang als auch als Ausgang verwendet werden, um beispielsweise Sensoren auszulesen oder Aktoren zu steuern. Die Pins können maximale 16mA liefern und haben eine Spannung von 3,3 Volt.
+    Zum anderen ist er leistungsstärker als ein Mikrocontroller. Das neuste Modell ist ausgestattet mit bis zu 16 Gigabytes an RAM, einem Arm-basierten 2,4 GHz Prozessor und einigen Schnittstellen wie beispielsweise einem \ac{LAN} Port, einer \ac{PCIe} Schnittstelle und sowohl \ac{USB}-A als auch \ac{USB}-C Ports. 
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.8\textwidth]{images/02Grundlagen/rpi.png}
@@ -41,7 +42,9 @@ Der Vorteil eines Hall-Sensors gegenüber einer Spule besteht darin, dass auch e
         \label{fig:rpi}
     \end{figure}
     
-\section{Motoren}
+    \section{Motoren}
+    In diesem Abschnitt werden die verwendeten Motoren sowie deren Ansteuerung beschrieben.
+    
     \subsection{Gleichstrommotoren} % zum motor an sich schreiben
     Zum Antreiben des Fahrzeugs werden zwei Gleichstrommotoren verwendet. Sie besitzen eine Nennspannung von 6 Volt und eine maximale Stromaufnahme von 1,8 Ampere. Die Motoren besitzen bereits ein Getriebe und sind mit dem Verhältnis 1:50 übersetzt, was bedeutet, dass die Ausgangswelle 50 mal langsamer dreht als die Eingangswelle. Dies hat den Vorteil, dass die Motoren damit mehr Drehmoment liefern können, und somit das Fahrzeug auch bei höheren Lastanforderungen bewegt werden kann.
 
@@ -64,7 +67,9 @@ Das Raspberry Pi Camera Module ist eine Kamera, die speziell für die Verwendung
 \end{figure}
 
 
-\section{Stromversorgung} % in Umsetzung Lipo Warner erwähnen, für höhere Sicherheit oder so n scheiß
+\section{Stromversorgung} 
+    Um die Motoren und den Raspberry Pi mit Strom zu versorgen, wird eine externe Stromquelle benötigt. 
+
     \subsection{Akku}
     Zur Stromversorgung des Fahrzeugs wird ein \ac{LiPo} Akku verwendet. Der Akku besitzt eine Spannung von 7,4 Volt und eine Kapazität von 5000 mAh. Er besteht aus zwei Zellen, die in Reihe geschaltet sind, um die Gesamtspannung zu erhöhen.
     
