@@ -79,12 +79,19 @@ Diese Berechnungen sind wesentlich rechenintensiver als bei \ac{MJPEG}. Mittlerw
 
 Um ein Einsteigen inmitten des Streams zu ermöglichen, sendet H.264 regelmäßig sogenannte I-Frames, die wie bei MJPEG jedes Bild vollständig kodieren. Zwischen diesen Keyframes werden dann die Unterschiede in P-Frames kodiert, wodurch die Datenrate reduziert wird, aber dennoch ein Einsteigen inmitten des Streams möglich ist.
 
-\subsection{AV1}
+\subsubsection{AV1}
 AV1 ein vergleichsweise neues Video-Kodierungsformat, das von der Alliance for Open Media entwickelt wurde. Es bietet eine höhere Komprimierung als H.264, was zu einer besseren Videoqualität bei niedrigeren Bitraten führt. Allerdings ist die Kodierung und Dekodierung von AV1 deutlich rechenintensiver als bei H.264, was zu einer höheren \ac{CPU}-Last führen kann. 
 
 Der Raspberry Pi 5 besitzt zwar einen Hardware-Decoder für AV1, jedoch keinen Hardware-Encoder, wodurch die Kodierung von Videodaten in AV1 auf dem Raspberry Pi 5 nicht effizient möglich ist.
 
 \subsection{Übertragungsprotokolle}
+Um Videodaten zu übertragen gibt es ebenfalls verschiedene Protokolle. 
+
+\subsubsection{WebRTC}
+WebRTC ist ein Protokoll, das speziell für die Echtzeitkommunikation von Audio- und Videodaten über das Internet entwickelt wurde. Zur Übertragung der Daten wird \ac{UDP} verwendet. Dies hat den Vorteil das auf verlorene Pakete nicht gewartet wird, sondern die Übertragung fortgesetzt wird. Dies ist bei der Livevideoübertragung optimal, da somit eine niedrige Latenz erreicht werden kann. 
+
+
+\subsubsection{HLS}
 
 
 \subsection{Implementierung via WebSockets}
