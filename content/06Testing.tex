@@ -4,7 +4,7 @@ In diesem Kapitel werden die Teststrategie, die Definition der Testfälle als au
 
 \section{Teststrategie} 
 Die Teststrategie für das Fahrzeug und die Fahrassistenzsysteme umfasst zwei Phasen, um sicherzustellen, dass alle Funktionen wie vorgesehen arbeiten. Zunächst werden die einzelnen Funktionen des Fahrzeugs möglichst isoliert getestet, um sicherzustellen, dass sie korrekt implementiert sind. Dabei werden verschiedene Testfälle definiert, die die Funktionalität in unterschiedlichen Situationen überprüfen. \\
-Anschließend wird das Fahrzeug im ganzen getestet, um die Interaktion der verschiedenen Funktionen unter realen Bedingungen zu überprüfen. 
+Anschließend wird das Fahrzeug im Ganzen getestet, um die Interaktion der verschiedenen Funktionen unter realen Bedingungen zu überprüfen. 
 % erstmal fernsteuerung (vorwärts, rückwärts, links, rechts), dann steuerung auf unterschiedlichen untergründen, dann ultraschallsensor, dann hall sensor, dann notbremsung (ultraschall + hall sensor), dann follow the line, dann generell rumfahren und schauen
 
 \section{Definition der Testfälle}
@@ -13,10 +13,10 @@ Die Definition der Testfälle erfolgt jeweils für die einzelnen Funktionen des 
     \subsection{Fernsteuerung}
     Zuerst wird die grundlegende Funktionalität der Fernsteuerung getestet, während die anderen Funktionen deaktiviert sind, um sicherzustellen, dass das Fahrzeug auf die Steuerbefehle korrekt reagiert. Dazu werden die folgenden Testfälle definiert:
     \begin{itemize}
-        \item Vorwärtsfahren - Das Fahrzeug soll auf das Kommando "Vorwärts" reagieren und sich mit der entsprechenden Geschwindigkeit geradeaus bewegen.
-        \item Rückwärtsfahren - Das Fahrzeug soll auf das Kommando "Rückwärts" reagieren und sich mit der entsprechenden Geschwindigkeit rückwärts bewegen.
-        \item Linksabbiegen - Das Fahrzeug soll auf das Kommando "Links" reagieren und die Motoren in die entsprechende Richtung drehen.
-        \item Rechtsabbiegen - Das Fahrzeug soll auf das Kommando "Rechts" reagieren und die Motoren in die entsprechende Richtung drehen.
+        \item Vorwärtsfahren - Das Fahrzeug soll auf das Kommando \enquote{Vorwärts} reagieren und sich mit der entsprechenden Geschwindigkeit geradeaus bewegen.
+        \item Rückwärtsfahren - Das Fahrzeug soll auf das Kommando \enquote{Rückwärts} reagieren und sich mit der entsprechenden Geschwindigkeit rückwärts bewegen.
+        \item Linksabbiegen - Das Fahrzeug soll auf das Kommando \enquote{Links} reagieren und die Motoren in die entsprechende Richtung drehen.
+        \item Rechtsabbiegen - Das Fahrzeug soll auf das Kommando \enquote{Rechts} reagieren und die Motoren in die entsprechende Richtung drehen.
     \end{itemize}
     Diese Testfälle werden unter verschiedenen Bedingungen durchgeführt, beispielsweise auf unterschiedlichen Untergründen und bei unterschiedlichen Geschwindigkeiten, um mögliche Bewegungseinschränkungen festzustellen. Als Untergründe werden Fliesen, Teppich, Parkett und Asphalt verwendet, um sowohl glatte als auch unebene Oberflächen zu testen. Zudem werden die Testfälle bei voller Geschwindigkeit, halber Geschwindigkeit und niedriger Geschwindigkeit durchgeführt, um die Reaktionsfähigkeit des Fahrzeugs zu überprüfen.
 
