@@ -1,10 +1,69 @@
-\chapter{Testing und Qualitätssicherung}
+\chapter{Testen des Fahrzeugs und der Assistenzsysteme}
 \label{chap:testing}
+In diesem Kapitel werden die Teststrategie, die Definition der Testfälle als auch die Durchführung und Auswertung der Tests beschrieben. Ziel ist es, die Funktionalität des Fahrzeugs und der implementierten Features zu überprüfen.
 
-\section{Teststrategie für die Überarbeitung} 
+\section{Teststrategie} 
+Die Teststrategie für das Fahrzeug und die Fahrassistenzsysteme umfasst zwei Phasen, um sicherzustellen, dass alle Funktionen wie vorgesehen arbeiten. Zunächst werden die einzelnen Funktionen des Fahrzeugs möglichst isoliert getestet, um sicherzustellen, dass sie korrekt implementiert sind. Dabei werden verschiedene Testfälle definiert, die die Funktionalität in unterschiedlichen Situationen überprüfen. \\
+Anschließend wird das Fahrzeug im Ganzen getestet, um die Interaktion der verschiedenen Funktionen unter realen Bedingungen zu überprüfen. 
+% erstmal fernsteuerung (vorwärts, rückwärts, links, rechts), dann steuerung auf unterschiedlichen untergründen, dann ultraschallsensor, dann hall sensor, dann notbremsung (ultraschall + hall sensor), dann follow the line, dann generell rumfahren und schauen
 
 \section{Definition der Testfälle}
+Die Definition der Testfälle erfolgt jeweils für die einzelnen Funktionen des Fahrzeugs. Dabei werden verschiedene Szenarien und Bedingungen berücksichtigt, um die Funktionalität umfassend zu überprüfen.
 
-\section{Testdurchführung zur Funktionalitätsprüfung}
+    \subsection{Fernsteuerung}
+    Zuerst wird die grundlegende Funktionalität der Fernsteuerung getestet, während die anderen Funktionen deaktiviert sind, um sicherzustellen, dass das Fahrzeug auf die Steuerbefehle korrekt reagiert. Dazu werden die folgenden Testfälle definiert:
+    \begin{itemize}
+        \item Vorwärtsfahren - Das Fahrzeug soll auf das Kommando \enquote{Vorwärts} reagieren und sich mit der entsprechenden Geschwindigkeit geradeaus bewegen.
+        \item Rückwärtsfahren - Das Fahrzeug soll auf das Kommando \enquote{Rückwärts} reagieren und sich mit der entsprechenden Geschwindigkeit rückwärts bewegen.
+        \item Linksabbiegen - Das Fahrzeug soll auf das Kommando \enquote{Links} reagieren und die Motoren in die entsprechende Richtung drehen.
+        \item Rechtsabbiegen - Das Fahrzeug soll auf das Kommando \enquote{Rechts} reagieren und die Motoren in die entsprechende Richtung drehen.
+    \end{itemize}
+    Diese Testfälle werden unter verschiedenen Bedingungen durchgeführt, beispielsweise auf unterschiedlichen Untergründen und bei unterschiedlichen Geschwindigkeiten, um mögliche Bewegungseinschränkungen festzustellen. Als Untergründe werden Fliesen, Teppich, Parkett und Asphalt verwendet, um sowohl glatte als auch unebene Oberflächen zu testen. Zudem werden die Testfälle bei voller Geschwindigkeit, halber Geschwindigkeit und niedriger Geschwindigkeit durchgeführt, um die Reaktionsfähigkeit des Fahrzeugs zu überprüfen.
+
+    \subsection{Notbremsung}
+    Um die Notbremsung zu testen, werden zuerst die dafür benötigten Sensoren, also der Ultraschallsensor und der Hall-Sensor, einzeln getestet, um mögliche Fehlerquellen vorab zu identifizieren. Anschließend wird die Notbremsung selbst getestet, indem das Fahrzeug auf ein Hindernis zufährt und die Reaktion des Systems beobachtet wird. 
+
+    Um den Ultraschallsensor zu testen, werden verschiedene Objekte aus unterschiedlichen Entfernungen, Materialien und Größen vor den Sensor gehalten, um die Zuverlässigkeit und Genauigkeit der Entfernungsmessung zu überprüfen. Die gemessenen Entfernungen werden in der Konsole ausgegeben und mit den tatsächlichen Entfernungen verglichen, um die Genauigkeit zu bewerten. Für die Tests werden folgende Parameter definiert:
+    \begin{itemize}
+        \item Objekte: Als Objekte werden Holzblöcke unterschiedlicher Größen, eine Wand und einen Wäschekorb mit Löchern, um ein Objekt mit geringer Reflektivität zu repräsentieren.
+        \item Entfernungen: Die Objekte werden in Abständen von 50cm, 100cm, 200cm und 300cm vor den Sensor gehalten, um die Genauigkeit der Messungen über verschiedene Distanzen zu überprüfen.
+    \end{itemize}
+    Für die Tests werden alle möglichen Kombinationen der Parameter getestet, um die Zuverlässigkeit und Genauigkeit des Ultraschallsensors unter verschiedenen Bedingungen zu bewerten.
+
+    Der Hall-Sensor wird unter verschiedenen Geschwindigkeiten getestet. Dafür wird das Fahrzeug mit niedriger, halber und voller Geschwindigkeit sowohl vorwärts, rückwärts als auch um Kurven bewegt, um die Funktionalität des Sensors bei unterschiedlichen Bewegungsrichtungen und Geschwindigkeiten zu überprüfen. Um die tatsächlichen Geschwindigkeiten zu ermitteln, wird die Zeit gemessen, die das Fahrzeug für eine bestimmte Strecke benötigt und diese mit der gemessenen Geschwindigkeit des Hall-Sensors verglichen.
+
+    Nachdem die Sensoren einzeln getestet wurden, wird die Notbremsung selbst getestet, indem die Bedingungen der Tests für die Sensoren miteinander kombiniert werden. Das Fahrzeug wird auf unterschiedliche Hindernisse aus unterschiedlichen Distanzen zufahren. Eine genaue Messung des tatsächlichen Anhaltewegs wird dabei nicht durchgeführt, da aufgrund des geringen Gewichts des Fahrzeugs vermutlich die Reifen blockieren und die Geschwindigkeitsmessung des Hall-Sensors auf Bewegung der Räder angewiesen ist. Dadurch würde das Fahrzeug bereits kurz nach dem Einleiten der Notbremsung einen Stillstand erkenn, obwohl es sich noch in Bewegung befindet. Stattdessen wird die Reaktionszeit des Systems gemessen, also die Zeit von der Erkennung des Hindernisses bis zum Einleiten der Notbremsung, um die Reaktionsfähigkeit des Systems zu bewerten. Zudem wird beobachtet, ob die Notbremsung rechtzeitig eingeleitet wird, um eine Kollision zu verhindern, und ob das Fahrzeug bei der Notbremsung stabil bleibt.
+
+    \subsection{Follow the line}
+    Um das Follow the line Feature zu testen, werden Linien auf unterschiedlichen Untergründen unter verschiedenen Lichtverhältnissen getestet, um die Erkennungsgenauigkeit des Systems zu überprüfen. Zudem werden Szenarien simuliert, wie Kurven und Unterbrechungen in der Linie. Dabei wird beobachtet, wie gut das Fahrzeug in den verschiedenen Szenarien der Linie folgt und ob es stabil bleibt. Die Geschwindigkeit des Fahrzeugs wird dabei nicht variiert.
+
+\section{Durchführung der Tests}
 
 \section{Evaluation der Testergebnisse}
+
+
+% Tests für:
+% - Notbremsung:
+%     - Sensoren: Funktionieren die Sensoren zuverlässig und genau? (unterschiedliche Objekte aus unterschiedlichen Entfernungen und Materialien testen)
+%     - Reaktionszeit: Wie schnell reagiert das System auf eine potenzielle Kollision? (Zeitmessung von der Erkennung des Hindernisses bis zum Einleiten der Bremsung)
+%     - Bremsleistung: Ist die Bremskraft ausreichend, um das Fahrzeug rechtzeitig zum Stillstand zu bringen? (Bremsverhalten für unterschiedliche Geschwindigkeiten und Untergründe testen)
+
+% - Follow the line:
+%     - Erkennungsgenauigkeit: Wie genau erkennt das System die Linie? (Testen mit verschiedenen Linienbreiten, ?Farben? und Untergründen)
+%     - Reaktionsfähigkeit: Wie schnell reagiert das System auf Veränderungen der Linie? (Testen mit Kurven, Kreuzungen und Unterbrechungen in der Linie)
+%     - Stabilität: Bleibt das Fahrzeug stabil auf der Linie, insbesondere bei höheren Geschwindigkeiten oder unebenen Untergründen? Wie gut folgt es der Linie in Kurven?
+    
+% - Fernsteuerung:
+%     - Verbindungsstabilität: Wie stabil ist die Verbindung zwischen der Fernsteuerung und dem Fahrzeug? (Testen der Verbindung über verschiedene Entfernungen und mit Hindernissen zwischen Fernsteuerung und Fahrzeug)
+%     - Reaktionszeit: Wie schnell reagiert das Fahrzeug auf Befehle von der Fernsteuerung? (Zeitmessung von der Eingabe eines Befehls bis zur Ausführung durch das Fahrzeug)
+    
+% - Videoübertragung:
+%     - Bildqualität: Wie gut ist die Qualität der übertragenen Bilder? (Testen der Auflösung, Farbwiedergabe und Bildstabilität unter verschiedenen Bedingungen)
+%     - Latenz: Wie hoch ist die Verzögerung zwischen der Aufnahme eines Bildes und dessen Anzeige auf der Fernsteuerung? (Zeitmessung von der Aufnahme bis zur Anzeige)
+%     - Verbindungsstabilität: Wie stabil ist die Verbindung für die Videoübertragung? (Testen der Verbindung über verschiedene Entfernungen und mit Hindernissen zwischen Kamera und Empfänger)
+    
+% - Schilderkennung:
+%     - Erkennungsgenauigkeit: Wie genau erkennt das System die Schilder? (Testen mit verschiedenen Schildern, Größen, Farben und Untergründen)
+%     - Reaktionsfähigkeit: Wie schnell reagiert das System auf erkannte Schilder? (Zeitmessung von der Erkennung des Schildes bis zur entsprechenden Reaktion)
+%     - Robustheit: Wie gut funktioniert die Schilderkennung unter verschiedenen Lichtverhältnissen, Wetterbedingungen und bei Verschmutzungen auf der Kamera? (Testen bei unterschiedlichen Lichtverhältnissen, Regen, Nebel und mit verschmutzter Kamera)
+    
