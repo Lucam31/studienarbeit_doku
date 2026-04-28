@@ -18,6 +18,9 @@ In diesem Abschnitt werden die verwendeten Programmiersprachen und deren Eigensc
         \item \textbf{Wenig Boilerplate-Code}: Python ermöglicht es, bereits mit wenigen Zeilen Code ein lauffähiges Programm zu erstellen, was Prototyping und schnelle Entwicklung fördert.
     \end{itemize}
 
+    \subsection{TypeScript} %erweitern?
+    TypeScript ist eine von Microsoft entwickelte kompilierte Programmiersprache, die auf JavaScript basiert, wodurch die Nutzung von JavaScript-Bibliotheken und -Frameworks ermöglicht wird. Auch funktionale, prozedurale und objektorientierte Programmierung sind möglich. Eines der größten Features, das durch TypeScript hinzugefügt wird, ist die statische Typisierung. Verwendung findet TypeScript wie auch JavaScript in der Entwicklung von Webanwendungen. TypeScript wird kompiliert und in JavaScript umgewandelt, wodurch es in allen Browsern ausgeführt werden kann.
+
     \subsection{Verwendete Bibliotheken und Frameworks}
     Für die Entwicklung der Software werden verschiedene Bibliotheken und Frameworks verwendet, um die geplanten Funktionalitäten umzusetzen und die Entwicklung zu erleichtern:
         \subsubsection{OpenCV} OpenCV ist eine Open-Source-Bibliothek, die eine Vielzahl von Funktionen für die Bildverarbeitung und -analyse bietet. Dadurch können Merkmale und Muster in Bildern erkannt und verarbeitet werden.
@@ -36,7 +39,7 @@ In diesem Abschnitt werden die Technologien und Tools beschrieben, die für die 
     % \subsection{Versionsverwaltung mit Git}
     % Für die Versionsverwaltung des Quellcodes wird GitHub verwendet. GitHub bietet umfangreiche Funktionen zur Zusammenarbeit mit anderen Entwicklern, um Quellcodeänderungen zu verfolgen und zu verwalten. Durch die Nutzung von GitHub können mehrere Entwickler gleichzeitig am Projekt arbeiten und Änderungen einfach zusammengeführt und nachverfolgt werden. (mehr über Git/GitHub? Brauchen wir diesen Abschnitt überhaupt?)
     
-    \subsection{Websockets}
+    \subsection{Websockets} \label{sec:websockets}
     Websockets sind ein Protokoll, das eine bidirektionale Kommunikation zwischen einem Client und einem Server über eine einzige TCP-Verbindung ermöglicht. Zwar verwendet es den HTTP-Handshake, wodurch es mit HTTP kompatibel ist, jedoch wechselt es nach dem Handshake zu einem binären Frame-basierten Protokoll.
     Im Gegensatz zu herkömmlichen HTTP-Verbindungen, die für jede Anfrage eine neue Verbindung öffnen, bleibt bei Websockets die Verbindung offen bis einer der Teilnehmer die Verbindung schließt, wodurch eine Echtzeit-Kommunikation möglich ist. Eine einfache Darstellung dieses Ablaufs ist in Abbildung \ref{fig:websocket} dargestellt.
 
@@ -53,3 +56,45 @@ In diesem Abschnitt werden die Technologien und Tools beschrieben, die für die 
 % WebRTC, H264, MJPEG, HLS
 % Hardwareencoder
 % In Konzept dann Vergleich und Begründung, warum wir uns für die gewählte Lösung entschieden haben
+Ein weiterer wichtiger Teil des Projekts ist die Videoübertragung von der Kamera zur Weboberfläche. Zur übertragung von Vidodaten gibt es verschiedene Möglichkeiten, welche sich in der Qualität, Latenz und Komplexität unterscheiden. In diesem Abschnitt werden die verschiedenen Möglichkeiten zur Videoübertragung beschrieben, um später eine fundierte Entscheidung für die Implementierung treffen zu können.  
+
+\subsection{Hardware-Encoder}
+Ein Hardware-Encoder ist ein ein dedizierter Chip, der ausschließlich für die Kodierung von Videodaten verantwortlich ist. Das Kodieren von Videodaten ist sehr rechenintensiv und würde bei hohen Auflösungen und Bildraten sehr viel \ac{CPU}-Last verursachen. Je nachdem könnte es auch zu sogennanten Frame-Drops kommen, wodurch manche Bilder überhaupt nicht übertragen werden. 
+
+Um dies zu vermeiden werden Hardware-Encoder verwendet, welche die Videodaten direkt von der Kamera aufnehmen und in Echtzeit kodieren können, ohne die \ac{CPU} zu belasten. Dadurch kann eine hohe Qualität und niedrige Latenz bei der Videoübertragung erreicht werden, selbst bei hohen Auflösungen und Bildraten. So können beispielsweise \textit{H.264} oder \textit{H.265} Hardware-Encoder verwendet werden, um die Videodaten effizient zu komprimieren und zu übertragen.
+
+\subsection{Übertragungsformate und Protokolle}
+Für die Übertragung von Videodaten gibt es verschiedene Formate und Protokolle. Diese unterscheiden sich jeweils in der Qualität, Latenz und Komplexität. Im Folgenden werden gänge Formate und Protkolle beschrieben, sowie ein Negativbeispiel, um die Unterschiede zu verdeutlichen.
+
+\subsection{Kodierungsformate}
+Bevor Videodaten übertragen werden können, werden sie in einem bestimmten Format kodiert und komprimiert. 
+
+\subsubsection{MJPEG}
+\ac{MJPEG} ist ein einfaches Video-Kodierungsformat, bei dem jedes Einzelbild als JPEG-Bild kodiert wird. Da jedes Bild unabhängig und ohne Bezug zu anderen Bildern kodiert wird, ermöglicht MJPEG eine einfache und schnelle Kodierung und Dekodierung von Videodaten. Zudem kann der Stream jederzeit gestartet und gestoppt werden, ohne dass es eine Synchronisierung benötigt, da jedes Bild für sich allein steht. Allerdings führt die fehlende Komprimierung über mehrere Bilder hinweg zu einer größeren Datenmenge, was zu einer höheren Bandbreitennutzung und möglicherweise zu einer geringeren Videoqualität führen kann, insbesondere bei höheren Auflösungen und Bildraten. Daher ist MJPEG nicht die effizienteste Wahl für die Übertragung von Videodaten, insbesondere wenn eine hohe Qualität und niedrige Latenz erforderlich sind.
+
+\subsubsection{H.264}
+H.264 auch bekannt als \ac{AVC} ist ein weit verbreitetes Video-Kodierungsformat, das eine gute Balance zwischen Qualität und Komprimierung bietet. Der Unterschied zu \ac{MJPEG} besteht darin, dass H.264 nicht jedes Bild einzeln kodiert, sondern nur die Unterschiede zwischen aufeinanderfolgenden Bildern sendet. Zusätzlich verwendet H.264 Bewegungsvektoren, um die Bewegung von Objekten zwischen Bildern zu verfolgen. Wenn sich ein Objekt von einem Bild zum nächsten bewegt, sendet H.264 nur die Informationen über die Bewegung, anstatt das gesamte Bild zu übertragen. Dadurch kann H.264 eine höhere Komprimierung erreichen und gleichzeitig eine gute Videoqualität beibehalten, insbesondere bei höheren Auflösungen und Bildraten.
+
+Diese Berechnungen sind wesentlich rechenintensiver als bei \ac{MJPEG}. Mittlerweile besitzen alle modernen Chips die entsprechenden Hardware-Encoder und Decoder für H.264, wodurch die \ac{CPU}-Last deutlich reduziert wird.
+
+Um ein Einsteigen inmitten des Streams zu ermöglichen, sendet H.264 regelmäßig sogenannte I-Frames, die wie bei MJPEG jedes Bild vollständig kodieren. Zwischen diesen Keyframes werden dann die Unterschiede in P-Frames kodiert, wodurch die Datenrate reduziert wird, aber dennoch ein Einsteigen inmitten des Streams möglich ist.
+
+\subsubsection{AV1}
+AV1 ein vergleichsweise neues Video-Kodierungsformat, das von der Alliance for Open Media entwickelt wurde. Es bietet eine höhere Komprimierung als H.264, was zu einer besseren Videoqualität bei niedrigeren Bitraten führt. Allerdings ist die Kodierung und Dekodierung von AV1 deutlich rechenintensiver als bei H.264, was zu einer höheren \ac{CPU}-Last führen kann. 
+
+Der Raspberry Pi 5 besitzt zwar einen Hardware-Decoder für AV1, jedoch keinen Hardware-Encoder, wodurch die Kodierung von Videodaten in AV1 auf dem Raspberry Pi 5 nicht effizient möglich ist.
+
+\subsection{Übertragungsprotokolle}
+Um Videodaten zu übertragen gibt es ebenfalls verschiedene Protokolle. 
+
+\subsubsection{WebRTC}
+WebRTC ist ein Protokoll, das speziell für die Echtzeitkommunikation von Audio- und Videodaten über das Internet entwickelt wurde. Zur Übertragung der Daten wird \ac{UDP} verwendet. Dies hat den Vorteil das auf verlorene Pakete nicht gewartet wird, sondern die Übertragung fortgesetzt wird. Dies ist bei der Livevideoübertragung optimal, da die Latenz sehr gering ist. 
+
+
+\subsubsection{HLS}
+HLS ist ein von Apple entwickeltes Protokoll, das auf \ac{HTTP} und somit auch \ac{TCP} basiert. Die Videodaten werden in kleine Segmente aufgeteilt und über HTTP übertragen. Da TCP eine zuverlässige Übertragung gewährleistet, werden verlorene Pakete automatisch erneut gesendet. Dies hat zwar den Vorteil das die Daten zuverlässig und in der richtigen Reihenfolge ankommen, hat aber auch den Nachteil das die Latenz deutlich höher als bei WebRTC ist, da auf verlorene Pakete gewartet werden muss. HLS verwendet ebenfalls einen Puffer von einigen Sekunden um Netzwerk-Schwankungen auszugleichen, was die Latenz weiter erhöht.
+
+\subsubsection{Implementierung via WebSockets}
+Eine weitere Möglichkeit zur Übertragung von Videodaten ist eine eigene Implementierung mittels Websockets (siehe Abschnitt \ref{sec:websockets}). 
+
+Dies bringt jedoch mehrere Nachteile mit sich. Zum einen muss die Kodierung und Übertragung der Videodaten selbst implementiert werden, was deutlich komplexer ist als die Verwendung eines bestehenden Protokolls wie WebRTC oder HLS. Zum anderen ist die Latenz bei einer eigenen Implementierung in der Regel höher als bei WebRTC, da WebRTC speziell für die Echtzeitkommunikation optimiert ist. Zudem müssen bei einer eigenen Implementierung zusätzliche Mechanismen zur Fehlerbehandlung und Synchronisierung implementiert werden, um eine zuverlässige Übertragung zu gewährleisten. Daher ist eine eigene Implementierung mittels Websockets in der Regel nicht die beste Wahl für die Übertragung von Videodaten, insbesondere wenn eine hohe Qualität und niedrige Latenz erforderlich sind.
