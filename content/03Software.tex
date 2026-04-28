@@ -39,7 +39,7 @@ In diesem Abschnitt werden die Technologien und Tools beschrieben, die für die 
     % \subsection{Versionsverwaltung mit Git}
     % Für die Versionsverwaltung des Quellcodes wird GitHub verwendet. GitHub bietet umfangreiche Funktionen zur Zusammenarbeit mit anderen Entwicklern, um Quellcodeänderungen zu verfolgen und zu verwalten. Durch die Nutzung von GitHub können mehrere Entwickler gleichzeitig am Projekt arbeiten und Änderungen einfach zusammengeführt und nachverfolgt werden. (mehr über Git/GitHub? Brauchen wir diesen Abschnitt überhaupt?)
     
-    \subsection{Websockets}
+    \subsection{Websockets} \label{sec:websockets}
     Websockets sind ein Protokoll, das eine bidirektionale Kommunikation zwischen einem Client und einem Server über eine einzige TCP-Verbindung ermöglicht. Zwar verwendet es den HTTP-Handshake, wodurch es mit HTTP kompatibel ist, jedoch wechselt es nach dem Handshake zu einem binären Frame-basierten Protokoll.
     Im Gegensatz zu herkömmlichen HTTP-Verbindungen, die für jede Anfrage eine neue Verbindung öffnen, bleibt bei Websockets die Verbindung offen bis einer der Teilnehmer die Verbindung schließt, wodurch eine Echtzeit-Kommunikation möglich ist. Eine einfache Darstellung dieses Ablaufs ist in Abbildung \ref{fig:websocket} dargestellt.
 
@@ -88,10 +88,13 @@ Der Raspberry Pi 5 besitzt zwar einen Hardware-Decoder für AV1, jedoch keinen H
 Um Videodaten zu übertragen gibt es ebenfalls verschiedene Protokolle. 
 
 \subsubsection{WebRTC}
-WebRTC ist ein Protokoll, das speziell für die Echtzeitkommunikation von Audio- und Videodaten über das Internet entwickelt wurde. Zur Übertragung der Daten wird \ac{UDP} verwendet. Dies hat den Vorteil das auf verlorene Pakete nicht gewartet wird, sondern die Übertragung fortgesetzt wird. Dies ist bei der Livevideoübertragung optimal, da somit eine niedrige Latenz erreicht werden kann. 
+WebRTC ist ein Protokoll, das speziell für die Echtzeitkommunikation von Audio- und Videodaten über das Internet entwickelt wurde. Zur Übertragung der Daten wird \ac{UDP} verwendet. Dies hat den Vorteil das auf verlorene Pakete nicht gewartet wird, sondern die Übertragung fortgesetzt wird. Dies ist bei der Livevideoübertragung optimal, da die Latenz sehr gering ist. 
 
 
 \subsubsection{HLS}
+HLS ist ein von Apple entwickeltes Protokoll, das auf \ac{HTTP} und somit auch \ac{TCP} basiert. Die Videodaten werden in kleine Segmente aufgeteilt und über HTTP übertragen. Da TCP eine zuverlässige Übertragung gewährleistet, werden verlorene Pakete automatisch erneut gesendet. Dies hat zwar den Vorteil das die Daten zuverlässig und in der richtigen Reihenfolge ankommen, hat aber auch den Nachteil das die Latenz deutlich höher als bei WebRTC ist, da auf verlorene Pakete gewartet werden muss. HLS verwendet ebenfalls einen Puffer von einigen Sekunden um Netzwerk-Schwankungen auszugleichen, was die Latenz weiter erhöht.
 
+\subsubsection{Implementierung via WebSockets}
+Eine weitere Möglichkeit zur Übertragung von Videodaten ist eine eigene Implementierung mittels Websockets (siehe Abschnitt \ref{sec:websockets}). 
 
-\subsection{Implementierung via WebSockets}
+Dies bringt jedoch mehrere Nachteile mit sich. Zum einen muss die Kodierung und Übertragung der Videodaten selbst implementiert werden, was deutlich komplexer ist als die Verwendung eines bestehenden Protokolls wie WebRTC oder HLS. Zum anderen ist die Latenz bei einer eigenen Implementierung in der Regel höher als bei WebRTC, da WebRTC speziell für die Echtzeitkommunikation optimiert ist. Zudem müssen bei einer eigenen Implementierung zusätzliche Mechanismen zur Fehlerbehandlung und Synchronisierung implementiert werden, um eine zuverlässige Übertragung zu gewährleisten. Daher ist eine eigene Implementierung mittels Websockets in der Regel nicht die beste Wahl für die Übertragung von Videodaten, insbesondere wenn eine hohe Qualität und niedrige Latenz erforderlich sind.
