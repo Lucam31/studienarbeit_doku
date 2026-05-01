@@ -84,7 +84,7 @@ Dieses Kapitel beschreibt die geplante Softwarearchitektur des Fahrzeugs.
 
 
     \subsection{Weboberfläche zur Steuerung und Überwachung}
-    Dem User wird eine Weboberfläche zur Verfügung über die das Fahrzeug gesteuert und überwacht werden kann. Hierzu werden Sensordaten und Kamerabilder in Echtzeit vom Fahrzeug an die Weboberfläche übertragen, um dem Benutzer die benötigten Informationen zur Steuerung des Fahrzeugs bereitzustellen. Über die Weboberfläche können zudem Steuerbefehle an das Fahrzeug gesendet werden, um beispielsweise die Geschwindigkeit zu regulieren oder die Richtung zu ändern.
+    Dem User wird eine Weboberfläche zur Verfügung gestellt, über die das Fahrzeug gesteuert und überwacht werden kann. Hierzu werden Sensordaten und Kamerabilder in Echtzeit vom Fahrzeug an die Weboberfläche übertragen, um dem Benutzer die benötigten Informationen zur Steuerung des Fahrzeugs bereitzustellen. Über die Weboberfläche können zudem Steuerbefehle an das Fahrzeug gesendet werden, um beispielsweise die Geschwindigkeit zu regulieren oder die Richtung zu ändern.
 
     \subsection{Backend-Anwendung zur Ansteuerung der Hardware}
     Das Backend ist für die direkte Ansteuerung der Hardwarekomponenten des Fahrzeugs zuständig. Es empfängt die Steuerbefehle von der Weboberfläche und wertet diese aus, um die entsprechenden Vorgänge und Aktionen durchzuführen. Dazu gehört beispielsweise die Ansteuerung der Motoren bei Regulierung der Geschwindigkeit. \\
@@ -93,9 +93,33 @@ Dieses Kapitel beschreibt die geplante Softwarearchitektur des Fahrzeugs.
     \subsection{Kommunikation zwischen GUI und Backend}
     Für die Kommunikation zwischen der GUI-Anwendung und der Backend-Anwendung wird ein Websocket verwendet. Ein Websocket ermöglicht eine bidirektionale Kommunikation zwischen einem Server und mehreren Clients. In diesem Projekt nimmt der Raspberry Pi die Rolle des Servers ein, während die Weboberfläche als Client fungiert. 
 
-    \subsection{Video-Encoding Vergleich}
-    % Tabelle mit Vor- und Nachteilen der verschiedenen Methoden, sowie die geplante Methode und Begründung für die Wahl
+    \subsection{Backend-Architektur}
+    Das Backend ist in mehrere Module unterteilt, um die Funktionalitäten und Verantwortlichkeiten klar zu trennen. Dies hat zudem den Vorteil, dass die Software modular aufgebaut werden kann, was die Wartbarkeit und Erweiterbarkeit des Systems verbessert. Jedes Modul ist für eine spezifische Funktionalität zuständig, wie beispielsweise die Ansteuerung der Motoren, die Verarbeitung der Sensordaten oder die Implementierung der Fahrassistenzsysteme.
 
+    \subsection{Vergleich von Kodierungsformaten und übertragungsprotokollen}
+    % Tabelle mit Vor- und Nachteilen der verschiedenen Methoden, sowie die geplante Methode und Begründung für die Wahl
+    Nachdem im vorherigen Kapitel einige Übertragungsformate und Codecs vorgestellt wurden, wird in diesem Abschnitt ein Vergleich der verschiedenen Methoden durchgeführt, um die beste Lösung für die Videoübertragung zu finden. Dabei werden die Vor- und Nachteile der verschiedenen Methoden gegenübergestellt, um eine fundierte Entscheidung treffen zu können.
+    \begin{table}[]
+        \begin{tabular}{|l|l|l|l|}
+        \hline
+                                                                    & MJPEG     & H.264     & AV1             \\ \hline
+        Qualität                                                    & Hoch      & Hoch      & Hoch            \\ \hline
+        Rechenaufwand                                               & Gering    & Mittel    & Hoch            \\ \hline
+        Datenrate                                                   & Niedrig   & Mittel    & Sehr hoch       \\ \hline
+        \begin{tabular}[c]{@{}l@{}}Hardware \\ Encoder\end{tabular} & Vorhanden & Vorhanden & Nicht vorhanden \\ \hline
+        \end{tabular}
+        \caption{Vergleich verschiedener Video-Encoding-Methoden}
+        \label{tab:video_encoding_comparison}
+    \end{table}
+    Grundsätzlich bieten alle drei Methoden eine hohe Qualität, unterscheiden sich jedoch deutlich im Rechenaufwand und in der Menge der Daten die bei gegebener Qualität übertragen werden können. MJPEG bietet eine hohe Qualität bei geringem Rechenaufwand, jedoch ist die Datenrate im Vergleich zu H.264 und AV1 deutlich höher. Das hat zur Folge, dass MJPEG zur Übertragung von Videodaten mit hoher Qualität wesentlich mehr Bandbreite benötigt als die anderen beiden Methoden. 
+    
+    H.264 bietet eine gute Balance zwischen Qualität, Rechenaufwand und Datenrate. Der Raspberry Pi verfügt über einen Hardware-Encoder für H.264, was den Rechenaufwand für die \ac{CPU} minimiert. AV1 bietet zwar eine sehr hohe Qualität, jedoch ist der Rechenaufwand für die Kodierung deutlich höher als bei den anderen beiden Methoden, was insbesondere auf einem Raspberry Pi auf Grund des fehlenden Hardware-Encoders zu Problemen führen könnte.
+    
+    Zur Übertragung der Videodaten stehen WebRTC und HLS zur Auswahl. HLS ist ein Streaming-Protokoll, das auf HTTP basiert und für die Übertragung von Videodaten über das Internet entwickelt wurde. Es bietet eine hohe Kompatibilität mit verschiedenen Geräten und Plattformen, jedoch ist die Latenz bei der Übertragung von Videodaten mit HLS im Vergleich zu WebRTC deutlich höher. WebRTC hingegen ist ein Echtzeit-Kommunikationsprotokoll, das speziell für die Übertragung von Audio- und Videodaten in Echtzeit entwickelt wurde. Es bietet eine sehr geringe Latenz und eine hohe Qualität, jedoch ist die Komplexität der Implementierung im Vergleich zu HLS höher.
+
+    Abschließend wurde die Entscheidung getroffen, H.264 als Video-Encoding-Methode zu verwenden, da es eine gute Balance zwischen Qualität, Rechenaufwand und Datenrate bietet. Zudem verfügt der Raspberry Pi über einen Hardware-Encoder für H.264, was den Rechenaufwand für die \ac{CPU} minimiert. Zur Übertragung der Videodaten wird WebRTC verwendet, da es eine sehr geringe Latenz bietet, was für die Steuerung des Fahrzeugs von entscheidender Bedeutung ist.
+    
+    
     \subsection{Implementierte Features} % vielleicht vor Softwarekomponenten? Weil da werden schon Features erwähnt
     In diesem Abschnitt werden die für das Fahrzeug geplanten Features beschrieben.
 
@@ -105,8 +129,11 @@ Dieses Kapitel beschreibt die geplante Softwarearchitektur des Fahrzeugs.
     \subsubsection{Schilderkennung}
 
     \subsubsection{Fernsteuerung}
+
     
-    \subsubsection{Follow the line}
+    \subsubsection{Follow the line} 
+    Alternativ zur Steuerung des Fahrzeugs über die Weboberfläche soll das Fahrzeug auch in der Lage sein, einer definierten, farbigen Linie auf dem Boden zu folgen. Zum Aufnehmen der Bilder wird die Kamera verwendet. Die Bilder werden in Echtzeit verarbeitet, um den Mittelpunkt der Linie zu erkennen und die Ausrichtung des Fahrzeugs mittels eines PID-Reglers entsprechend anzupassen, um der Linie zu folgen.
+
     \subsubsection{etc.}
 
 
