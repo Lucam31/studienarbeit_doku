@@ -17,7 +17,7 @@ Ein Ultraschallsensor nutzt hochfrequente Schallwellen, um die Entfernung zu ein
 
 
 \section{Hall-Sensor}
-Ein Hall-Sensor erkennt die Anwesenheit eines magnetischen Feldes. Er besteht aus einem dünnen Halbleiterplättchen, das von einem Magnetfeld beeinflusst wird. Wenn ein Magnetfeld in die Nähe des Sensors kommt, erzeugt es eine Spannung, die vom Sensor gemessen werden kann. \\
+Ein Hall-Sensor erkennt die Anwesenheit eines magnetischen Feldes. Er besteht aus einem dünnen Halbleiterplättchen, das von einem Magnetfeld beeinflusst wird. Wenn der Sensor in ein Magnetfeld kommt, erzeugt dies eine Spannung, die senkrecht zur Richtung des Magnetfelds ist und vom Sensor gemessen werden kann. Das ist der sogenannte Hall-Effekt. \\
 Der Vorteil eines Hall-Sensors gegenüber einer Spule besteht darin, dass auch ein konstantes Magnetfeld erkannt wird, während die Spule nur Veränderungen im Magnetfeld registrieren kann. Daher eignet sich der Hall-Sensor besonders gut für die Erkennung von Positionen oder Bewegungen, beispielsweise zur Erkennung der Raddrehung oder der Position des Lenkrads.
 
 \begin{figure}[H]
@@ -30,45 +30,78 @@ Der Vorteil eines Hall-Sensors gegenüber einer Spule besteht darin, dass auch e
 \end{figure}
 
 \section{Raspberry Pi}
-    Ein Raspberry Pi ist ein Einplatinencomputer, der eine Brücke zwischen Hard- und Software bildet. Er verbindet einige der Vorteile eines herkömmlichen Computers und eines Mikrocontrollers. 
-    Zum einen besitzt er konfigurierbare \ac{GPIO} Pins und Anschlüsse für Versorgungsspannung und Erdung, wodurch externe Hardwarekomponenten direkt an den Raspberry Pi angeschlossen werden können. Zum anderen ist er leistungsstärker als ein Mikrocontroller. Das neuste Modell ist ausgestattet mit bis zu 16 Gigabytes an RAM, einem Arm-basierten 2,4 GHz Prozessor und einigen Schnittstellen wie beispielsweise einem \ac{LAN} Port, einer \ac{PCIe} Schnittstelle und sowohl \ac{USB}-A als auch \ac{USB}-C Ports. 
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.8\textwidth]{images/02Grundlagen/rpi.png}
-        %\vspace{-0.3cm}
-        \caption{Aufbau Raspberry Pi}
-        \vspace{-0.3cm}
-        \label{fig:rpi}
-    \end{figure}
-    
-\section{Motoren}
-    \subsection{Gleichstrommotoren} % zum motor an sich schreiben
-    Zum Antreiben des Fahrzeugs werden zwei Gleichstrommotoren verwendet. Sie besitzen eine Nennspannung von 6 Volt und eine maximale Stromaufnahme von 1,8 Ampere. Die Motoren besitzen bereits ein Getriebe und sind mit dem Verhältnis 1:50 übersetzt, was bedeutet, dass die Ausgangswelle 50 mal langsamer dreht als die Eingangswelle. Dies hat den Vorteil, dass die Motoren damit mehr Drehmoment liefern können, und somit das Fahrzeug auch bei höheren Lastanforderungen bewegt werden kann.
-
-    Durch die hohen Ströme die ein Gleichstrommotor zur Fortbewegung benötigt, kann dieser nicht einfach an die \ac{GPIO} Pins des Raspberry Pi angeschlossen werden, da diese nur Ströme von bis zu 16 mA liefern können. Daher wird ein Motortreiber benötigt, um die Motoren mit ausreichend Strom zu versorgen und gleichzeitig die Steuerung durch den Raspberry Pi zu ermöglichen.
-
-    \subsection{Motortreiber}
-    Zur Steuerung der beiden Motoren wird der Motortreiber \textit{TB6612FNG} verwendet. Der \textit{TB6612FNG} besitzt zwei Kanäle sowie jeweils eine H-Brücke. Somit können mit einem Motortreiber zwei Gleichstrommotoren parallel und unabhängig voneinander betrieben werden. Die H-Brücke ermöglicht, die Drehrichtung der Motoren zu drehen, indem es die Polartität der Versorgungsspannung ändert. Dadurch können die Motoren sowohl vorwärts als auch rückwärts drehen.
-
-\section{Raspberry Pi Camera Module}
-% Was über MP, FOV, autofokus und so schreiben?
-Das Raspberry Pi Camera Module ist eine Kamera, die speziell für die Verwendung mit dem Raspberry Pi entwickelt wurde. Sie bietet eine Auflösung von bis zu 12 Megapixeln und einen Blickwinkel von 160 Grad, was sie ideal für die Erfassung von Bildern und Videos in diesem Projekt macht. \\
-
+Ein Raspberry Pi ist ein Einplatinencomputer, der eine Brücke zwischen Hard- und Software bildet. Er verbindet einige der Vorteile eines herkömmlichen Computers und eines Mikrocontrollers. 
+Zum einen besitzt er konfigurierbare \ac{GPIO} Pins und Anschlüsse für Versorgungsspannung und Erdung, wodurch externe Hardwarekomponenten direkt an den Raspberry Pi angeschlossen werden können. Insgesamt besitzt er 40 Pins, von welchen 26 als \ac{GPIO} Pins konfiguriert werden können. Diese können sowohl als Eingang als auch als Ausgang verwendet werden, um beispielsweise Sensoren auszulesen oder Aktoren zu steuern. Die Pins können maximale 16mA liefern und haben eine Spannung von 3,3 Volt.
+Zum anderen ist er leistungsstärker als ein Mikrocontroller. Das neuste Modell ist ausgestattet mit bis zu 16 Gigabytes an RAM, einem Arm-basierten 2,4 GHz Prozessor und einigen Schnittstellen wie beispielsweise einem \ac{LAN} Port, einer \ac{PCIe} Schnittstelle und sowohl \ac{USB}-A als auch \ac{USB}-C Ports. 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{images/02Grundlagen/pi_camera.jpg}
+    \includegraphics[width=0.8\textwidth]{images/02Grundlagen/rpi.png}
     %\vspace{-0.3cm}
-    \caption{Raspberry Pi Camera Module}
+    \caption{Aufbau Raspberry Pi}
     \vspace{-0.3cm}
-    \label{fig:pi_camera}
+    \label{fig:rpi}
 \end{figure}
-
-
-\section{Stromversorgung} % in Umsetzung Lipo Warner erwähnen, für höhere Sicherheit oder so n scheiß
-    \subsection{Akku}
-    Zur Stromversorgung des Fahrzeugs wird ein \ac{LiPo} Akku verwendet. Der Akku besitzt eine Spannung von 7,4 Volt und eine Kapazität von 5000 mAh. Er besteht aus zwei Zellen, die in Reihe geschaltet sind, um die Gesamtspannung zu erhöhen.
     
-    Der Vorteil von \ac{LiPo}-Akkus liegt in ihrer hohen Energiedichte, was bedeutet, dass sie viel Energie in einem relativ kleinen und leichten Paket speichern können. Dies ist besonders wichtig für mobile Anwendungen wie dieses Projekt, da es die Gesamtgröße und das Gewicht des Fahrzeugs reduziert. Nachteil ist, dass \ac{LiPo} Akkus empfindlich gegenüber Überladung, Tiefenentladung und mechanischen Beschädigungen sind, was zu Sicherheitsrisiken führen kann. Daher ist es wichtig, geeignete Schutzmaßnahmen zu ergreifen, um die Sicherheit bei der Verwendung von \ac{LiPo} Akkus zu gewährleisten. So dürfen dürfen die Zellen keinen starken mechanischen Belastungen wie Stößen ausgesetzt werden, da dies zum Brand oder zur Explosion führen kann. Außerdem sollten sie nicht überladen oder tiefenentladen werden, da dies die Lebensdauer des Akkus erheblich verkürzen und ebenfalls zu Sicherheitsrisiken führen kann. Daher ist es wichtig, geeignete Ladegeräte und Schuutzmechanismen wie \textit{LiPo-Warner}, welche bei Tiefenentladung ein akustisches Signal abgeben, zu verwenden, um die Sicherheit bei der Verwendung von \ac{LiPo} Akkus zu gewährleisten.
+\section{Motoren}
+In diesem Abschnitt werden die verwendeten Motoren sowie deren Ansteuerung beschrieben.
+    
+    \subsection{Gleichstrommotoren} % zum motor an sich schreiben
+    Ein Gleichstrommotor wandelt elektrische Energie in mechanische Energie in Form einer Drehbewegung um. Sein grundlegender Aufbau besteht aus einem feststehenden Teil, dem Stator, und einem beweglichen Teil, dem Rotor. Dies ist auch der Abbildung \ref{fig:dc_motor} zu entnehmen.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{images/02Grundlagen/dc_motor.png}
+        %\vspace{-0.3cm}
+        \caption{Aufbau eines Gleichstrommotors}
+        \vspace{-0.3cm}
+        \label{fig:dc_motor}
+    \end{figure}
+    
+    Der Stator, welcher aus zwei Magneten besteht, erzeugt ein konstantes Magnetfeld. Im Inneren dieses Magnetfeldes befindet sich der Rotor, auch Anker genannt, der aus einer Kupferdraht-Spule besteht. Wird an diese Spulen eine elektrische Spannung angelegt, fließt ein Strom, wodurch um den Rotor ebenfalls ein Magnetfeld entsteht.\\
+    Die Wechselwirkung dieser beiden Magnetfelder führt zur eigentlichen Bewegung. Die unterschiedlichen Pole der Magnetfelder von Stator und Rotor stoßen sich ab bzw. ziehen sich an, wodurch ein Drehmoment auf den Rotor wirkt und ihn in Bewegung versetzt.
+    
+    Damit eine kontinuierliche Drehung entsteht, muss die Stromrichtung in den Rotorspulen in regelmäßigen Abständen umgepolt werden. Diese Aufgabe übernimmt der Kommutator. Während der Rotor sich dreht, schleifen sogenannte Bürsten über den Kommutator und stellen den elektrischen Kontakt her. Dies wird ebenfalls in der Abbildung \ref{fig:dc_motor} dargestellt. Bei jeder halben Umdrehung sorgen die Unterbrechungen im Kommutator dafür, dass sich die Stromrichtung in der Spule umkehrt. Dadurch wird auch die Polarität des elektromagnetischen Feldes des Rotors umgekehrt, was sicherstellt, dass die Drehkraft kontinuierlich in die gleiche Richtung wirkt und der Motor sich weiterdreht.
+    
+    In der Praxis werden häufig Motortreiber verwendet, um Gleichstrommotoren anzusteuern, da diese eine kontrollierte Stromversorgung und Steuerung der Motoren ermöglichen.
+
+    \subsection{Motortreiber}
+    Zur Steuerung der beiden Motoren wird der Motortreiber \textit{TB6612FNG} verwendet. Der \textit{TB6612FNG} besitzt zwei Kanäle sowie jeweils eine H-Brücke. Somit können mit einem Motortreiber zwei Gleichstrommotoren parallel und unabhängig voneinander betrieben werden. Eine H-Brücke besteht im Wesentlichen aus vier Schaltern, die so angeordnet sind, dass durch gezieltes Schließen von jeweils zwei Schaltern der Strom in die eine oder andere Richtung durch den Motor fließen kann. Dies ermöglicht es, die Drehrichtung der Motoren zu ändern, indem es die Polartität der Versorgungsspannung dreht. Dadurch können die Motoren sowohl vorwärts als auch rückwärts drehen.
+
+\section{Raspberry Pi Camera Module}
+Zur Erfassung von Bildern und Videos gibt es verschiedene Technologien, die sich in ihrer Funktionsweise und ihren Eigenschaften unterscheiden. Dieser Abschnitt beschreibt die Funktionsweise eines Kameramoduls und die verwendete Technologie zur Bilderfassung.
+
+    \subsection{Eigenschaften}
+    Das Raspberry Pi Camera Module ist eine Kamera, die speziell für die Verwendung mit dem Raspberry Pi entwickelt wurde. Sie bietet eine Auflösung von bis zu 12 Megapixeln und einen Blickwinkel von 160 Grad, was sie ideal für die Erfassung von Bildern und Videos in diesem Projekt macht. \\
+    Das Camera Module unterstützt sowohl Foto- als auch Videoaufnahmen. Es wird über ein Flachbandkabel an die \ac{CSI}-Schnittstelle mit dem Raspberry Pi verbunden, was eine schnelle Datenübertragung ermöglicht. Es verfügt über einen Autofokus, der es ermöglicht, scharfe Bilder aufzunehmen, auch wenn sich das Objekt oder die Kamera bewegt. \\
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{images/02Grundlagen/pi_camera.jpg}
+        %\vspace{-0.3cm}
+        \caption{Raspberry Pi Camera Module}
+        \vspace{-0.3cm}
+        \label{fig:pi_camera}
+    \end{figure}
+
+    \subsection{\acl{CMOS} Sensor}
+    Zur Bilderfassung nutzt das Raspberry Pi Camera Module einen \ac{CMOS}-Sensor. Ein \ac{CMOS}-Sensor besteht aus einer Matrix von lichtempfindlichen Pixeln, die das einfallende Licht in elektrische Signale umwandeln. Jeder Pixel enthält eine Fotodiode, die meist aus Silizium besteht und Licht in Form von Photonen absorbiert. Ein solcher Pixel ist in Abbildung \ref{fig:cmos} dargestellt. Wenn ein Photon auf die Fotodiode trifft, erzeugt es ein Elektron-Loch-Paar, wodurch eine elektrische Spannung erzeugt wird. Dies wird durch den sogenannten Photoelektrischen Effekt ermöglicht. Eintreffende Photonen heben dabei Elektronen des Siliziums auf ein höheres Energieniveau, wodurch diese frei beweglich werden und eine elektrische Spannung erzeugen. Je mehr Licht auf die Fotodiode trifft, desto mehr Elektronen werden freigesetzt, was zu einer höheren Spannung führt. \\
+    Die erzeugten elektrischen Signale werden anschließend verstärkt und von einem \ac{ADC} in digitale Werte umgewandelt, die dann verarbeitet werden können. Der Wert jedes Pixels entspricht dabei der Helligkeit des Lichts, das auf diesen Pixel gefallen ist. Durch die Kombination der Werte aller Pixel kann ein digitales Bild erstellt werden, das die Szene vor der Kamera darstellt. \\
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{images/02Grundlagen/cmos.png}
+        %\vspace{-0.3cm}
+        \caption{Aufbau eines Pixels im CMOS-Sensor}
+        \vspace{-0.3cm}
+        \label{fig:cmos}
+    \end{figure}
+
+\section{Stromversorgung} 
+    Die Stromversorgung von Komponenten ist ein wichtiger Aspekt bei der Entwicklung von elektronischen Systemen. Es gibt verschiedene Möglichkeiten, um die benötigte Energie bereitzustellen. 
+
+    \subsection{Akku}
+    % Zur Stromversorgung des Fahrzeugs wird ein \ac{LiPo} Akku verwendet. Der Akku besitzt eine Spannung von 7,4 Volt und eine Kapazität von 5000 mAh. Er besteht aus zwei Zellen, die in Reihe geschaltet sind, um die Gesamtspannung zu erhöhen.
+    \ac{LiPo}-Akkus sind wiederaufladbare Batterien, die aus Lithium-Ionen-Zellen bestehen.\\
+    Der Vorteil von \ac{LiPo}-Akkus liegt in ihrer hohen Energiedichte, was bedeutet, dass sie viel Energie in einem relativ kleinen und leichten Paket speichern können. Dies ist besonders wichtig für mobile Anwendungen wie dieses Projekt, da es die Gesamtgröße und das Gewicht des Fahrzeugs reduziert. Nachteil ist, dass \ac{LiPo} Akkus empfindlich gegenüber Überladung, Tiefenentladung und mechanischen Beschädigungen sind, was zu Sicherheitsrisiken führen kann. Daher ist es wichtig, geeignete Schutzmaßnahmen zu ergreifen, um die Sicherheit bei der Verwendung von \ac{LiPo} Akkus zu gewährleisten. So dürfen dürfen die Zellen keinen starken mechanischen Belastungen wie Stößen ausgesetzt werden, da dies zum Brand oder zur Explosion führen kann. Außerdem sollten sie nicht überladen oder tiefenentladen werden, da dies die Lebensdauer des Akkus erheblich verkürzen und ebenfalls zu Sicherheitsrisiken führen kann. Daher ist es wichtig, geeignete Ladegeräte und Schutzmechanismen wie \textit{LiPo-Warner}, welche bei Tiefenentladung ein akustisches Signal abgeben, zu verwenden, um die Sicherheit bei der Verwendung von \ac{LiPo} Akkus zu gewährleisten.
 
     Eine andere Option wäre die Verwendung von \ac{LiFePO4} Akkus, welche eine höhere Sicherheit bieten, da sie weniger empfindlich gegenüber Überladung, Tiefenentladung und mechanischen Beschädigungen sind. Allerdings haben sie eine geringere Energiedichte als \ac{LiPo} Akkus, was bedeutet, dass sie größer und schwerer sein können, um die gleiche Menge an Energie zu speichern. Daher müssen bei der Auswahl des Akkus die Anforderungen an die Energieversorgung und die Sicherheitsaspekte sorgfältig abgewogen werden.
 
