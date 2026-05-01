@@ -48,11 +48,10 @@ In diesem Abschnitt wird der geplante Hardwareaufbau des Fahrzeugs beschrieben. 
         % Die Motoren verfügen über eine interne Getriebeübersetzung, welche die Drehzahl reduziert und das Drehmoment erhöht. Dies ermöglicht eine präzisere Steuerung des Fahrzeugs und im Vergleich zu einem Motor ohne Getriebe ein höheres Drehmoment, was insbesondere bei niedrigen Geschwindigkeiten von Vorteil ist. 
 
         \subsubsection{Akku}
-        Zur Stromversorgung des Fahrzeugs wird ein \ac{LiPo} Akku verwendet. Aufgrund der hohen Energiedichte ist ein \ac{LiPo} Akku eine geeignete Wahl für diesen Anwendungszweck. Jedoch gibt es auch einige Nachteile. Die Zellchemie des Akkus ist sehr empfindlich gegenüber Tiefenentladung sowie mechanischen Beschädigungen, weshalb eine sorgfältige Handhabung und Überwachung der Akkus notwendig ist. Dies wird mit einem \ac{LiPo} Warner gewährleistet, welcher die Spannung der Zellen überwacht und bei Unterschreitung einer bestimmten Spannung warnt, um eine Tiefenentladung zu verhindern.
-
-        Eine alternative Zell-Chemie wäre ein \ac{LiFePO} Akku, welcher eine höhere Sicherheit bietet, jedoch eine geringere Energiedichte aufweist. 
-        \ac{LiFePO} Akkus sind aufgrund der geringeren Energiedichte in der Regel schwerer und größer als \ac{LiPo} Akkus. Dadurch wird eine gleichmäßige Gewichtsverteilung des Fahrzeugs erschwert, was die Stabilität beeinträchtigen könnte. \\
-        Da die geplante Halterung nur begrenzten PLatz für den Akku bietet, wurde die Entscheidung getroffen, einen \ac{LiPo} Akku zu verwenden, um eine ausreichende Kapazität zu gewährleisten.
+        Zur Stromversorgung des Fahrzeugs wird ein Akku verwendet. Der Akku besitzt eine Kapazität von \SI{5000}{\milli\ampere\hour} und eine Spannung von \SI{7,4}{\volt}. Der Akku wird verwendet, um sowohl den Raspberry Pi als auch die Motoren mit Strom zu versorgen. Das Pack besteht aus zwei in Reihe geschalteten \ac{LiPo} Zellen, was die Spannung von \SI{7,4}{\volt} ergibt.
+        
+        Aufgrund der benötigten Kapazität und der begrenzten Größe der Halterung wurde die Entscheidung getroffen, einen \ac{LiPo} Akku zu verwenden. \ac{LiPo} Akkus bieten eine hohe Energiedichte, was bedeutet, dass sie eine große Menge an Energie in einem relativ kleinen und leichten Gehäuse speichern können. (siehe Abschnitt ...).
+        Ein Akkupack mit \ac{LiFEPO4} Zellen wurde aufgrund der geringeren Energiedichte im Vergleich zu \ac{LiPo} Akkus nicht in Betracht gezogen, da dies deutlich mehr Platz für die gleiche Kapazität erfordern würde, was auf Grund der begrenzten Größe der Halterung nicht möglich wäre.
 
         \subsubsection{Spannungswandler}
         Die Motoren besitzen eine Nennspannung von \SI{6}{\volt} und der Raspberry Pi eine Nennspannung von \SI{5}{\volt}. Der Akku weist jedoch eine Spannung von \SI{7,4}{\volt} auf. Daher wird ein Abwärtswandler verwendet, um die Spannung von \SI{7,4}{\volt} auf \SI{5}{\volt} zu reduzieren, um den Raspberry Pi mit Strom zu versorgen. Zwei weitere Step-Down Spannungsregler werden verwendet, um die Spannung von \SI{7,4}{\volt} auf \SI{6}{\volt} zu reduzieren, um die Motoren zu versorgen.
