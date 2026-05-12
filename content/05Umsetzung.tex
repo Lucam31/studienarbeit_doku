@@ -1,5 +1,7 @@
 \chapter{Implementierung und Integration}
 \label{chap:implementierung}
+In diesem Kapitel wird die Umsetzung der verschiedenen Komponenten des Projekts beschrieben. Es wird erläutert, wie die Hardware und Software implementiert wurden, um die gewünschten Funktionen zu realisieren.
+\section{Hardware}
 
 \section{Software}
 
@@ -10,6 +12,23 @@
     %noch erwähnen, dass weboberfläche auf laptop läuft?
 
     \subsection{Videoübertragung} % wie aufgenommen? wie gesendet? etc.
+    Das Aufnehmen der Bilder erfolgt mittels der Raspberry Pi Kamera, die über die CSI-Schnittstelle mit dem Raspberry Pi verbunden ist. Jedoch ist das Aufnehen und die Übertragung dieser Bilder kein triviales Problem. Die Bilder müssen in Echzeit aufgenommen, komprimiert und über das Netzwerk an den Client gesendet werden. Wie zuvor im Abschnitt (encoding vergleich ref) festgelegt, soll als Übertragungsprotokoll WebRTC und als Codec H.264 verwendet werden, da es speziell für die Übertragung in Echtzeit entwickelt wurde und eine geringe Latenz bietet. 
+
+    Eine eigene Implementierung des WebRTC Protkolls wäre sehr aufwendig und würde nicht zum eigentlichen Ziel der Arbeit beitragen. Auf Grund dessen wird die Software \textit{MediaMTX} verwendet, welche eine einfache Schnittstelle für die Implementierung von WebRTC bietet. MediaMTX ermöglicht es, die aufgenommenen Bilder der Kamera zu komprimieren und über das Netzwerk an den Client zu senden, ohne dass eine eigene Implementierung des WebRTC Protokolls erforderlich ist. Ein weiterer Vorteil von \textit{MediaMTX} ist, dass es im Falle er PI Kamera direkt die Bilder von der Kamer aufnehmen und komprimieren kann, ohne dass die Bilder zuerst an die CPU gesendet werden müssen, was die Latenz weiter reduziert. Somit profitiert die Videoübertragung von den Hardwareencodern des Raspberry Pi, was zu einer deutlich geringeren Latenz führt.
+
+    Damit die Kamera von MediaMTX erkannt und verwendet werden kann, muss sie in der Konfigurationsdatei von MediaMTX entsprechend konfiguriert werden. In Listing~\ref{lst:mediamtx_config} ist die Konfiguration der Kamera in der MediaMTX Konfigurationsdatei zu sehen. Hier werden die Quelle der Bilder, die Auflösung, die Bildrate und die Ausrichtung der Bilder festgelegt. Durch diese Konfiguration kann MediaMTX die Bilder der Kamera aufnehmen, komprimieren und über das Netzwerk an den Client senden. Auf Grund dessen, dass die Kamera verkehrt herum montiert ist, müssen die Bilder vertikal und horizontal gespiegelt werden, damit sie auf der Weboberfläche korrekt angezeigt werden.
+
+    \begin{lstlisting}[caption={Konfiguration der Kamera in der MediaMTX Konfigurationsdatei}, label={lst:mediamtx_config}]
+    cam:
+        source: rpiCamera
+        rpiCameraWidth: 1280
+        rpiCameraHeight: 720
+        rpiCameraFPS: 30
+        rpiCameraVFlip: yes
+        rpiCameraHFlip: yes
+    \end{lstlisting}
+
+    Die Weboberfläche kann sich mit dem WebRTC Stream von MediaMTX verbinden und die Bilder in einem Video Element anzeigen. 
 
     \subsection{Notbremsung} % wir könnten den Scheiß richtig kompliziert machen, wenn wir berechnen wie schnell sich der Abstand zum Hindernis reduziert, wie schnell das Fahrzeug ist und wie weit das Hindernis entfernt ist. Weil wenn man hinter einem fahrenden Auto fährt und man nur Geschwindigkeit und Abstand misst, wird die Notbremsung vielleicht ungewollt ausgelöst. Oder wir sagen wir beachten nur 
     In diesem Projekt werden Ultraschallsensoren als Frühwarnsystem zur Hinderniserkennung eingesetzt. Die Sensoren werden so positioniert, dass sie den Bereich vor dem Fahrzeug überwachen können. Wenn ein Hindernis erkannt wird und die Gefahr einer Kollision besteht, kann automatisch eine Notbremsung eingeleitet werden, um diese zu verhindern. \\
