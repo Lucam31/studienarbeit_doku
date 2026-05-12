@@ -7,10 +7,10 @@ In diesem Abschnitt werden die Anforderungen an das ferngesteuerte Fahrzeug besc
 
     \subsection{Funktionale Anforderungen}
     Das Fahrzeug soll in der Lage sein, über eine Weboberfläche gesteuert zu werden, um die Bewegungsrichtung und Geschwindigkeit zu regulieren. Zudem soll es Sensordaten und Kamerabilder in Echtzeit an die Weboberfläche übertragen können.
-    Eine weitere Funktionalität ist die Steuerung des Fahrzeugs durch die Weboberfläche, um beispielsweise die Geschwindigkeit zu regulieren oder die Richtung zu ändern. \\
+    Eine weitere Funktionalität ist das Auslesen der Sensordaten, wie Geschwindigkeit und Entfernung zu Hindernissen über die Weboberfläche. Desweiteren soll es möglich sein, den Fahrtmodus zu wechseln, um beispielsweise zwischen der manuellen Steuerung über die Weboberfläche und einem automatischen Fahrmodus wie Follow the line zu wechseln. \\
 
     \subsection{Nicht-funktionale Anforderungen}
-    Die Videoübertragung soll eine geringe Latenz aufweisen und eine mindest Framerate von 30 Bildern pro Sekunde erreichen, um eine flüssige Steuerung des Fahrzeugs zu ermöglichen. Die Kommunikation zwischen der Weboberfläche und dem Backend soll zuverlässig und stabil sein und eine möglichst geringe Latenz aufweisen, um eine praäzise und zufriedenstellende Steuerung zu ermöglichen. \\
+    Die Videoübertragung soll eine geringe Latenz aufweisen und eine mindest Framerate von 30 Bildern pro Sekunde erreichen, um eine flüssige Steuerung des Fahrzeugs zu ermöglichen. Die Kommunikation zwischen der Weboberfläche und dem Backend soll zuverlässig und stabil sein und eine möglichst geringe Latenz aufweisen, um eine präzise und zufriedenstellende Steuerung zu ermöglichen. \\
     Außerdem soll die Bedienung der Weboberfläche intuitiv und benutzerfreundlich gestaltet sein, um eine einfache Steuerung des Fahrzeugs zu ermöglichen.
 
 \section{Hardwareaufbau}
@@ -21,16 +21,6 @@ In diesem Abschnitt wird der geplante Hardwareaufbau des Fahrzeugs beschrieben. 
     Insbesondere die einfache Bearbeitung ist ein entscheidender Punkt, da die Halterung voraussichtlich im Laufe des Projekts einige Male bearbeitet werden muss, um Anpassungen für die Montage der verschiedenen Komponenten vorzunehmen.
 
     Die Komponenten des Fahrzeugs werden so angeordnet, dass sie leicht zugänglich sind für Wartungsarbeiten und Anpassungen. Zudem wird darauf geachtet, dass das Gewicht der Komponenten gleichmäßig verteilt ist, um die Stabilität des Fahrzeugs zu gewährleisten.
-
-    In Abbildung \ref{fig:halterung} ist der Aufbau zu sehen, auf der alle Komponenten des Fahrzeugs montiert sind.
-    \begin{figure}[H]
-        \centering
-        % \includegraphics[width=0.48\textwidth]{images/02Hardware/gehaeuse.png}
-        %\vspace{-0.3cm}
-        \caption{Holzhalterung des Fahrzeugs}
-        \vspace{-0.3cm}
-        \label{fig:halterung}
-    \end{figure}
 
     \subsection{Komponenten}
     Dieser Abschnitt beschreibt, welche Komponenten wie für die Umsetzung des Projekts verwendet werden.
@@ -48,11 +38,10 @@ In diesem Abschnitt wird der geplante Hardwareaufbau des Fahrzeugs beschrieben. 
         % Die Motoren verfügen über eine interne Getriebeübersetzung, welche die Drehzahl reduziert und das Drehmoment erhöht. Dies ermöglicht eine präzisere Steuerung des Fahrzeugs und im Vergleich zu einem Motor ohne Getriebe ein höheres Drehmoment, was insbesondere bei niedrigen Geschwindigkeiten von Vorteil ist. 
 
         \subsubsection{Akku}
-        Zur Stromversorgung des Fahrzeugs wird ein \ac{LiPo} Akku verwendet. Aufgrund der hohen Energiedichte ist ein \ac{LiPo} Akku eine geeignete Wahl für diesen Anwendungszweck. Jedoch gibt es auch einige Nachteile. Die Zellchemie des Akkus ist sehr empfindlich gegenüber Tiefenentladung sowie mechanischen Beschädigungen, weshalb eine sorgfältige Handhabung und Überwachung der Akkus notwendig ist. Dies wird mit einem \ac{LiPo} Warner gewährleistet, welcher die Spannung der Zellen überwacht und bei Unterschreitung einer bestimmten Spannung warnt, um eine Tiefenentladung zu verhindern.
-
-        Eine alternative Zell-Chemie wäre ein \ac{LiFePO} Akku, welcher eine höhere Sicherheit bietet, jedoch eine geringere Energiedichte aufweist. 
-        \ac{LiFePO} Akkus sind aufgrund der geringeren Energiedichte in der Regel schwerer und größer als \ac{LiPo} Akkus. Dadurch wird eine gleichmäßige Gewichtsverteilung des Fahrzeugs erschwert, was die Stabilität beeinträchtigen könnte. \\
-        Da die geplante Halterung nur begrenzten PLatz für den Akku bietet, wurde die Entscheidung getroffen, einen \ac{LiPo} Akku zu verwenden, um eine ausreichende Kapazität zu gewährleisten.
+        Zur Stromversorgung des Fahrzeugs wird ein Akku verwendet. Der Akku besitzt eine Kapazität von \SI{5000}{\milli\ampere\hour} und eine Spannung von \SI{7,4}{\volt}. Der Akku wird verwendet, um sowohl den Raspberry Pi als auch die Motoren mit Strom zu versorgen. Das Pack besteht aus zwei in Reihe geschalteten \ac{LiPo} Zellen, was die Spannung von \SI{7,4}{\volt} ergibt.
+        
+        Aufgrund der benötigten Kapazität und der begrenzten Größe der Halterung wurde die Entscheidung getroffen, einen \ac{LiPo} Akku zu verwenden. \ac{LiPo} Akkus bieten eine hohe Energiedichte, was bedeutet, dass sie eine große Menge an Energie in einem relativ kleinen und leichten Gehäuse speichern können. (siehe Abschnitt ...).
+        Ein Akkupack mit \ac{LiFEPO4} Zellen wurde aufgrund der geringeren Energiedichte im Vergleich zu \ac{LiPo} Akkus nicht in Betracht gezogen, da dies deutlich mehr Platz für die gleiche Kapazität erfordern würde, was auf Grund der begrenzten Größe der Halterung nicht möglich wäre.
 
         \subsubsection{Spannungswandler}
         Die Motoren besitzen eine Nennspannung von \SI{6}{\volt} und der Raspberry Pi eine Nennspannung von \SI{5}{\volt}. Der Akku weist jedoch eine Spannung von \SI{7,4}{\volt} auf. Daher wird ein Abwärtswandler verwendet, um die Spannung von \SI{7,4}{\volt} auf \SI{5}{\volt} zu reduzieren, um den Raspberry Pi mit Strom zu versorgen. Zwei weitere Step-Down Spannungsregler werden verwendet, um die Spannung von \SI{7,4}{\volt} auf \SI{6}{\volt} zu reduzieren, um die Motoren zu versorgen.
@@ -70,9 +59,25 @@ In diesem Abschnitt wird der geplante Hardwareaufbau des Fahrzeugs beschrieben. 
         \subsubsection{Ultraschallsensor}
         Ultraschallsensoren werden als Frühwarnsystem zur Hinderniserkennung eingesetzt. Die Sensoren werden vorne an der Unterseite des Fahrzeugs positioniert, dass sie den Bereich vor dem Fahrzeug überwachen können. Wenn ein Hindernis erkannt wird und die Gefahr einer Kollision besteht, kann automatisch eine Notbremsung eingeleitet werden, um diese zu verhindern.
 
+    \subsection{Aufbau}
+    Abbildung \ref{fig:hardware_block} zeigt eine Übersicht über den geplanten Hardwareaufbau. Alle Komponenten werden über den Akku mit Strom versorgt. Die \textit{Buck-Converter} sorgen dafür, dass die Komponenten immer mit der passenden Spannung versorgt werden. Der Raspberry Pi ist über die \ac{GPIO} Pins mit den Motoren, den Hall-Sensoren und dem Ultraschallsensor verbunden, um diese ansteuern und die Sensordaten auslesen zu können. Die Kamera ist über die CSI-Schnittstelle mit dem Raspberry Pi verbunden, um die Bilder in Echtzeit verarbeiten zu können.
+
+    \begin{figure}[H]
+        \centering
+         \includegraphics[width=0.7\textwidth]{images/04Konzept/hardware_block.drawio.pdf}
+        \vspace{-0.3cm}
+        \caption{Übersicht }
+        \vspace{-0.3cm}
+        \label{fig:hardware_block}
+    \end{figure}
+
 % motoren
 \section{Softwarearchitektur}
 Dieses Kapitel beschreibt die geplante Softwarearchitektur des Fahrzeugs. 
+
+    \subsection{Architektur-Übersicht}
+    Die Software folgt einer klassischen Client-Server-Architektur, wie in Abbildung \ref{fig:software_overview} dargestellt. Der Benutzer interagiert über eine Weboberfläche mit dem Server, die als Client-Komponente fungiert. Der Raspberry Pi bildet die Server-Seite und verwaltet sämtliche Hardwareschnittstellen sowie die Verarbeitung von Sensordaten und Fahrassistenzsysteme.
+
      \begin{figure}[H]
         \centering
          \includegraphics[width=0.7\textwidth]{images/04Konzept/software_overview.drawio.pdf}
@@ -82,19 +87,11 @@ Dieses Kapitel beschreibt die geplante Softwarearchitektur des Fahrzeugs.
         \label{fig:software_overview}
     \end{figure}
 
+    \subsection{Kommunikationsmodell}
+    Die bidirektionale Echtzeit-Kommunikation zwischen Weboberfläche und Backend erfolgt über Websocket-Verbindungen. Die Entscheidung Websockets zu verwenden, wurde getroffen, da sie eine persistente Verbindung ermöglichen, die für die Echtzeit-Übertragung von Sensordaten und Steuerbefehlen notwendig ist. Websockets haben im Vergleich zu herkömmlichen \ac{HTTP}-Requests eine geringere Latenz und eine höhere Effizienz bei der Übertragung von Daten, da nicht für jeden Datenaustausch eine neue Verbindung aufgebaut werden muss. Zudem ermöglichen Websockets eine einfache Implementierung von Ereignis-basierten Kommunikationsmustern, was für die Steuerung des Fahrzeugs und das Empfangen von Daten von Vorteil ist.
 
-    \subsection{Weboberfläche zur Steuerung und Überwachung}
-    Dem User wird eine Weboberfläche zur Verfügung gestellt, über die das Fahrzeug gesteuert und überwacht werden kann. Hierzu werden Sensordaten und Kamerabilder in Echtzeit vom Fahrzeug an die Weboberfläche übertragen, um dem Benutzer die benötigten Informationen zur Steuerung des Fahrzeugs bereitzustellen. Über die Weboberfläche können zudem Steuerbefehle an das Fahrzeug gesendet werden, um beispielsweise die Geschwindigkeit zu regulieren oder die Richtung zu ändern.
-
-    \subsection{Backend-Anwendung zur Ansteuerung der Hardware}
-    Das Backend ist für die direkte Ansteuerung der Hardwarekomponenten des Fahrzeugs zuständig. Es empfängt die Steuerbefehle von der Weboberfläche und wertet diese aus, um die entsprechenden Vorgänge und Aktionen durchzuführen. Dazu gehört beispielsweise die Ansteuerung der Motoren bei Regulierung der Geschwindigkeit. \\
-    Zudem verarbeitet das Backend die Sensordaten und Kamerabilder, um die geplanten Fahrassistenzsysteme wie die Notbremsung oder Follow the line zu implementieren. Diese werden ohne direkte Interaktion des Benutzers automatisch ausgelöst, wenn die entsprechenden Bedingungen erfüllt sind, weshalb diese vollständig im Backend verarbeitet werden.
-
-    \subsection{Kommunikation zwischen GUI und Backend}
-    Für die Kommunikation zwischen der GUI-Anwendung und der Backend-Anwendung wird ein Websocket verwendet. Ein Websocket ermöglicht eine bidirektionale Kommunikation zwischen einem Server und mehreren Clients. In diesem Projekt nimmt der Raspberry Pi die Rolle des Servers ein, während die Weboberfläche als Client fungiert. 
-
-    \subsection{Backend-Architektur}
-    Das Backend ist in mehrere Module unterteilt, um die Funktionalitäten und Verantwortlichkeiten klar zu trennen. Dies hat zudem den Vorteil, dass die Software modular aufgebaut werden kann, was die Wartbarkeit und Erweiterbarkeit des Systems verbessert. Jedes Modul ist für eine spezifische Funktionalität zuständig, wie beispielsweise die Ansteuerung der Motoren, die Verarbeitung der Sensordaten oder die Implementierung der Fahrassistenzsysteme.
+    \subsection{Systemmodularität}
+    Das Backend wird modular aufgebaut, um die Wartbarkeit und Erweiterbarkeit der Software zu gewährleisten. Es wird in verschiedene Module unterteilt, die jeweils für bestimmte Funktionen verantwortlich sind. Dazu gehören beispielsweise ein Modul für die Ansteuerung der Motoren, ein Modul für die Verarbeitung der Sensordaten, ein Modul für die Implementierung der Fahrassistenzsysteme und ein Modul für die Kommunikation mit der Weboberfläche.
 
     \subsection{Vergleich von Kodierungsformaten und übertragungsprotokollen}
     % Tabelle mit Vor- und Nachteilen der verschiedenen Methoden, sowie die geplante Methode und Begründung für die Wahl
@@ -117,71 +114,20 @@ Dieses Kapitel beschreibt die geplante Softwarearchitektur des Fahrzeugs.
     
     Zur Übertragung der Videodaten stehen WebRTC und HLS zur Auswahl. HLS ist ein Streaming-Protokoll, das auf HTTP basiert und für die Übertragung von Videodaten über das Internet entwickelt wurde. Es bietet eine hohe Kompatibilität mit verschiedenen Geräten und Plattformen, jedoch ist die Latenz bei der Übertragung von Videodaten mit HLS im Vergleich zu WebRTC deutlich höher. WebRTC hingegen ist ein Echtzeit-Kommunikationsprotokoll, das speziell für die Übertragung von Audio- und Videodaten in Echtzeit entwickelt wurde. Es bietet eine sehr geringe Latenz und eine hohe Qualität, jedoch ist die Komplexität der Implementierung im Vergleich zu HLS höher.
 
-    Abschließend wurde die Entscheidung getroffen, H.264 als Video-Encoding-Methode zu verwenden, da es eine gute Balance zwischen Qualität, Rechenaufwand und Datenrate bietet. Zudem verfügt der Raspberry Pi über einen Hardware-Encoder für H.264, was den Rechenaufwand für die \ac{CPU} minimiert. Zur Übertragung der Videodaten wird WebRTC verwendet, da es eine sehr geringe Latenz bietet, was für die Steuerung des Fahrzeugs von entscheidender Bedeutung ist.
+    Abschließend wurde die Entscheidung getroffen, H.264 als Video-Encoding-Methode zu verwenden, da es eine gute Balance zwischen Qualität, Rechenaufwand und Datenrate bietet. Zudem verfügt der Raspberry Pi über einen Hardware-Encoder für H.264, was den Rechenaufwand für die \ac{CPU} minimiert. Zur Übertragung der Videodaten wird WebRTC verwendet, da es eine sehr geringe Latenz bietet, was für die Steuerung des Fahrzeugs von entscheidender Bedeutung ist. 
+
+    Somit ist eine Kombination aus H.264 und WebRTC die beste Lösung für die Videoübertragung in diesem Projekt, da sie eine hohe Qualität bei geringer Latenz ermöglicht, was für die Steuerung des Fahrzeugs von entscheidender Bedeutung ist.
     
     
-    \subsection{Implementierte Features} % vielleicht vor Softwarekomponenten? Weil da werden schon Features erwähnt
+    \subsection{Geplante Software-Features} % vielleicht vor Softwarekomponenten? Weil da werden schon Features erwähnt
     In diesem Abschnitt werden die für das Fahrzeug geplanten Features beschrieben.
+    
+    \subsubsection{Fernsteuerung}
+    Das Fahrzeug soll über eine Weboberfläche fernsteuerbar sein. Hierzu werden Steuerbefehle von der Weboberfläche an das Backend im \ac{JSON}-Format gesendet, welche dann von diesem verarbeitet und die Motoren entsprechend angesteuert werden.
 
     \subsubsection{Notbremsung durch Hinderniserkennung}
     Das Fahrzeug soll in der Lage sein, eine Notbremsung durchzuführen, wenn es ein Hindernis erkennt. Hierzu werden Ultraschallsensoren verwendet, die den Bereich vor dem Fahrzeug überwachen und die Entfernung zu Hindernissen messen. Wird ein Hindernis erkannt, das eine Kollision verursachen könnte, wird automatisch eine Notbremsung eingeleitet. Um zu ermitteln, ob eine Kollision wahrscheinlich ist, wird die gemessene Entfernung unter Berücksichtigung der aktuellen Geschwindigkeit des Fahrzeugs ausgewertet. 
-
-    \subsubsection{Schilderkennung}
-
-    \subsubsection{Fernsteuerung}
-
     
     \subsubsection{Follow the line} 
     Alternativ zur Steuerung des Fahrzeugs über die Weboberfläche soll das Fahrzeug auch in der Lage sein, einer definierten, farbigen Linie auf dem Boden zu folgen. Zum Aufnehmen der Bilder wird die Kamera verwendet. Die Bilder werden in Echtzeit verarbeitet, um den Mittelpunkt der Linie zu erkennen und die Ausrichtung des Fahrzeugs mittels eines PID-Reglers entsprechend anzupassen, um der Linie zu folgen.
 
-    \subsubsection{etc.}
-
-
-% Hardware-Aufbau:
-%     Komponentenübersicht:
-%         - Auflistung der verwendeten Hardware (z. B. Sensoren, Aktoren, Mikrocontroller, Stromversorgung).
-%     Systemarchitektur:
-%         - Blockdiagramm oder Beschreibung der Verbindungen zwischen den Komponenten.
-%     Materialwahl:
-%         - Begründung der Auswahl (z. B. Holz vs. 3D-Druck, spezifische Bauteile).
-%     Mechanische Konstruktion:
-%         - Aufbau des Gehäuses oder Rahmens.
-%         - Befestigung der Komponenten.
-%     Energieversorgung:
-%         - Stromquelle (z. B. Batterie, Netzteil).
-%         - Energiebedarf und Effizienz.
-%     Kommunikation:
-%         - Schnittstellen (z. B. I2C, SPI, UART, CAN-Bus).
-%     Erweiterbarkeit:
-%         - Möglichkeit, zusätzliche Module oder Funktionen hinzuzufügen.
-
-% Software-Aufbau:
-%     Systemübersicht:
-%         - Beschreibung der Softwarearchitektur (z. B. Schichtenmodell, Module).
-%     Programmiersprache und Frameworks:
-%         - Begründung der Wahl (z. B. Python, C++, ROS).
-%     Hauptfunktionen:
-%         - Steuerung der Hardware.
-%         - Datenverarbeitung (z. B. von Sensoren).
-%     Benutzerinteraktion (z. B. GUI, Webinterface).
-%     Kommunikation:
-%         - Protokolle (z. B. MQTT, HTTP, WebSocket).
-%         - Datenformate (z. B. JSON, XML).
-%     Fehlerbehandlung:
-%         - Strategien zur Erkennung und Behandlung von Fehlern.
-%     Modularität:
-%         - Möglichkeit, Funktionen zu erweitern oder zu ändern.
-%     Testbarkeit:
-%         - Unit-Tests, Integrationstests.
-%     Sicherheitsaspekte:
-%         - Schutz vor unbefugtem Zugriff.
-%         - Datenintegrität.
-%     Allgemein:
-%         - Zusammenspiel von Hardware und Software:
-%             - Wie die Software die Hardware steuert.
-%             - Datenfluss zwischen den Komponenten.
-%     Ziele und Anforderungen:
-%         - Funktionale Anforderungen (z. B. Leistung, Genauigkeit).
-%         - Nicht-funktionale Anforderungen (z. B. Robustheit, Skalierbarkeit).
-%     Zeitplan und Meilensteine:
-%         - Wichtige Schritte bei der Umsetzung.
