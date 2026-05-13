@@ -98,3 +98,18 @@ HLS ist ein von Apple entwickeltes Protokoll, das auf \ac{HTTP} und somit auch \
 Eine weitere Möglichkeit zur Übertragung von Videodaten ist eine eigene Implementierung mittels Websockets (siehe Abschnitt \ref{sec:websockets}). 
 
 Dies bringt jedoch mehrere Nachteile mit sich. Zum einen muss die Kodierung und Übertragung der Videodaten selbst implementiert werden, was deutlich komplexer ist als die Verwendung eines bestehenden Protokolls wie WebRTC oder HLS. Zum anderen ist die Latenz bei einer eigenen Implementierung in der Regel höher als bei WebRTC, da WebRTC speziell für die Echtzeitkommunikation optimiert ist. Zudem müssen bei einer eigenen Implementierung zusätzliche Mechanismen zur Fehlerbehandlung und Synchronisierung implementiert werden, um eine zuverlässige Übertragung zu gewährleisten. Daher ist eine eigene Implementierung mittels Websockets in der Regel nicht die beste Wahl für die Übertragung von Videodaten, insbesondere wenn eine hohe Qualität und niedrige Latenz erforderlich sind.
+
+
+\subsection{PID-Regler}
+In einem System können einzelne Parameter (Temperatur, Geschwindigkeit, Position) von dem eigentlichen Sollwert abweichen. Um diese Abweichung zu minimieren, kann ein PID-Regler verwendet werden. Dieser misst den aktuellen Fehler, auch Regelabweichung $e(t) = w(t) - y(t)$ genannt, und berechnet daraus die Stellgröße $u(t)$, sodass die Regelgröße $y(t)$ den Sollwert $w(t)$ erreicht.
+
+Der PID-Regler besteht aus drei Komponenten: 
+\begin{itemize}
+    \item \textbf{Proportionalanteil (P)}: Dieser Anteil ist proportional zum aktuellen Fehler. Er berechnet sich als $ u_P = K_P \cdot e(t)$, wobei $K_P$ der Proportionale Faktor ist. Eigenschaften des Proportionalanteils sind, dass er schnell auf Fehler reagiert, aber alleine nicht in der Lage ist, den Fehler vollständig zu eliminieren, da er nur auf den aktuellen Fehler reagiert in dem er die Stellgröße proportional zum Fehler anpasst. Daher kann es zu einem sogenannten stationären Fehler kommen, bei dem die Regelgröße einen konstanten Abstand zum Sollwert aufweist.
+    
+    \item \textbf{Integralanteil (I)}: Dieser Anteil berücksichtigt die Summe aller vergangenen Fehler. Er berechnet sich als $ u_I = K_I \cdot \int e(\tau) d\tau$, wobei $K_I$ der Integrationsfaktor ist. Solange der Fehler nicht null ist, wächst das Integral weiter an, wodurch der Regler die Stellgröße so lange anpasst, bis der Fehler vollständig eliminiert ist. Dadurch kann der stationäre Fehler, der durch den Proportionalanteil verursacht wird, beseitigt werden. Allerdings kann ein zu hoher Integrationsfaktor zu einem Überschwingen führen, da die Stellgröße zu stark angepasst wird.
+    
+    \item \textbf{Differentialanteil (D)}: Dieser Anteil berücksichtigt die Änderungsrate des Fehlers. Er berechnet sich als $ u_D = K_D \cdot \frac{de(t)}{dt}$, wobei $K_D$ der Differenzierungsfaktor ist. Der Differentialanteil hilft dabei, das System zu stabilisieren und Überschwingen zu reduzieren. Da er bei schneller Änderung des Fehlers die Stellgröße verkleinert und dadurch ein Überschwingend verhindert. Allerdings kann ein zu hoher Differenzierungsfaktor zu einem Trägen System führen, da die Stellgröße zu stark reduziert wird, wodurch das System langsamer auf Fehler reagiert.
+\end{itemize}
+
+Die Gesamtstellgröße des PID-Reglers berechnet sich als Summe der drei Anteile: $ u(t) = u_P + u_I + u_D$. Durch die richtige Einstellung der Faktoren $K_P$, $K_I$ und $K_D$ kann der PID-Regler so angepasst werden, dass das System schnell auf Fehler reagiert, den stationären Fehler eliminiert und Überschwingen minimiert.
