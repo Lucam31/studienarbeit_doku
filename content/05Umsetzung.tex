@@ -1,17 +1,137 @@
 \chapter{Implementierung und Integration}
 \label{chap:implementierung}
+In diesem Kapitel wird die Umsetzung der verschiedenen Komponenten des Projekts beschrieben. Es wird erläutert, wie die Hardware und Software implementiert wurden, um die gewünschten Funktionen zu realisieren.
+\section{Hardware}
+    Der fertige Aufbau des Fahrzeugs ist in Abbildung~\ref{fig:final_vehicle} zu sehen. Das Fahrzeug besteht aus einem Holzbrett, auf dem die verschiedenen Komponenten montiert sind. Auf der Vorderseite des Fahrzeugs befinden sich der Ultraschallsensor und die Kamera. Mittig des Fahrzeugs befindet sich der Raspberry Pi. Die Motoren, die für die Fortbewegung des Fahrzeugs verantwortlich sind, sind an der unteren Seite des Holzbretts montiert. Der Akku befindet sich ebenfalls mittig, um eine gute Gewichtsverteilung sicher zu stellen. Da das Fahrzeug nur 2 Antriebsräder hat, ist es notwendig, ein Stützrad zu verwenden, um das Gleichgewicht des Fahrzeugs zu gewährleisten. Dieses Stützrad ist an der Rückseite des Fahrzeugs montiert.
+
+    \begin{figure}[H]
+        \centering
+         \includegraphics[width=0.7\textwidth]{images/05Umsetzung/final_vehicle.png}
+        \vspace{-0.3cm}
+        \caption{Finaler Aufbau des Fahrzeugs}
+        \vspace{-0.3cm}
+        \label{fig:final_vehicle}
+    \end{figure}
+
 
 \section{Software}
 
-    \subsection{Websocket}
-    % Um die Kommunikation zwischen dem Backend und der Weboberfläche zu ermöglichen, wird ein Websocket verwendet. Dieser wird auf dem Raspberry Pi implementiert und ermöglicht der Weboberfläche, Sensordaten und Kamerabilder zu empfangen und Steuerbefehle an das Backend zu senden. Darüber soll das Fahrzeug über die Weboberfläche gesteuert werden können. Durch die Verwendung von Websockets kann eine Echtzeit-Kommunikation zwischen der Weboberfläche und dem Backend gewährleistet werden, was für die Steuerung und Überwachung des Fahrzeugs von entscheidender Bedeutung ist.
-    Es wird die Python-Bibliothek \textbf{PySide6} und die darin enthaltene \textbf{QtWebSockets} Klasse verwendet, um die Websocket-Verbindung zu implementieren. Auf der Weboberfläche wird JavaScript verwendet, um die Verbindung zum Websocket herzustellen und die Daten zum Senden und Empfangen zu verarbeiten bzw. vorzubereiten.
-    % noch schreiben, dass Websocket in lokalem Netzwerk läuft und feste IP-Adresse hat, damit die Weboberfläche immer weiß, wie sie das Backend erreichen kann?
-    %noch erwähnen, dass weboberfläche auf laptop läuft?
-
     \subsection{Videoübertragung} % wie aufgenommen? wie gesendet? etc.
+    Das Aufnehmen der Bilder erfolgt mittels der Raspberry Pi Kamera, die über die CSI-Schnittstelle mit dem Raspberry Pi verbunden ist. Jedoch ist das Aufnehen und die Übertragung dieser Bilder kein triviales Problem. Die Bilder müssen in Echzeit aufgenommen, komprimiert und über das Netzwerk an den Client gesendet werden. Wie zuvor im Abschnitt (encoding vergleich ref) festgelegt, soll als Übertragungsprotokoll WebRTC und als Codec H.264 verwendet werden, da es speziell für die Übertragung in Echtzeit entwickelt wurde und eine geringe Latenz bietet. 
 
-    \subsection{Notbremsung} % wir könnten den Scheiß richtig kompliziert machen, wenn wir berechnen wie schnell sich der Abstand zum Hindernis reduziert, wie schnell das Fahrzeug ist und wie weit das Hindernis entfernt ist. Weil wenn man hinter einem fahrenden Auto fährt und man nur Geschwindigkeit und Abstand misst, wird die Notbremsung vielleicht ungewollt ausgelöst. Oder wir sagen wir beachten nur 
+    Eine eigene Implementierung des WebRTC Protkolls wäre sehr aufwendig und würde nicht zum eigentlichen Ziel der Arbeit beitragen. Auf Grund dessen wird die Software \textit{MediaMTX} verwendet, welche eine einfache Schnittstelle für die Implementierung von WebRTC bietet. MediaMTX ermöglicht es, die aufgenommenen Bilder der Kamera zu komprimieren und über das Netzwerk an den Client zu senden, ohne dass eine eigene Implementierung des WebRTC Protokolls erforderlich ist. Ein weiterer Vorteil von \textit{MediaMTX} ist, dass es im Falle er PI Kamera direkt die Bilder von der Kamer aufnehmen und komprimieren kann, ohne dass die Bilder zuerst an die CPU gesendet werden müssen, was die Latenz weiter reduziert. Somit profitiert die Videoübertragung von den Hardwareencodern des Raspberry Pi, was zu einer deutlich geringeren Latenz führt.
+
+    Damit die Kamera von MediaMTX erkannt und verwendet werden kann, muss sie in der Konfigurationsdatei von MediaMTX entsprechend konfiguriert werden. In Listing~\ref{lst:mediamtx_config} ist die Konfiguration der Kamera in der MediaMTX Konfigurationsdatei zu sehen. Hier werden die Quelle der Bilder, die Auflösung, die Bildrate und die Ausrichtung der Bilder festgelegt. Durch diese Konfiguration kann MediaMTX die Bilder der Kamera aufnehmen, komprimieren und über das Netzwerk an den Client senden. Auf Grund dessen, dass die Kamera verkehrt herum montiert ist, müssen die Bilder vertikal und horizontal gespiegelt werden, damit sie auf der Weboberfläche korrekt angezeigt werden.
+
+    \begin{lstlisting}[caption={Konfiguration der Kamera in der MediaMTX Konfigurationsdatei}, label={lst:mediamtx_config}]
+cam:
+    source: rpiCamera
+    rpiCameraWidth: 1280
+    rpiCameraHeight: 720
+    rpiCameraFPS: 30
+    rpiCameraVFlip: yes
+    rpiCameraHFlip: yes
+    \end{lstlisting}
+
+    Die Weboberfläche kann sich mit dem WebRTC Stream von MediaMTX verbinden und die Bilder in einem Video Element anzeigen. 
+
+    %!!!! Fahrzeug hat viel kürzeren Bremsweg, weil kein Gewicht
+    % aber wir nehmen einfach die normale Formel für Notbremsung und sagen, dass die Differenz zwischen Bremsung eines echten Fahrzeug und unseres Fahrzeus als Puffer für Reaktionszeit und Bremsverzögerung etc. dient, damit die Notbremsung nicht zu spät ausgelöst wird.
+
+    \subsection{Fernsteuerung}
+    Die Fernsteuerung des Fahrzeugs erfolgt über die Weboberfläche, die auf einem beliebigen Client, welcher im selben lokalen Netzwerk wie der Raspberry Pi ist, geöffnet werden kann. Über die Weboberfläche können Steuerbefehle an das Backend gesendet werden, um die Bewegung des Fahrzeugs zu steuern. Die Steuerbefehle werden über die Websocket-Verbindung gesendet und vom Backend empfangen. Das Backend interpretiert die empfangenen Befehle und steuert entsprechend die Motoren des Fahrzeugs, um die gewünschte Bewegung zu erreichen. \\
+    Im Folgenden werden der Aufbau der Weboberfläche und die genauere Implementierung der Fernsteuerung beschrieben.
+
+        \subsubsection{Weboberfläche}
+        Wie in der Abbildung~\ref{fig:webview} zu sehen ist, besteht die Weboberfläche grob aus drei Elementen. Links im Bildschirm befindet sich der Joystick, mit welchem das Fahrzeug gesteuert werden kann. In der Mitte befindet sich das Video Element, in welchem der WebRTC Stream der Kamera angezeigt wird. Rechts im Bildschirm befinden sich die Sensordaten, welche über die Websocket-Verbindung vom Backend empfangen und auf der Weboberfläche angezeigt werden. Der Button um zwischen den Modi Manuell und Autopilot zu wechseln befindet sich ebenfalls hier.
+
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.9\textwidth]{images/05Umsetzung/webview.png}
+            \caption{Weboberfläche für die Fernsteuerung des Fahrzeugs}
+            \label{fig:webview}
+        \end{figure}
+
+        Sobald der Joystick bewegt wird, wird die Eingabe erfasst und in der in Listing~\ref{lst:handle_move} gezeigten Funktion verarbeitet. Dabei werdend die x- und y- Koordianten des Joysticks erfasst und in den Wertebereich von -100 bis 100 umgerechnet. Die Erfahrung hat hierbei gezeigt, dass es für die Steuerung des Fahrzeugs von Vorteil ist, wenn die Werte in auf fünf gerundet werden. Dies hat den Ursprung darin, dass der Joystick sehr empfindlich gegenüber minimalen Bewegungen ist. Vor allem bei der Verwendung auf einen Touchscreen, ist es schwierig, den Joystick permanent in der selben Position zu halten. 
+
+        Durch die Umrechung in fünfer Schritte, kann vermieden werden, dass durch miniale Bewegungen ständig neue Befehle mit minimalsten Abweichungen gesendet werden, was zu einem unruhigen und ruckligen Fahrverhalten führen würde. Stattdessen werden nur dann neue Befehle gesendet, wenn sich beide Werte um mindestes fünf Einheiten geändert haben. Somit kann weiterhin für eine präzise Steuerung gesorgt werden, ohne dass permanent neue Daten mit minimalsten Abweichungen gesendet werden.
+
+        \begin{lstlisting}[caption={Handler für Joystick-Bewegungen, um Steuerbefehle zu senden}, label={lst:handle_move}]
+const handleMove = (event: any) => {
+    const { x, y } = event
+
+    const speed = Math.round(Math.round(y  * 100)/5)*5 // Convert to range -100 to 100
+    const steering = Math.round(Math.round(x  * 100)/5)*5 // Convert to range -100 to 100
+    if (speed === lastSpeed.current && steering === lastSteering.current) {
+        return
+    }
+    lastSpeed.current = speed
+    lastSteering.current = steering
+    const jsonMessage = {
+        id: 'drive_command',
+        payload: {
+            x: steering,
+            y: speed,
+        },
+    }
+    if (socket && isConnected) {
+        socket.send(JSON.stringify(jsonMessage))
+        console.log('Joystick move message sent:', jsonMessage)
+    } else {
+        console.error('WebSocket is not connected')
+    }
+}
+        \end{lstlisting}
+
+    Auf dem serverseitigen Backend wird zur Implementierung des Websockets die Python-Bibliothek \textbf{PySide6} und die darin enthaltene \textbf{QtWebSockets} Klasse verwendet. Diese ermöglicht es, eine Websocket-Verbindung zu erstellen und zu verwalten, um die Kommunikation zwischen der Weboberfläche und dem Backend zu ermöglichen. Auf der Weboberfläche wird TypeScript verwendet, um die Verbindung zum Websocket herzustellen und die Daten zum Senden und Empfangen zu verarbeiten bzw. vorzubereiten.
+    
+    Die Verarbeitung der Nachrichten erfolgt im Backend durch eine \textit{Handle\_Message} Funktion, welche die empfangen Nachrichten zunächst in Id und Payload aufteilt. Anhand der Id kann festgestellt werden, um welche Art von Nachricht es sich handelt. Sobald eine Nachricht mit der Id "drive\_command", wie zuvor in Listing~\ref{lst:handle_move} gezeigt, empfangen wird, werden die darin enthaltenen Parameter extrahiert und an den die entsprechende Methode des Controllers übergeben, um die Motoren des Fahrzeugs entsprechend zu steuern.
+
+    Die Steuerung der Motoren wird durch die \textit{drive\_joystick} Methode des Controllers realisiert, welche die x- und y- Werte der Joystick-Eingabe entgegennimmt und in entsprechende Befehle für die Motoren umwandelt. In Listing~\ref{lst:drive_joystick} ist die Implementierung der \textit{drive\_joystick} Methode zu sehen. Die x-Koorodinate wird als Lenkungswert interpretiert, während die y-Koordinate als Geschwindigkeitswert interpretiert wird. Anhand dieser Werte werden die Zielgeschwindigkeiten für die linken und rechten Motoren berechnet, um die gewünschte Bewegung des Fahrzeugs zu erreichen. Die berechneten Zielgeschwindigkeiten werden anschließend an die Motoren übergeben, um die Bewegung des Fahrzeugs entsprechend zu steuern.
+
+    \begin{lstlisting}[caption={Funktion zur Steuerung des Fahrzeugs über den Joystick}, label={lst:drive_joystick}]
+def drive_joystick(self, x: float, y: float) -> None:
+    x = self._clamp(x, -100.0, 100.0)
+    y = self._clamp(y, -100.0, 100.0)
+
+    left = y + x
+    right = y - x
+
+    self._left_target = self._clamp(left, -100.0, 100.0)
+    self._right_target = self._clamp(right, -100.0, 100.0)
+
+    self._apply_ramp()
+    \end{lstlisting}
+
+    Die Zielgeschwindigkeiten für die Motoren werden in den Variablen \textit{\_left\_target} und \textit{\_right\_target} gespeichert. Diese Zielgeschwindigkeiten werden jedoch nicht direkt an die Motoren übergeben, sondern durch die Funktion \textit{\_apply\_ramp} verarbeitet, um eine sanfte Beschleunigung und Verzögerung zu gewährleisten. Dies hat den Grund, da das abrupte Beschleunigen oder Bremsen zu Instabilitäten innerhalb des Stromkreises geführt hat. Gleichstrommotoren können bei plötzlichen Änderungen der Geschwindigkeit hohe Ströme ziehen oder beim Bremsen induzieren, was zu Spannungsschwankungen im System führen kann. Darauf reagiert vor allem der Raspberry Pi mit einem automatischen Herunterfahren, um Schäden zu vermeiden. 
+
+    In der Regel würde man Stützkondensatoren verwenden, um diese Schwankungen auszugleiche. Auf Grund von Zeitmängel wurde sich jedoch dafür entschieden, dieses Problem Software seitig zu lösen. Die Funktion \textit{\_apply\_ramp} sorgt dafür, dass die Geschwindigkeit der Motoren schrittweise erhöht oder verringert wird, anstatt sofort auf die Zielgeschwindigkeit zu springen. Dadurch werden die Stromspitzen vermieden, die durch plötzliche Änderungen der Geschwindigkeit verursacht werden können, wodurch das Ausfallen des Raspberry Pi verhindert wird. Sobald die Geschwindigkeiten durch die Funktion \textit{\_apply\_ramp} berechnet wurden, werden diese an die Motoren übergeben. In Listing~\ref{lst:apply_output} ist die Funktion \textit{\_apply\_output} zu sehen, welche die berechneten Zielgeschwindigkeiten an die Motoren übergibt, um die Bewegung des Fahrzeugs entsprechend zu steuern.
+
+    Damit der Motortreiber die Motoren entsprechend ansteuern kann, muss die Richtung und die Geschwindigkeit der Motoren festgelegt werden. Die Richtung wird durch die Steuerung der Pins \textit{right1}, \textit{right2}, \textit{left1} und \textit{left2} festgelegt, während die Geschwindigkeit durch die Steuerung der PWM-Signale an den Pins \textit{rightpwm} und \textit{leftpwm} festgelegt wird. Der \textit{TB6612FNG} verfügt wie zuvor erwähnt über eine H-Brücke, welche es ermöglicht, die Richtung der Motoren durch die Steuerung der Pins festzulegen. Durch das Anlegen von HIGH oder LOW an diesen Pins kann die Drehrichtung der Motoren gesteuert werden. Die Geschwindigkeit wird durch die Steuerung der PWM-Signale festgelegt, welche die Leistung, die an die Motoren geliefert wird, regulieren. Durch die Anpassung des Duty Cycles der PWM-Signale kann die Geschwindigkeit der Motoren entsprechend erhöht oder verringert werden. Hierzu wechselt PWM sehr schnell zwischen HIGH und LOW. Ein höherer Duty Cycle bedeutet, dass die Motoren im Mittel Leistung erhalten da mehr Strom fließt und somit schneller drehen, während ein niedrigerer Duty Cycle bedeutet, dass die Motoren weniger Leistung erhalten und somit langsamer drehen. Auf Grund der Tatsache, dass die Motoren träge sind reagieren sie nicht auf die schnellen Wehchsel der PWM-Signale, sondern nehmen die durchschnittliche Leistung über die Zeit wahr, was zu einer entsprechenden Geschwindigkeit führt.
+
+    Der Motortreiber verfügt über zwei Kanäle, jedoch kann pro Kanal ein maximaler Strom von 1,2 A fließen. Da die Motoren jedoch dauerhaft einen Strom von 1,8 A ziehen können, ist es notwendig, beide Kanäle des Motortreibers parallel zu schalten, um die benötigte Stromstärke für die Motoren bereitzustellen, damit der Motortreiber nicht beschädigt wird. Durch das Parallelschalten der Kanäle wird die maximale Stromstärke, die an die Motoren geliefert werden kann, auf 2,4 A erhöht, was ausreichend ist, um die Motoren mit der benötigten Leistung zu versorgen.
+
+
+    \begin{lstlisting}[caption={Funktion zur Ansteuerung der Motoren}, label={lst:apply_output}]
+def _apply_output(self, left_speed: float, right_speed: float) -> None:
+    left_fwd = left_speed >= 0
+    right_fwd = right_speed >= 0
+
+    # Right motor direction 
+    self.drivers.write(self.right1, not right_fwd)
+    self.drivers.write(self.right2, right_fwd)
+    self.drivers.setup_pwm(self.rightpwm, frequency=5000, duty_cycle=abs(right_speed))
+
+     # Left motor direction 
+    self.drivers.write(self.left1, left_fwd)
+    self.drivers.write(self.left2, not left_fwd)
+    self.drivers.setup_pwm(self.leftpwm, frequency=5000, duty_cycle=abs(left_speed))
+
+    self.last_set_speed = max(abs(left_speed), abs(right_speed))
+    \end{lstlisting}
+    
+
+     \subsection{Notbremsung} % wir könnten den Scheiß richtig kompliziert machen, wenn wir berechnen wie schnell sich der Abstand zum Hindernis reduziert, wie schnell das Fahrzeug ist und wie weit das Hindernis entfernt ist. Weil wenn man hinter einem fahrenden Auto fährt und man nur Geschwindigkeit und Abstand misst, wird die Notbremsung vielleicht ungewollt ausgelöst. Oder wir sagen wir beachten nur 
     In diesem Projekt werden Ultraschallsensoren als Frühwarnsystem zur Hinderniserkennung eingesetzt. Die Sensoren werden so positioniert, dass sie den Bereich vor dem Fahrzeug überwachen können. Wenn ein Hindernis erkannt wird und die Gefahr einer Kollision besteht, kann automatisch eine Notbremsung eingeleitet werden, um diese zu verhindern. \\
     Ultraschallsensoren sind für diesen Anwendungsfall besonders geeignet, da sie zuverlässig Entfernungen messen können, selbst wenn die Sichtverhältnisse schlecht sind, beispielsweise bei Dunkelheit, Staub oder Nebel. Zudem sind sie kostengünstig und einfach zu integrieren, was sie zu einer idealen Wahl für die Hinderniserkennung in diesem Projekt macht. \\
 
@@ -25,13 +145,41 @@
     
     Für gewöhnlich wird für den tatsächlichen Anhalteweg eines Fahrzeugs zusätzlich zum Bremsweg auch die Reaktionszeit berücksichtigt, die der Fahrer benötigt, um auf die Gefahr zu reagieren und die Bremsung einzuleiten. Da in diesem Fall jedoch eine Notbremsung durch die Software automatisch ausgelöst wird, fällt diese Reaktionszeit deutlich geringer aus. Ein weiterer Aspekt der berücksichtigt werden muss, ist die Tatsache, dass das Fahrzeug aufgrund seines geringen Gewichts einen deutlich kürzeren Bremsweg hat als ein echtes Fahrzeug. Daher wird die Differenz zwischen dem Bremsweg eines echten Fahrzeugs und diesen Fahrzeugs als Puffer für die Reaktionszeit und die Bremsverzögerung genutzt, um sicherzustellen, dass die Notbremsung nicht zu spät ausgelöst wird.
 
-    %!!!! Fahrzeug hat viel kürzeren Bremsweg, weil kein Gewicht
-    % aber wir nehmen einfach die normale Formel für Notbremsung und sagen, dass die Differenz zwischen Bremsung eines echten Fahrzeug und unseres Fahrzeus als Puffer für Reaktionszeit und Bremsverzögerung etc. dient, damit die Notbremsung nicht zu spät ausgelöst wird.
+    Damit das Fahrzeug tatsächlich eine Notbremsung durchführt, muss die Software in der Lage sein, die gemessene Entfernung zum Hindernis mit dem berechneten Bremsweg zu vergleichen. Hierzu wird periodisch die Funktion \textit{emergency\_stop} aufgerufen (siehe Listing~\ref{lst:emergency_stop}), welche die gemessene Entfernung zum Hindernis aktualisiert und mit dem berechneten Bremsweg vergleicht. Sobald die gemessene Entfernung kleiner oder gleich der berechneten Bremsweg plus einem zusätzlichen Puffer ist, wird die Notbremsung ausgelöst, indem die Motoren des Fahrzeugs gestoppt werden. Da die Methode periodisch und asynchron aufgerufen wird, kann die Methode die Eingabe des Benutzters überschreiben, um eine Kollision garantiert zu vermeiden.
+
+     \begin{lstlisting}[caption={Funktion zur Durchführen einer Notbremsung}, label={lst:emergency_stop}]
+def emergency_stop(self) -> None:
+    distance = self._update_distance()
+    speed = self.controller.get_current_speed() * 3.6
+    break_distance = (
+        (speed / 10) * (speed / 10) * 0.5 * self.emergency_stop_brake_scale
+    )
+    driving_backward = self.last_drive_y < 0
+
+    if distance <= self.emergency_stop_min_distance_cm:
+        self.emergency_stop_active = True
+        if not driving_backward:
+            self.break_time = time.time()
+            self.controller.stop()
+        return
+
+    if break_distance + self.emergency_stop_brake_margin_cm >= distance and not driving_backward:
+        self.break_time = time.time()
+        self.emergency_stop_active = True
+        self.controller.stop()
+        return
+
+    if self.emergency_stop_active:
+        if speed == 0 and (time.time() - self.break_time) > 3:
+            self.emergency_stop_active = False
+        return
+        \end{lstlisting}
 
     \subsection{Geschwindigkeitsmessung} % oben hall sensor kapitel raus?
     Um die Geschwindigkeit des Fahrzeugs zu messen, wird ein Hall-Sensor verwendet, der die Drehung eines Rades erfasst. Dabei werden Magneten im Rad verbaut, welche vom Hall-Sensor erkannt werden. Sobald ein Magnet in der Nähe des Sensors ist, wird ein Signal generiert. Durch die Messung der Zeit, die für eine vollständige Umdrehung des Rades benötigt wird und dem bekannten Radumfang, kann die Geschwindigkeit des Fahrzeugs berechnet werden. \\
 
-    \subsection{Schilderkennung}
-    \subsection{Fernsteuerung}
+
     \subsection{Follow the line}
-    \subsection{etc.}
+    Für die "Follow the line" Funktion, wird die an der Front befestigten Kamera verwendet. Diese ist bereits so ausgerichtet, sodass eine Linie auf dem Boden einen großen Teil des Bildes einnimmt. 
+
+
