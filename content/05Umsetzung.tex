@@ -7,9 +7,7 @@ In diesem Kapitel wird die Umsetzung der verschiedenen Komponenten des Projekts 
     \begin{figure}[H]
         \centering
          \includegraphics[width=0.7\textwidth]{images/05Umsetzung/final_vehicle.png}
-        \vspace{-0.3cm}
         \caption{Finaler Aufbau des Fahrzeugs}
-        \vspace{-0.3cm}
         \label{fig:final_vehicle}
     \end{figure}
 
@@ -132,11 +130,11 @@ def _apply_output(self, left_speed: float, right_speed: float) -> None:
     
 
      \subsection{Notbremsung} % wir könnten den Scheiß richtig kompliziert machen, wenn wir berechnen wie schnell sich der Abstand zum Hindernis reduziert, wie schnell das Fahrzeug ist und wie weit das Hindernis entfernt ist. Weil wenn man hinter einem fahrenden Auto fährt und man nur Geschwindigkeit und Abstand misst, wird die Notbremsung vielleicht ungewollt ausgelöst. Oder wir sagen wir beachten nur 
-    In diesem Projekt werden Ultraschallsensoren als Frühwarnsystem zur Hinderniserkennung eingesetzt. Die Sensoren werden so positioniert, dass sie den Bereich vor dem Fahrzeug überwachen können. Wenn ein Hindernis erkannt wird und die Gefahr einer Kollision besteht, kann automatisch eine Notbremsung eingeleitet werden, um diese zu verhindern. \\
-    Ultraschallsensoren sind für diesen Anwendungsfall besonders geeignet, da sie zuverlässig Entfernungen messen können, selbst wenn die Sichtverhältnisse schlecht sind, beispielsweise bei Dunkelheit, Staub oder Nebel. Zudem sind sie kostengünstig und einfach zu integrieren, was sie zu einer idealen Wahl für die Hinderniserkennung in diesem Projekt macht. \\
+    In diesem Projekt werden Ultraschallsensoren als Frühwarnsystem zur Hinderniserkennung eingesetzt. Die Sensoren werden so positioniert, dass sie den Bereich vor dem Fahrzeug überwachen können. Wenn ein Hindernis erkannt wird und die Gefahr einer Kollision besteht, kann automatisch eine Notbremsung eingeleitet werden, um diese zu verhindern. 
+    Ultraschallsensoren sind für diesen Anwendungsfall besonders geeignet, da sie zuverlässig Entfernungen messen können, selbst wenn die Sichtverhältnisse schlecht sind, beispielsweise bei Dunkelheit, Staub oder Nebel. Zudem sind sie kostengünstig und einfach zu integrieren, was sie zu einer idealen Wahl für die Hinderniserkennung in diesem Projekt macht.
 
-    Eine Notbremsung wird durchgeführt, wenn ein Hindernis eine potenzielle Kollisionsgefahr darstellt. Die gemessene Entfernung zu diesem Hindernis wird unter Berücksichtigung der aktuellen Geschwindigkeit des Fahrzeugs ausgewertet. Dadurch kann ermittelt werden, ob eine Kollision wahrscheinlich ist. \\
-    Die Auswertung der gemessenen Entfernung erfolgt durch die Berechnung des Bremswegs, der anhand der aktuellen Geschwindigkeit berechnet wird. Hierzu wird die Formel für eine Notbremsung herangezogen. Die Formel für die Berechnung des Bremswegs bei einer normalen Bremsung kann in diesem Fall vernachlässigt werden, da es sich um die Implementierung einer Notbremsung handelt. Für eine Notbremsung wird folgende Formel verwendet: \\
+    Eine Notbremsung wird durchgeführt, wenn ein Hindernis eine potenzielle Kollisionsgefahr darstellt. Die gemessene Entfernung zu diesem Hindernis wird unter Berücksichtigung der aktuellen Geschwindigkeit des Fahrzeugs ausgewertet. Dadurch kann ermittelt werden, ob eine Kollision wahrscheinlich ist.
+    Die Auswertung der gemessenen Entfernung erfolgt durch die Berechnung des Bremswegs, der anhand der aktuellen Geschwindigkeit berechnet wird. Hierzu wird die Formel für eine Notbremsung herangezogen. Die Formel für die Berechnung des Bremswegs bei einer normalen Bremsung kann in diesem Fall vernachlässigt werden, da es sich um die Implementierung einer Notbremsung handelt. Für eine Notbremsung wird folgende Formel verwendet: 
     \begin{equation}
         s = \frac{v}{10} \cdot \frac{v}{10} \cdot 0.5
     \end{equation} 
@@ -176,10 +174,87 @@ def emergency_stop(self) -> None:
         \end{lstlisting}
 
     \subsection{Geschwindigkeitsmessung} % oben hall sensor kapitel raus?
-    Um die Geschwindigkeit des Fahrzeugs zu messen, wird ein Hall-Sensor verwendet, der die Drehung eines Rades erfasst. Dabei werden Magneten im Rad verbaut, welche vom Hall-Sensor erkannt werden. Sobald ein Magnet in der Nähe des Sensors ist, wird ein Signal generiert. Durch die Messung der Zeit, die für eine vollständige Umdrehung des Rades benötigt wird und dem bekannten Radumfang, kann die Geschwindigkeit des Fahrzeugs berechnet werden. \\
+    Um die Geschwindigkeit des Fahrzeugs zu messen, wird ein Hall-Sensor verwendet, der die Drehung eines Rades erfasst. Dabei werden Magneten im Rad verbaut, welche vom Hall-Sensor erkannt werden. Sobald ein Magnet in der Nähe des Sensors ist, wird ein Signal generiert. Durch die Messung der Zeit, die für eine vollständige Umdrehung des Rades benötigt wird und dem bekannten Radumfang, kann die Geschwindigkeit des Fahrzeugs berechnet werden.
 
 
     \subsection{Follow the line}
-    Für die "Follow the line" Funktion, wird die an der Front befestigten Kamera verwendet. Diese ist bereits so ausgerichtet, sodass eine Linie auf dem Boden einen großen Teil des Bildes einnimmt. 
+    Für die Follow the line Funktion, wird die an der Front befestigten Kamera verwendet. Wie auf dem Kamera Bild aus Abbildung \ref{fig:stream2} erkennbar ist, nimmt die Kamera den Bereich vor dem Fahrzeug auf. Der oragene Streifen dient als Orientierungspunkt, welchem dem Fahrzeug folgen soll.
 
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth]{images/05Umsetzung/stream-2.jpeg}
+        \caption{Rohbild der Kamera}
+        \label{fig:stream2}
+    \end{figure}
 
+        \subsubsection{Vision Worker}
+        Die Verarbeitung von Bildern ist eine rechenintensive Aufgabe. Ein Ausführen im Hauptthread des Programms, also ein blockierender Aufruf, wäre nicht akzeptabel, da so die Reatkionsfähigkeit der Software stark beeinträchtigt werden würde. Auf Grund dessen werden alle bildverarbeitenden Aufgabem in einen separaten Thread, den sogenannten \textit{Vision-Worker} ausgelagert. Dieser Thread läuft parallel zum Hauptthread und ist ausschließlich für die Verarbeitung der Bilder zuständig. Der Worker kann sich kontinuierlich die neuesten Bilder vom MediaMTX Stream holen und diese verarbeiten. Dieses Bild kann dann verarbeitet werden und der Steuerbefehl per QT-Signal an den Hauptthread gesendet werden, um die Bewegung des Fahrzeugs entsprechend zu steuern. 
+
+        \subsubsection{Verarbeitung}
+        Standardmäßig sind die Bilder der Kamer im RGB Farbraum. Für die Verarbeitung der Bilder ist dies jedoch nicht optimal, da die Farbinformationen bei RGB mit dem Helligkeitswert vermischt sind, was die Erkennung der oragenen Farbe erschwert. Daher werden die Bilder zunächst in den HSV Farbraum umgewandelt, da hier die Farbinformationen (Hue) von den Helligkeitsinformationen (Value) getrennt sind, was die Erkennung der orangen Farbe erleichtert. 
+
+        Damit nun die orangene Linie innerhalb des Bildes erkannt werden kann, muss das Bild in ein Binärbild umgewandelt werden, in welchem die Pixel mit orangenem Farbwert weiß und alle anderen Pixel schwarz sind. Hierzu wird eine Farbschwelle definiert, welche die unteren und oberen Grenzen für die Farbwerte festlegt, um die orangene Farbe zu erkennen. Alle Pixel, welche innerhalb dieser Farbschwelle liegen, werden als weiß dargestellt, während alle anderen Pixel als schwarz dargestellt werden. Das Ergebnis ist ein Binärbild, in welchem die orangene Linie als weiße Linie dargestellt wird, während der Rest des Bildes schwarz ist (siehe Listing~\ref{lst:transform_pipeline}). 
+
+        \begin{lstlisting}[caption={Ausschnitt aus der Verarbeitungspipeline}, label={lst:transform_pipeline}]
+hsv = cv2.cvtColor(roi_frame, cv2.COLOR_BGR2HSV)
+        
+lower = np.array([0, 130, 60])
+upper = np.array([30, 255, 255])
+
+mask = cv2.inRange(hsv, lower, upper)
+kernel = np.ones((7, 7), np.uint8)
+mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel, iterations=2)
+        \end{lstlisting}
+
+        Durch eine nicht ausreichende Beleuchtung kann es zu Rauschen im Binärbild kommen, was die Erkennung der Linie erschwert. Um dieses Problem zu beheben, wird eine Morphologische Operation namens \textit{Closing} angewendet, welche kleine Löcher in den weißen Bereichen des Binärbildes schließt und somit das Rauschen reduziert. Hierzu wird ein Kernel definiert, welcher die Form und Größe der Bereiche festlegt, die geschlossen werden sollen. Wie in Abbildung \ref{fig:stream4} zu erkennen ist, verbessert die Anwendung dieser Operation die Darstellung der Linie im Binärbild, da keine Löcher mehr vorhanden sind, was die Erkennung der Linie erleichtert.
+
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.9\textwidth]{images/05Umsetzung/stream-4.jpeg}
+            \caption{Darstellung des Bildes als Binärbild nach der Anwendung des Closing-Operators}
+            \label{fig:stream4}
+        \end{figure}
+
+        In Abbildung \ref{fig:stream4} lässt sich deutlich der ursprüngliche Klebestreifen erkennen. Es ist jedoch auch erkennbar, das umso weiter entfernt die Linie ist, die Erkennung schwieriger wird, da die Beleuchtung nicht mehr ausreichend ist und die Farbe an Sättigung verliert. Darum werden weiter enfterne Pixel eher als grau erkannt und schwarz eingefärbt, obwohl sie eigentlich orangefarbig sind und weiß sein müssten.
+
+        Nichts desto trotz ist es für die Erkennung der Linie ausreichend. Mittels der Funktion \textit{findContours} von OpenCV können die Konturen der weißen Fläche im Binärbild erkannt werden. Wenn die Fläche der größten Kontur größer als ein bestimmter Schwellwert ist, wird die Kontur als gültiger Orientierungspunkt erkannt. Anschließend kann der Fehler berechnet werden. Dieser Fehler gibt die Abweichung der Linie von der Mitte des Bildes an. Je größer der Fehler, desto weiter ist die Linie von der Mitte entfernt. Dieser Fehler kann dann verwendet werden, um die Lenkung des Fahrzeugs entsprechend anzupassen, damit es der Linie folgen kann. In Listing~\ref{lst:conjurs} ist die Implementierung der Konturenerkennung und Fehlerberechnung zu sehen.
+
+        \begin{lstlisting}[caption={Einzeichnen von Konturen und ermitteln des Fehlers}, label={lst:conjurs}]
+contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+if contours:
+    largest = max(contours, key=cv2.contourArea)
+    
+    if cv2.contourArea(largest) > 100:
+        M = cv2.moments(largest)
+        cx = int(M["m10"] / M["m00"])
+        
+        error = cx - (width // 2)
+        
+        cv2.drawContours(roi_frame, [largest], -1, (0, 255, 0), 2)
+        cv2.circle(roi_frame, (cx, int(M["m01"] / M["m00"])), 5, (0, 0, 255), -1)
+        return roi_frame, error / (width // 2) * 100, 10.0
+        \end{lstlisting}
+
+        \subsubsection{PD-Regler}
+        Nachdem der Fehler berechnet wurde beziehungsweise die Linie erkannt wurde, muss auf Basis dessen ein Steuerbefehl gesendet werden, um den Fehler zu korrigieren. Hierzu wird ein PD-Regler (sieheh PID Sec) verwendet. Der Proportionalanteil des Reglers sorgt dafür, dass die Korrektur proportional zum Fehler ist, während der Differentialanteil dafür sorgt, dass die Korrektur auch von der Änderungsrate des Fehlers abhängt. Letzteres ist besonder wichtig, um ein überschwingen zu vermeiden, da es sonst passieren könnte, dass das Fahrzeug über die Linie hinaus korrigiert und dann wieder zurück korrigieren muss, was zu einem unruhigen Fahrverhalten führen würde. In Listing~\ref{lst:pd_regler} ist die Implementierung des PD-Reglers zu sehen, welcher die berechneten Fehlerwerte verwendet, um die Lenkung des Fahrzeugs entsprechend anzupassen, damit es der Linie folgen kann.
+
+        Zum Einstellen der Regelparameter $ K_p $ und $ K_d $ wurde ein Trial and Error Ansatz verwendet, bei dem eine vordefinierte Teststrecke mit verschiedenen Kurvenstärken befahren wurde, um die Auswirkungen der verschiedenen Parameter auf das Fahrverhalten zu beobachten. Durch die Anpassung der Parameter und das Beobachten des Fahrverhaltens konnte schließlich eine Kombination von $ K_p = 0.15 $ und $ K_d = 0.1 $ gefunden werden, welche ein stabiles und reaktionsschnelles Fahrverhalten ermöglicht, ohne dass es zu einem überschwingen kommt. Zu beachten ist, das der die Korrektur durch den Regler nur die Lenkung beeinflusst. Die Geschwindigkeit bleib konstant.
+
+        \begin{lstlisting}[caption={Berechnung des Regelfehlers}, label={lst:pd_regler}]
+processed, error, confidence = self.process_frame(frame)
+
+if confidence > 0.0:
+    derivative = error - self.last_error
+    correction  = self.Kp * error + self.Kd * derivative
+    self.last_error = error
+    
+    x = correction
+    y = self.base_speed
+else:
+    x = 0.0
+    y = 0.0
+    self.last_error = 0.0
+
+self.steeringCommand.emit(x, y)
+        \end{lstlisting}
