@@ -4,21 +4,23 @@
 
 \renewcommand{\abstractname}{Zusammenfassung}
 \begin{abstract}
-    Das Thema dieser Bachelorarbeit ist die Entwicklung eines Prototyps für eine neue Softwarearchitektur. Diese Architektur basiert auf dem LIN-Bussystem und soll die Kommunikation zwischen Slaves und Mastern überarbeiten. Ziel dieser Arbeit ist es, eine...
+    Die vorliegende Studienarbeit befasst sich mit der Entwicklung und dem Testen eines ferngesteuerten Modellfahrzeugs, welches zur Implementierung und Evaluation grundlegender Fahrassistenzfunktionen dient. Hintergrund der Arbeit ist die steigende Bedeutung von Assistenzsystemen in der Automobilindustrie und die damit verbundene Notwendigkeit, entsprechende Funktionen in einer kontrollierten Umgebung untersuchen zu können, bevor eine Übertragung auf reale Fahrzeuge erfolgt.
 
-    Diese Bachelorarbeit behandelt die Entwicklung eines elektronischen Systems zur Temperaturbegrenzung von Strahlungsheizkörpern mithilfe von Thermoelementen. Ziel dieser Arbeit ist es, ein kostengünstigeres und flexibleres System zu entwickeln, das die bislang verwendeten mechanischen Temperaturbegrenzer ersetzt. Hintergrund ist die zunehmende Marktanforderung nach sensorbasierten Lösungen sowie die Notwendigkeit, den Oil-Ignition-Test der Norm UL~858 zu bestehen, der zukünftig auch für Strahlungsheizkörper verpflichtend sein könnte.
+    Im Rahmen der Arbeit wird zunächst eine geeignete Hardwarearchitektur konzipiert, die auf einem Raspberry Pi als zentraler Steuereinheit basiert und durch Ultraschallsensoren, einen Hall-Sensor sowie ein Kameramodul ergänzt wird. Darauf aufbauend wird eine modulare Softwarearchitektur entworfen, die eine Kommunikation zwischen Fahrzeug und einer webbasierten Bedienoberfläche über WebSockets realisiert.
 
-    Der Kern der Arbeit liegt in der Auswertung von Thermoelementen zur Temperaturbegrenzung der Strahlungsheizkörper. Die Arbeit umfasst die Entwicklung der hierfür notwendigen Hardware sowie die Programmierung der Software für den Mikrocontroller. Zusätzlich wird eine PC-Anwendung entwickelt, die den Systemstatus der entwickelten Steuerung visualisiert und eine Konfiguration der Temperaturbegrenzung ermöglicht.
+    Als Fahrassistenzfunktionen werden eine geschwindigkeitsabhängige Notbremsung mit Hilfe der Ultraschallsensorik sowie eine kamerabasierte Linienverfolgung mittels Bildverarbeitung und PID-Regelung implementiert. Außerdem wird eine manuelle Fernsteuerung über die Weboberfläche bereitgestellt.
 
-    Abschließend werden Funktionstests des entwickelten Systems durchgeführt, gefolgt von einer Bewertung der Wirtschaftlichkeit des neuen Systems.
+    Die Funktionalität des Gesamtsystems wird anhand definierter Testfälle unter variierenden Bedingungen, darunter unterschiedliche Hindernisse und Lichtverhältnisse, evaluiert. Die Ergebnisse zeigen, dass die implementierten Systeme unter kontrollierten Bedingungen zuverlässig arbeiten, jedoch material- und umgebungsbedingte Einschränkungen aufweisen. Abschließend werden die Übertragbarkeit der Ergebnisse auf reale Fahrzeuge diskutiert sowie Verbesserungsansätze für zukünftige Weiterentwicklungen vorgeschlagen.
 \end{abstract}
 
 
 \renewcommand{\abstractname}{Abstract}
 \begin{abstract}
-    The scope of this bachelor thesis is the development of an electronic system for temperature limitation of radiant heating elements using thermocouples. The aim of this thesis is to develop a more cost-effective and flexible system to replace the mechanical temperature limiters currently in use. The motivation for this work is the increasing market demand for sensor-based solutions and the need to pass the Oil-Ignition Test of the UL~858 standard, which could also apply to radiant heaters in the future.
+    This student research project focuses on the development and testing of a remote-controlled model vehicle designed to implement and evaluate basic driver assistance functions. The background to this work is the growing importance of assistance systems in the automotive industry and the associated need to be able to investigate such functions in a controlled environment before transferring them to real vehicles.
 
-    The focus of this thesis is measuring the voltage from thermocouples to limit the temperature of the radiant heating elements. Furthermore, the thesis includes the development of the necessary hardware and the development of the microcontroller software. Additionally, a desktop application is developed to visualize the system status of the developed control system and to configure the temperature limits.
+    As part of the project, a suitable hardware architecture is first designed, based on a Raspberry Pi as the central control unit and supplemented by ultrasonic sensors, a Hall sensor and a camera module. Building on this, a modular software architecture is designed that enables communication between the vehicle and a web-based user interface via WebSockets.
 
-    Finally, functional tests of the developed system will be conducted, followed by an assessment of the economic efficiency of the new system.
+    Speed-dependent emergency braking using ultrasonic sensors and camera-based line tracking via image processing and PID control are implemented as driver assistance functions. Manual remote control via the web interface is also provided.
+
+    The functionality of the overall system is evaluated using defined test cases under varying conditions, including different obstacles and lighting conditions. The results show that the implemented systems operate reliably under controlled conditions, but show limitations due to material and environmental factors. Finally, the applicability of the results to real vehicles is discussed, and approaches for improvement are proposed for future developments.
 \end{abstract}
