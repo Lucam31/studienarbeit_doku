@@ -91,12 +91,13 @@ Dieses Kapitel beschreibt die geplante Softwarearchitektur des Fahrzeugs.
     Die bidirektionale Echtzeit-Kommunikation zwischen Weboberfläche und Backend erfolgt über Websocket-Verbindungen. Die Entscheidung Websockets zu verwenden, wurde getroffen, da sie eine persistente Verbindung ermöglichen, die für die Echtzeit-Übertragung von Sensordaten und Steuerbefehlen notwendig ist. Websockets haben im Vergleich zu herkömmlichen \ac{HTTP}-Requests eine geringere Latenz und eine höhere Effizienz bei der Übertragung von Daten, da nicht für jeden Datenaustausch eine neue Verbindung aufgebaut werden muss. Zudem ermöglichen Websockets eine einfache Implementierung von Ereignis-basierten Kommunikationsmustern, was für die Steuerung des Fahrzeugs und das Empfangen von Daten von Vorteil ist.
 
     \subsection{Systemmodularität}
-    Das Backend wird modular aufgebaut, um die Wartbarkeit und Erweiterbarkeit der Software zu gewährleisten. Es wird in verschiedene Module unterteilt, die jeweils für bestimmte Funktionen verantwortlich sind. Dazu gehören beispielsweise ein Modul für die Ansteuerung der Motoren, ein Modul für die Verarbeitung der Sensordaten, ein Modul für die Implementierung der Fahrassistenzsysteme und ein Modul für die Kommunikation mit der Weboberfläche.
+    Das Backend wird modular aufgebaut, um die Wartbarkeit und Erweiterbarkeit der Software zu gewährleisten. Es wird in verschiedene Module unterteilt, die jeweils für bestimmte Funktionen verantwortlich sind. Das Websocket Modul ist für die Verwaltung der Websocket-Verbindung und die spezifische Implementierung zur Verarbeitung von eingehenden und ausgehenden Nachrichten verantwortlich. Das Drivers Modul enthält den Lowlevel Code um die einzelnen \ac{GPIO} Pins des Raspberry Pi anzusteuern beziehungsweise auszulesen. Der Controller verwendet das Driver Modul um abstrakte Funktionen zu definieren mit dem die Motoren vereinfacht angesteurt werden können. Ebenfalls liest der Controller die Sensordaten des Hall-Sensors und des Ultraschallsensors aus, um die Geschwindigkeit zu berechnen und die Notbremsung durchzuführen.
+
 
     \subsection{Vergleich von Kodierungsformaten und übertragungsprotokollen}
     % Tabelle mit Vor- und Nachteilen der verschiedenen Methoden, sowie die geplante Methode und Begründung für die Wahl
-    Nachdem im vorherigen Kapitel einige Übertragungsformate und Codecs vorgestellt wurden, wird in diesem Abschnitt ein Vergleich der verschiedenen Methoden durchgeführt, um die beste Lösung für die Videoübertragung zu finden. Dabei werden die Vor- und Nachteile der verschiedenen Methoden gegenübergestellt, um eine fundierte Entscheidung treffen zu können.
-    \begin{table}[]
+    Nachdem im vorherigen Kapitel einige Übertragungsformate und Codecs vorgestellt wurden, wird in diesem Abschnitt ein Vergleich der verschiedenen Methoden durchgeführt, um die beste Lösung für die Videoübertragung zu finden. Dabei werden die Vor- und Nachteile der verschiedenen Methoden in Tabelle \ref{tab:video_encoding_comparison} aufgezeigt und anschließend gegenübergestellt, um eine fundierte Entscheidung treffen zu können.
+    \begin{table}[H]
         \begin{tabular}{|l|l|l|l|}
         \hline
                                                                     & MJPEG     & H.264     & AV1             \\ \hline
@@ -108,6 +109,7 @@ Dieses Kapitel beschreibt die geplante Softwarearchitektur des Fahrzeugs.
         \caption{Vergleich verschiedener Video-Encoding-Methoden}
         \label{tab:video_encoding_comparison}
     \end{table}
+
     Grundsätzlich bieten alle drei Methoden eine hohe Qualität, unterscheiden sich jedoch deutlich im Rechenaufwand und in der Menge der Daten die bei gegebener Qualität übertragen werden können. MJPEG bietet eine hohe Qualität bei geringem Rechenaufwand, jedoch ist die Datenrate im Vergleich zu H.264 und AV1 deutlich höher. Das hat zur Folge, dass MJPEG zur Übertragung von Videodaten mit hoher Qualität wesentlich mehr Bandbreite benötigt als die anderen beiden Methoden. 
     
     H.264 bietet eine gute Balance zwischen Qualität, Rechenaufwand und Datenrate. Der Raspberry Pi verfügt über einen Hardware-Encoder für H.264, was den Rechenaufwand für die \ac{CPU} minimiert. AV1 bietet zwar eine sehr hohe Qualität, jedoch ist der Rechenaufwand für die Kodierung deutlich höher als bei den anderen beiden Methoden, was insbesondere auf einem Raspberry Pi auf Grund des fehlenden Hardware-Encoders zu Problemen führen könnte.
