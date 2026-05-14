@@ -6,49 +6,46 @@ In diesem Kapitel werden die verwendeten Technologien, Programmiersprachen und T
 \section{Programmiersprachen}
 In diesem Abschnitt werden die verwendeten Programmiersprachen und deren Eigenschaften beschrieben. Zudem werden die wichtigsten Bibliotheken und Frameworks vorgestellt.
     \subsection{Python}
-    Python ist eine interpretierte, plattformunabhängige Programmiersprache mit dynamischer Typisierung und automatischer Speicherverwaltung. Sie unterstützt mehrere Programmieransätze (insbesondere prozedurale, objektorientierte und funktionale Ansätze) und weist eine klare und leicht lesbare Syntax auf. \\
+    Python ist eine interpretierte, plattformunabhängige Programmiersprache mit dynamischer Typisierung und automatischer Speicherverwaltung. Sie unterstützt mehrere Programmieransätze, insbesondere prozedurale, objektorientierte und funktionale Ansätze, und weist eine klare und leicht lesbare Syntax auf. \\
     Neben einer umfangreichen Standardbibliothek steht eine große Auswahl an Drittanbieterbibliotheken zur Verfügung, wodurch sich Python für viele Anwendungsbereiche effizient einsetzen lässt.
 
     Die wichtigsten Eigenschaften und Vorteile zusammengefasst sind:
     \begin{itemize}
         \item \textbf{Lesbarkeit und Wartbarkeit}: Die einheitliche und kompakte Syntax erleichtert das Verstehen von Quellcode und fördert eine einheitliche Code-Struktur.
         \item \textbf{Portabilität}: Python-Programme sind in der Regel ohne große Anpassungen auf unterschiedlichen Betriebssystemen lauffähig.
-        \item \textbf{Umfangreiche Standardbibliothek}: Viele grundlegende Aufgaben (Datei- und Netzwerkzugriff, Datenformate, Tests, Logging) werden bereits durch die Standardbibliothek abgedeckt.
+        \item \textbf{Umfangreiche Standardbibliothek}: Viele grundlegende Aufgaben, wie Datei- und Netzwerkzugriff, Datenformate, Tests und Logging, werden bereits durch die Standardbibliothek abgedeckt.
         \item \textbf{Große Community und Tooling}: Durch die Beliebtheit von Python existiert ein umfangreiches Ökosystem an Tools und Bibliotheken, die die Entwicklung unterstützen.
         \item \textbf{Wenig Boilerplate-Code}: Python ermöglicht es, bereits mit wenigen Zeilen Code ein lauffähiges Programm zu erstellen, was Prototyping und schnelle Entwicklung fördert.
     \end{itemize}
 
     \subsection{TypeScript} %erweitern?
-    TypeScript ist eine von Microsoft entwickelte kompilierte Programmiersprache, die auf JavaScript basiert, wodurch die Nutzung von JavaScript-Bibliotheken und -Frameworks ermöglicht wird. Auch funktionale, prozedurale und objektorientierte Programmierung sind möglich. Eines der größten Features, das durch TypeScript hinzugefügt wird, ist die statische Typisierung. Verwendung findet TypeScript wie auch JavaScript in der Entwicklung von Webanwendungen. TypeScript wird kompiliert und in JavaScript umgewandelt, wodurch es in allen Browsern ausgeführt werden kann.
+    TypeScript ist eine von Microsoft entwickelte kompilierte Programmiersprache, die auf JavaScript basiert, wodurch die Nutzung von JavaScript-Bibliotheken und -Frameworks ermöglicht wird. Auch funktionale, prozedurale und objektorientierte Programmierung sind möglich. Eines der wichtigsten Features, das durch TypeScript hinzugefügt wird, ist die statische Typisierung, wodurch die Typisierung bereits zur Compile-Zeit stattfindet. Verwendung findet TypeScript wie auch JavaScript in der Entwicklung von Webanwendungen. TypeScript wird kompiliert und in JavaScript umgewandelt, wodurch es in allen Browsern ausgeführt werden kann.
 
     \subsection{Verwendete Bibliotheken und Frameworks}
     Für die Entwicklung der Software werden verschiedene Bibliotheken und Frameworks verwendet, um die geplanten Funktionalitäten umzusetzen und die Entwicklung zu erleichtern:
-        \subsubsection{OpenCV} OpenCV ist eine Open-Source-Bibliothek, die eine Vielzahl von Funktionen für die Bildverarbeitung und -analyse bietet. Dadurch können Merkmale und Muster in Bildern erkannt und verarbeitet werden.
-        \subsubsection{gpiozero} Diese Python-Bibliothek ermöglicht die einfache Steuerung von GPIO-Pins auf dem Raspberry Pi. Sie bietet eine benutzerfreundliche API, um Sensoren und Aktoren anzusteuern, was die Entwicklung von Hardware-Interaktionen erleichtert. Im Gegensatz zu der RPi.GPIO Bibliothek läuft gpiozero auch auf dem Raspberry Pi 5, da diese Bibliothek auf der libgpiod Bibliothek basiert, welche die GPIO-Schnittstelle des Raspberry Pi 5 unterstützt. RPi.GPIO hingegen ist nicht mit der neuen GPIO-Schnittstelle kompatibel und kann daher nicht auf dem Raspberry Pi 5 verwendet werden.
+        \subsubsection{OpenCV} OpenCV ist eine Open-Source-Bibliothek, die eine Vielzahl von Funktionen für die Bildverarbeitung und -analyse bietet. Dadurch können Merkmale und Muster in Bildern erkannt und verarbeitet werden. OpenCV unterstützt verschiedene Algorithmen und Techniken, wie z.B. Kantenerkennung, Objekterkennung und Farberkennung, was es zu einer leistungsstarken Bibliothek für eine Vielzahl von Anwendungen macht.
+        \subsubsection{gpiozero} Diese Python-Bibliothek ermöglicht die einfache Steuerung von GPIO-Pins auf dem Raspberry Pi. Sie bietet eine benutzerfreundliche \ac{API}, um Sensoren und Aktoren anzusteuern, was die Entwicklung von Hardware-Interaktionen erleichtert. Im Gegensatz zu der RPi.GPIO Bibliothek läuft gpiozero auch auf dem Raspberry Pi 5, da diese Bibliothek auf der libgpiod Bibliothek basiert, welche die \ac{GPIO}-Schnittstelle des Raspberry Pi 5 unterstützt. RPi.GPIO hingegen ist nicht mit der neuen \ac{GPIO}-Schnittstelle kompatibel und kann daher nicht auf dem Raspberry Pi 5 verwendet werden.
         \subsubsection{React} React ist eine JavaScript-Bibliothek zur Erstellung von Benutzeroberflächen, die von Facebook entwickelt wurde. Sie ermöglicht die Entwicklung von interaktiven und dynamischen Webanwendungen durch die Verwendung von Komponenten, die den aktuellen Zustand verwalten und effizient aktualisieren können.
-        \subsubsection{PySide6} PySide6 ist eine Python-Bibliothek für die Anbindung an das Qt-Framework, das zur Entwicklung von plattformübergreifenden Anwendungen verwendet wird. Es bietet eine umfangreiche Sammlung von Widgets und Tools, um grafische Benutzeroberflächen zu erstellen, und ermöglicht die Integration von weiteren Funktionen wie beispielsweise Websockets. 
+        \subsubsection{PySide6} PySide6 ist eine Python-Bibliothek für die Anbindung an das Qt-Framework, das zur Entwicklung von plattformübergreifenden Anwendungen verwendet wird. Es bietet eine umfangreiche Sammlung von Widgets und Tools, um grafische Benutzeroberflächen zu erstellen. Außerdem ermöglicht es die Integration von weiteren Funktionen wie beispielsweise Websockets. 
     % gpiozero, react, PySide6, OpenCV
 
 \section{Verwendete Technologien und Tools}
-In diesem Abschnitt werden die Technologien und Tools beschrieben, die für die Entwicklung der Software verwendet werden. Dazu gehören beispielsweise die Entwicklungsumgebung und Versionsverwaltungssysteme.
+In diesem Abschnitt werden die Technologien und Tools beschrieben, die für die Entwicklung der Software verwendet werden. 
 
     \subsection{Entwicklungsumgebung}
-    Visual Studio Code ist eine kostenlose, plattformübergreifende Entwicklungsumgebung, die von Microsoft entwickelt wurde. Sie bietet eine Vielzahl von Funktionen, die die Entwicklung von Software erleichtern, darunter Syntaxhervorhebung, Codevervollständigung, Debugging-Tools und eine integrierte Terminal-Emulation. \\
-    Außerdem unterstützt Visual Studio Code eine Vielzahl von Programmiersprachen und bietet eine umfangreiche Sammlung von Erweiterungen, die zusätzliche Funktionen und Integrationen bereitstellen. Durch die plattformübergreifende Verfügbarkeit kann die Entwicklungsumgebung sowohl auf einem Laptop als auch auf einem Raspberry Pi verwendet werden.
+    Visual Studio Code ist eine kostenlose, plattformübergreifende Entwicklungsumgebung, die von Microsoft entwickelt wurde. Sie bietet eine Vielzahl von Funktionen, die die Entwicklung von Software erleichtern. Dazu gehören Syntaxhervorhebung, Codevervollständigung, Debugging-Tools und eine integrierte Terminal-Emulation. Außerdem unterstützt Visual Studio Code eine Vielzahl von Programmiersprachen und bietet eine umfangreiche Sammlung von Erweiterungen, die zusätzliche Funktionen bereitstellen. Durch die plattformübergreifende Verfügbarkeit kann die Entwicklungsumgebung sowohl auf einem Laptop als auch auf einem Raspberry Pi verwendet werden.
 
     % \subsection{Versionsverwaltung mit Git}
     % Für die Versionsverwaltung des Quellcodes wird GitHub verwendet. GitHub bietet umfangreiche Funktionen zur Zusammenarbeit mit anderen Entwicklern, um Quellcodeänderungen zu verfolgen und zu verwalten. Durch die Nutzung von GitHub können mehrere Entwickler gleichzeitig am Projekt arbeiten und Änderungen einfach zusammengeführt und nachverfolgt werden. (mehr über Git/GitHub? Brauchen wir diesen Abschnitt überhaupt?)
     
     \subsection{Websockets} \label{sec:websockets}
-    Websockets sind ein Protokoll, das eine bidirektionale Kommunikation zwischen einem Client und einem Server über eine einzige TCP-Verbindung ermöglicht. Zwar verwendet es den HTTP-Handshake, wodurch es mit HTTP kompatibel ist, jedoch wechselt es nach dem Handshake zu einem binären Frame-basierten Protokoll.
-    Im Gegensatz zu herkömmlichen HTTP-Verbindungen, die für jede Anfrage eine neue Verbindung öffnen, bleibt bei Websockets die Verbindung offen bis einer der Teilnehmer die Verbindung schließt, wodurch eine Echtzeit-Kommunikation möglich ist. Eine einfache Darstellung dieses Ablaufs ist in Abbildung \ref{fig:websocket} dargestellt.
+    Websockets sind ein Protokoll, das eine bidirektionale Kommunikation zwischen einem Client und einem Server über eine einzige \ac{TCP}-Verbindung ermöglicht. Zwar verwendet es den \ac{HTTP}-Handshake, wodurch es mit \ac{HTTP} kompatibel ist, jedoch wechselt es nach dem Handshake zu einem binären Frame-basierten Protokoll.
+    Im Gegensatz zu herkömmlichen \ac{HTTP}-Verbindungen, die für jede Anfrage eine neue Verbindung öffnen, bleibt bei Websockets die Verbindung offen bis einer der Teilnehmer die Verbindung schließt, wodurch eine Echtzeit-Kommunikation möglich ist. Eine einfache Darstellung dieses Ablaufs ist in Abbildung \ref{fig:websocket} dargestellt.
 
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.5\textwidth]{images/03Software/websocket.png}
-        %
         \caption{Ablauf einer Websocket-Verbindung}
-        
         \label{fig:websocket}
     \end{figure}
 
@@ -56,60 +53,60 @@ In diesem Abschnitt werden die Technologien und Tools beschrieben, die für die 
 % WebRTC, H264, MJPEG, HLS
 % Hardwareencoder
 % In Konzept dann Vergleich und Begründung, warum wir uns für die gewählte Lösung entschieden haben
-Ein weiterer wichtiger Teil des Projekts ist die Videoübertragung von der Kamera zur Weboberfläche. Zur übertragung von Vidodaten gibt es verschiedene Möglichkeiten, welche sich in der Qualität, Latenz und Komplexität unterscheiden. In diesem Abschnitt werden die verschiedenen Möglichkeiten zur Videoübertragung beschrieben, um später eine fundierte Entscheidung für die Implementierung treffen zu können.  
+Ein weiterer wichtiger Teil des Projekts ist die Videoübertragung von der Kamera zur Weboberfläche. Zur Übertragung von Vidodaten gibt es verschiedene Möglichkeiten, welche sich in der Qualität, Latenz und Komplexität unterscheiden. In diesem Abschnitt werden die verschiedenen Möglichkeiten zur Videoübertragung beschrieben, um später eine fundierte Entscheidung für die Implementierung treffen zu können.  
 
-\subsection{Hardware-Encoder}
-Ein Hardware-Encoder ist ein ein dedizierter Chip, der ausschließlich für die Kodierung von Videodaten verantwortlich ist. Das Kodieren von Videodaten ist sehr rechenintensiv und würde bei hohen Auflösungen und Bildraten sehr viel \ac{CPU}-Last verursachen. Je nachdem könnte es auch zu sogennanten Frame-Drops kommen, wodurch manche Bilder überhaupt nicht übertragen werden. 
+    \subsection{Hardware-Encoder}
+    Ein Hardware-Encoder ist ein dedizierter Chip, der ausschließlich für die Kodierung von Videodaten verantwortlich ist. Das Kodieren von Videodaten ist sehr rechenintensiv und würde bei hohen Auflösungen und Bildraten sehr viel \ac{CPU}-Last verursachen. Je nachdem könnte es auch zu sogennanten Frame-Drops kommen, wodurch manche Bilder überhaupt nicht übertragen werden. 
 
-Um dies zu vermeiden werden Hardware-Encoder verwendet, welche die Videodaten direkt von der Kamera aufnehmen und in Echtzeit kodieren können, ohne die \ac{CPU} zu belasten. Dadurch kann eine hohe Qualität und niedrige Latenz bei der Videoübertragung erreicht werden, selbst bei hohen Auflösungen und Bildraten. So können beispielsweise \textit{H.264} oder \textit{H.265} Hardware-Encoder verwendet werden, um die Videodaten effizient zu komprimieren und zu übertragen.
+    Um dies zu vermeiden werden Hardware-Encoder verwendet, welche die Videodaten direkt von der Kamera aufnehmen und in Echtzeit kodieren können, ohne die \ac{CPU} zu belasten. Dadurch kann selbst bei hohen Auflösungen und Bildraten eine hohe Qualität und niedrige Latenz bei der Videoübertragung erreicht werden. So können beispielsweise \textit{H.264} oder \textit{H.265} Hardware-Encoder verwendet werden, um die Videodaten effizient zu komprimieren und zu übertragen.
 
-\subsection{Übertragungsformate und Protokolle}
-Für die Übertragung von Videodaten gibt es verschiedene Formate und Protokolle. Diese unterscheiden sich jeweils in der Qualität, Latenz und Komplexität. Im Folgenden werden gänge Formate und Protkolle beschrieben, sowie ein Negativbeispiel, um die Unterschiede zu verdeutlichen.
+    \subsection{Übertragungsformate und Protokolle}
+    Für die Übertragung von Videodaten gibt es verschiedene Formate und Protokolle. Diese unterscheiden sich jeweils in der Qualität, Latenz und Komplexität. Im Folgenden werden gängige Formate und Protokolle beschrieben, sowie ein Negativbeispiel, um die Unterschiede zu verdeutlichen.
 
-\subsection{Kodierungsformate}
-Bevor Videodaten übertragen werden können, werden sie in einem bestimmten Format kodiert und komprimiert. 
+    \subsection{Kodierungsformate}
+    Bevor Videodaten übertragen werden können, werden sie in einem bestimmten Format kodiert und komprimiert. 
 
-\subsubsection{MJPEG}
-\ac{MJPEG} ist ein einfaches Video-Kodierungsformat, bei dem jedes Einzelbild als JPEG-Bild kodiert wird. Da jedes Bild unabhängig und ohne Bezug zu anderen Bildern kodiert wird, ermöglicht MJPEG eine einfache und schnelle Kodierung und Dekodierung von Videodaten. Zudem kann der Stream jederzeit gestartet und gestoppt werden, ohne dass es eine Synchronisierung benötigt, da jedes Bild für sich allein steht. Allerdings führt die fehlende Komprimierung über mehrere Bilder hinweg zu einer größeren Datenmenge, was zu einer höheren Bandbreitennutzung und möglicherweise zu einer geringeren Videoqualität führen kann, insbesondere bei höheren Auflösungen und Bildraten. Daher ist MJPEG nicht die effizienteste Wahl für die Übertragung von Videodaten, insbesondere wenn eine hohe Qualität und niedrige Latenz erforderlich sind.
+        \subsubsection{MJPEG}
+        \ac{MJPEG} ist ein einfaches Video-Kodierungsformat, bei dem jedes Einzelbild als \ac{JPEG}-Bild kodiert wird. Da jedes Bild unabhängig und ohne Bezug zu anderen Bildern kodiert wird, ermöglicht \ac{MJPEG} eine einfache und schnelle Kodierung und Dekodierung von Videodaten. Zudem kann der Stream jederzeit gestartet und gestoppt werden, ohne dass es eine Synchronisierung benötigt, da jedes Bild für sich allein steht. Allerdings führt die fehlende Komprimierung über mehrere Bilder hinweg zu einer größeren Datenmenge, was zu einer höheren Bandbreitennutzung und möglicherweise zu einer geringeren Videoqualität führen kann, insbesondere bei höheren Auflösungen und Bildraten. Daher ist MJPEG nicht die effizienteste Wahl für die Übertragung von Videodaten, insbesondere wenn eine hohe Qualität und niedrige Latenz erforderlich sind.
 
-\subsubsection{H.264}
-H.264 auch bekannt als \ac{AVC} ist ein weit verbreitetes Video-Kodierungsformat, das eine gute Balance zwischen Qualität und Komprimierung bietet. Der Unterschied zu \ac{MJPEG} besteht darin, dass H.264 nicht jedes Bild einzeln kodiert, sondern nur die Unterschiede zwischen aufeinanderfolgenden Bildern sendet. Zusätzlich verwendet H.264 Bewegungsvektoren, um die Bewegung von Objekten zwischen Bildern zu verfolgen. Wenn sich ein Objekt von einem Bild zum nächsten bewegt, sendet H.264 nur die Informationen über die Bewegung, anstatt das gesamte Bild zu übertragen. Dadurch kann H.264 eine höhere Komprimierung erreichen und gleichzeitig eine gute Videoqualität beibehalten, insbesondere bei höheren Auflösungen und Bildraten.
+        \subsubsection{H.264}
+        H.264 auch bekannt als \ac{AVC} ist ein weit verbreitetes Video-Kodierungsformat, das eine gute Balance zwischen Qualität und Komprimierung bietet. Der Unterschied zu \ac{MJPEG} besteht darin, dass H.264 nicht jedes Bild einzeln kodiert, sondern nur die Unterschiede zwischen aufeinanderfolgenden Bildern sendet. Zusätzlich verwendet H.264 Bewegungsvektoren, um die Bewegung von Objekten zwischen Bildern zu verfolgen. Wenn sich ein Objekt von einem Bild zum nächsten bewegt, sendet H.264 nur die Informationen über die Bewegung, anstatt das gesamte Bild zu übertragen. Dadurch kann eine höhere Komprimierung erreicht und gleichzeitig eine gute Videoqualität beibehalten werden.
 
-Diese Berechnungen sind wesentlich rechenintensiver als bei \ac{MJPEG}. Mittlerweile besitzen alle modernen Chips die entsprechenden Hardware-Encoder und Decoder für H.264, wodurch die \ac{CPU}-Last deutlich reduziert wird.
+        Diese Berechnungen sind wesentlich rechenintensiver als bei \ac{MJPEG}. Mittlerweile besitzen alle modernen Chips die entsprechenden Hardware-Encoder und Decoder für H.264, wodurch die \ac{CPU}-Last deutlich reduziert wird.
 
-Um ein Einsteigen inmitten des Streams zu ermöglichen, sendet H.264 regelmäßig sogenannte I-Frames, die wie bei MJPEG jedes Bild vollständig kodieren. Zwischen diesen Keyframes werden dann die Unterschiede in P-Frames kodiert, wodurch die Datenrate reduziert wird, aber dennoch ein Einsteigen inmitten des Streams möglich ist.
+        Um ein Einsteigen inmitten des Streams zu ermöglichen, sendet H.264 regelmäßig sogenannte I-Frames, die wie bei \ac{MJPEG} jedes Bild vollständig kodieren. Zwischen diesen Keyframes werden dann die Unterschiede in P-Frames kodiert, wodurch die Datenrate reduziert wird, aber dennoch ein Einsteigen inmitten des Streams möglich ist.
 
-\subsubsection{AV1}
-AV1 ein vergleichsweise neues Video-Kodierungsformat, das von der Alliance for Open Media entwickelt wurde. Es bietet eine höhere Komprimierung als H.264, was zu einer besseren Videoqualität bei niedrigeren Bitraten führt. Allerdings ist die Kodierung und Dekodierung von AV1 deutlich rechenintensiver als bei H.264, was zu einer höheren \ac{CPU}-Last führen kann. 
+        \subsubsection{AV1}
+        AV1 ein vergleichsweise neues Video-Kodierungsformat, das von der Alliance for Open Media entwickelt wurde. Es bietet eine höhere Komprimierung als H.264, was zu einer besseren Videoqualität bei niedrigeren Bitraten führt. Allerdings ist die Kodierung und Dekodierung von AV1 deutlich rechenintensiver als bei H.264, was zu einer höheren \ac{CPU}-Last führen kann. 
 
-Der Raspberry Pi 5 besitzt zwar einen Hardware-Decoder für AV1, jedoch keinen Hardware-Encoder, wodurch die Kodierung von Videodaten in AV1 auf dem Raspberry Pi 5 nicht effizient möglich ist.
+        Der Raspberry Pi 5 besitzt zwar einen Hardware-Decoder für AV1, jedoch keinen Hardware-Encoder, wodurch die Kodierung von Videodaten in AV1 auf dem Raspberry Pi 5 nicht effizient möglich ist.
 
-\subsection{Übertragungsprotokolle}
-Um Videodaten zu übertragen gibt es ebenfalls verschiedene Protokolle. 
+    \subsection{Übertragungsprotokolle}
+    Um Videodaten zu übertragen gibt es ebenfalls verschiedene Protokolle, die im Folgenden beschrieben werden.
 
-\subsubsection{WebRTC}
-WebRTC ist ein Protokoll, das speziell für die Echtzeitkommunikation von Audio- und Videodaten über das Internet entwickelt wurde. Zur Übertragung der Daten wird \ac{UDP} verwendet. Dies hat den Vorteil das auf verlorene Pakete nicht gewartet wird, sondern die Übertragung fortgesetzt wird. Dies ist bei der Livevideoübertragung optimal, da die Latenz sehr gering ist. 
-
-
-\subsubsection{HLS}
-HLS ist ein von Apple entwickeltes Protokoll, das auf \ac{HTTP} und somit auch \ac{TCP} basiert. Die Videodaten werden in kleine Segmente aufgeteilt und über HTTP übertragen. Da TCP eine zuverlässige Übertragung gewährleistet, werden verlorene Pakete automatisch erneut gesendet. Dies hat zwar den Vorteil das die Daten zuverlässig und in der richtigen Reihenfolge ankommen, hat aber auch den Nachteil das die Latenz deutlich höher als bei WebRTC ist, da auf verlorene Pakete gewartet werden muss. HLS verwendet ebenfalls einen Puffer von einigen Sekunden um Netzwerk-Schwankungen auszugleichen, was die Latenz weiter erhöht.
-
-\subsubsection{Implementierung via WebSockets}
-Eine weitere Möglichkeit zur Übertragung von Videodaten ist eine eigene Implementierung mittels Websockets (siehe Abschnitt \ref{sec:websockets}). 
-
-Dies bringt jedoch mehrere Nachteile mit sich. Zum einen muss die Kodierung und Übertragung der Videodaten selbst implementiert werden, was deutlich komplexer ist als die Verwendung eines bestehenden Protokolls wie WebRTC oder HLS. Zum anderen ist die Latenz bei einer eigenen Implementierung in der Regel höher als bei WebRTC, da WebRTC speziell für die Echtzeitkommunikation optimiert ist. Zudem müssen bei einer eigenen Implementierung zusätzliche Mechanismen zur Fehlerbehandlung und Synchronisierung implementiert werden, um eine zuverlässige Übertragung zu gewährleisten. Daher ist eine eigene Implementierung mittels Websockets in der Regel nicht die beste Wahl für die Übertragung von Videodaten, insbesondere wenn eine hohe Qualität und niedrige Latenz erforderlich sind.
+        \subsubsection{WebRTC}
+        WebRTC ist ein Protokoll, das speziell für die Echtzeitkommunikation von Audio- und Videodaten über das Internet entwickelt wurde. Zur Übertragung der Daten wird \ac{UDP} verwendet. Dies hat den Vorteil, dass auf verlorene Pakete nicht gewartet wird, sondern die Übertragung fortgesetzt wird. Dabei ist die Latenz sehr gering, was insbesondere für die Livevideoübertragung von Vorteil ist.
 
 
-\subsection{PID-Regler}
-In einem System können einzelne Parameter (Temperatur, Geschwindigkeit, Position) von dem eigentlichen Sollwert abweichen. Um diese Abweichung zu minimieren, kann ein PID-Regler verwendet werden. Dieser misst den aktuellen Fehler, auch Regelabweichung $e(t) = w(t) - y(t)$ genannt, und berechnet daraus die Stellgröße $u(t)$, sodass die Regelgröße $y(t)$ den Sollwert $w(t)$ erreicht.
+        \subsubsection{HLS}
+        HLS ist ein von Apple entwickeltes Protokoll, das auf \ac{HTTP} und somit auch \ac{TCP} basiert. Die Videodaten werden in kleine Segmente aufgeteilt und über \ac{HTTP} übertragen. Da \ac{TCP} eine zuverlässige Übertragung gewährleistet, werden verlorene Pakete automatisch erneut gesendet. Dies hat zwar den Vorteil, dass die Daten zuverlässig und in der richtigen Reihenfolge ankommen, hat aber auch den Nachteil, dass die Latenz deutlich höher ist als bei WebRTC, da auf verlorene Pakete gewartet werden muss. HLS verwendet ebenfalls einen Puffer von einigen Sekunden um Netzwerk-Schwankungen auszugleichen, was die Latenz weiter erhöht.
 
-Der PID-Regler besteht aus drei Komponenten: 
-\begin{itemize}
-    \item \textbf{Proportionalanteil (P)}: Dieser Anteil ist proportional zum aktuellen Fehler. Er berechnet sich als $ u_P = K_P \cdot e(t)$, wobei $K_P$ der Proportionale Faktor ist. Eigenschaften des Proportionalanteils sind, dass er schnell auf Fehler reagiert, aber alleine nicht in der Lage ist, den Fehler vollständig zu eliminieren, da er nur auf den aktuellen Fehler reagiert in dem er die Stellgröße proportional zum Fehler anpasst. Daher kann es zu einem sogenannten stationären Fehler kommen, bei dem die Regelgröße einen konstanten Abstand zum Sollwert aufweist.
-    
-    \item \textbf{Integralanteil (I)}: Dieser Anteil berücksichtigt die Summe aller vergangenen Fehler. Er berechnet sich als $ u_I = K_I \cdot \int e(\tau) d\tau$, wobei $K_I$ der Integrationsfaktor ist. Solange der Fehler nicht null ist, wächst das Integral weiter an, wodurch der Regler die Stellgröße so lange anpasst, bis der Fehler vollständig eliminiert ist. Dadurch kann der stationäre Fehler, der durch den Proportionalanteil verursacht wird, beseitigt werden. Allerdings kann ein zu hoher Integrationsfaktor zu einem Überschwingen führen, da die Stellgröße zu stark angepasst wird.
-    
-    \item \textbf{Differentialanteil (D)}: Dieser Anteil berücksichtigt die Änderungsrate des Fehlers. Er berechnet sich als $ u_D = K_D \cdot \frac{de(t)}{dt}$, wobei $K_D$ der Differenzierungsfaktor ist. Der Differentialanteil hilft dabei, das System zu stabilisieren und Überschwingen zu reduzieren. Da er bei schneller Änderung des Fehlers die Stellgröße verkleinert und dadurch ein Überschwingend verhindert. Allerdings kann ein zu hoher Differenzierungsfaktor zu einem Trägen System führen, da die Stellgröße zu stark reduziert wird, wodurch das System langsamer auf Fehler reagiert.
-\end{itemize}
+        \subsubsection{Implementierung via WebSockets}
+        Eine weitere Möglichkeit zur Übertragung von Videodaten ist eine eigene Implementierung mittels Websockets (siehe Abschnitt \ref{sec:websockets}). 
 
-Die Gesamtstellgröße des PID-Reglers berechnet sich als Summe der drei Anteile: $ u(t) = u_P + u_I + u_D$. Durch die richtige Einstellung der Faktoren $K_P$, $K_I$ und $K_D$ kann der PID-Regler so angepasst werden, dass das System schnell auf Fehler reagiert, den stationären Fehler eliminiert und Überschwingen minimiert.
+        Dies bringt jedoch mehrere Nachteile mit sich. Zum einen muss die Kodierung und Übertragung der Videodaten selbst implementiert werden, was deutlich komplexer ist als die Verwendung eines bestehenden Protokolls wie WebRTC oder HLS. Zum anderen ist die Latenz bei einer eigenen Implementierung in der Regel höher als bei WebRTC, da WebRTC speziell für die Echtzeitkommunikation optimiert ist. Zudem müssen zusätzliche Mechanismen zur Fehlerbehandlung und Synchronisierung implementiert werden, um eine zuverlässige Übertragung zu gewährleisten. Daher ist eine eigene Implementierung mittels Websockets in der Regel nicht die beste Wahl für die Übertragung von Videodaten, insbesondere wenn eine hohe Qualität und niedrige Latenz erforderlich sind.
+
+
+    \subsection{PID-Regler}
+    In einem System können einzelne Parameter, wie die Temperatur, Geschwindigkeit und Position, von dem eigentlichen Sollwert abweichen. Um diese Abweichung zu minimieren, kann ein PID-Regler verwendet werden. Dieser misst den aktuellen Fehler, auch Regelabweichung $e(t) = w(t) - y(t)$ genannt, und berechnet daraus die Stellgröße $u(t)$, sodass die Regelgröße $y(t)$ den Sollwert $w(t)$ erreicht.
+
+    Der PID-Regler besteht aus drei Komponenten: 
+    \begin{itemize}
+        \item \textbf{Proportionalanteil (P)}: Dieser Anteil ist proportional zum aktuellen Fehler. Er berechnet sich als $ u_P = K_P \cdot e(t)$, wobei $K_P$ der Proportionale Faktor ist. Eigenschaften des Proportionalanteils sind, dass er schnell auf Fehler reagiert, aber alleine nicht in der Lage ist, den Fehler vollständig zu eliminieren, da er nur die Stellgröße proportional zum aktuellen Fehler anpasst. Daher kann es zu einem sogenannten stationären Fehler kommen, bei dem die Regelgröße einen konstanten Abstand zum Sollwert aufweist.
+        
+        \item \textbf{Integralanteil (I)}: Dieser Anteil berücksichtigt die Summe aller vergangenen Fehler. Er berechnet sich als $ u_I = K_I \cdot \int e(\tau) d\tau$, wobei $K_I$ der Integrationsfaktor ist. Solange der Fehler nicht null ist, wächst das Integral weiter an, wodurch der Regler die Stellgröße so lange anpasst, bis der Fehler vollständig eliminiert ist. Dadurch kann der stationäre Fehler, der durch den Proportionalanteil verursacht wird, beseitigt werden. Allerdings kann ein zu hoher Integrationsfaktor zu einem Überschwingen führen, da die Stellgröße zu stark angepasst wird. Ein solches Überschwingen kann dazu führen, dass die Regelgröße den Sollwert überschreitet und wieder zurückschwingt, was zu Instabilität im System führen kann.
+        
+        \item \textbf{Differentialanteil (D)}: Dieser Anteil berücksichtigt die Änderungsrate des Fehlers. Er berechnet sich als $ u_D = K_D \cdot \frac{de(t)}{dt}$, wobei $K_D$ der Differenzierungsfaktor ist. Der Differentialanteil hilft dabei, das System zu stabilisieren und Überschwingen zu reduzieren. Da er bei schneller Änderung des Fehlers die Stellgröße verkleinert und dadurch ein Überschwingen verhindert. Allerdings kann ein zu hoher Differenzierungsfaktor zu einem trägen System führen, da die Stellgröße zu stark reduziert wird, wodurch das System langsamer auf Fehler reagiert.
+    \end{itemize}
+
+    Die Gesamtstellgröße des PID-Reglers berechnet sich als Summe der drei Anteile: $ u(t) = u_P + u_I + u_D$. Durch die richtige Einstellung der Faktoren $K_P$, $K_I$ und $K_D$ kann der PID-Regler so angepasst werden, dass das System schnell auf Fehler reagiert, den stationären Fehler eliminiert und Überschwingen minimiert.
