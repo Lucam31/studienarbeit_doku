@@ -7,6 +7,7 @@
 
 %Zeilenumbruch und mehr
 \usepackage[activate]{microtype}
+\usepackage{xurl}
 
 % Zeichencodierung
 \usepackage[utf8]{inputenc}
@@ -85,7 +86,8 @@
 % (Farb-)einstellungen für die Links im PDF
 \hypersetup{
 	colorlinks=false, % De-/Aktivieren von farbigen Links im Dokument
-  pdfborder={0 0 0}
+  pdfborder={0 0 0},
+  breaklinks=true, %Erlaubt Zeilenumbruch in Links
 	%linkcolor=LinkColor, % Farbe festlegen
 	%citecolor=LinkColor,
 	%filecolor=LinkColor,
@@ -223,7 +225,7 @@
 \usepackage{circuitikz} %Schaltungen
 \usepackage{pgfplots} %Plots/Graphs
 \pgfplotsset{compat=newest}
-\usepackage{ulem} %doppelt unterstreichen
+\usepackage[normalem]{ulem} %doppelt unterstreichen
 \usepackage{colortbl}
 \usepackage{multirow} %Zellen vertikal verbinden Tabelle
 \usepackage{tablefootnote}

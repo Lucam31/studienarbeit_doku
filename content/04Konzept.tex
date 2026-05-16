@@ -105,8 +105,6 @@ Auch die Softwarearchitektur hat einen erheblichen Einfluss auf die Entwicklung 
             \hline
             Datenrate & Niedrig & Mittel & Sehr hoch \\
             \hline
-            Hardware-Encoder & Vorhanden & Vorhanden & Nicht vorhanden \\
-            \hline
         \end{tabular}
         \caption{Vergleich verschiedener Video-Encoding-Methoden}
         \label{tab:video_encoding_comparison}
@@ -114,11 +112,11 @@ Auch die Softwarearchitektur hat einen erheblichen Einfluss auf die Entwicklung 
 
     Grundsätzlich bieten alle drei Methoden eine hohe Qualität, unterscheiden sich jedoch deutlich im Rechenaufwand und in der Menge der Daten die bei gegebener Qualität übertragen werden können. MJPEG bietet eine hohe Qualität bei geringem Rechenaufwand, jedoch ist die Datenrate im Vergleich zu H.264 und AV1 deutlich höher. Das hat zur Folge, dass MJPEG zur Übertragung von Videodaten mit hoher Qualität wesentlich mehr Bandbreite benötigt als die anderen beiden Methoden. 
     
-    H.264 bietet eine gute Balance zwischen Qualität, Rechenaufwand und Datenrate. Der Raspberry Pi verfügt über einen Hardware-Encoder für H.264, was den Rechenaufwand für die \ac{CPU} minimiert. AV1 bietet zwar eine sehr hohe Qualität, jedoch ist der Rechenaufwand für die Kodierung deutlich höher als bei den anderen beiden Methoden, was insbesondere auf einem Raspberry Pi aufgrund des fehlenden Hardware-Encoders zu Problemen führen könnte.
+    H.264 bietet eine gute Balance zwischen Qualität, Rechenaufwand und Datenrate. AV1 bietet zwar eine sehr hohe Qualität, jedoch ist der Rechenaufwand für die Kodierung deutlich höher als bei den anderen beiden Methoden. Da seit dem Raspberry Pi 5 keine dedizierten Hardware-Encoder mehr verbaut sind, muss die Kodierung der Videodaten vollständig von der \ac{CPU} übernommen werden, was bei AV1 zu einer erheblichen Belastung der \ac{CPU} führen würde. Daher ist AV1 für die Videoübertragung in diesem Projekt nicht geeignet.
     
     Zur Übertragung der Videodaten stehen WebRTC und HLS zur Auswahl. HLS ist ein Streaming-Protokoll, das auf \ac{HTTP} basiert und für die Übertragung von Videodaten über das Internet entwickelt wurde. Es bietet eine hohe Kompatibilität mit verschiedenen Geräten und Plattformen, jedoch ist die Latenz bei der Übertragung von Videodaten mit HLS im Vergleich zu WebRTC deutlich höher. WebRTC hingegen ist ein Echtzeit-Kommunikationsprotokoll, das speziell für die Übertragung von Audio- und Videodaten in Echtzeit entwickelt wurde. Es bietet eine sehr geringe Latenz und eine hohe Qualität, jedoch ist die Komplexität der Implementierung im Vergleich zu HLS höher.
 
-    Abschließend wurde die Entscheidung getroffen, H.264 als Video-Encoding-Methode zu verwenden, da es eine gute Balance zwischen Qualität, Rechenaufwand und Datenrate bietet. Zudem verfügt der Raspberry Pi über einen Hardware-Encoder für H.264, was den Rechenaufwand für die \ac{CPU} minimiert. Zur Übertragung der Videodaten wird WebRTC verwendet, da es eine sehr geringe Latenz bietet, was für die Steuerung des Fahrzeugs von entscheidender Bedeutung ist. Somit ist eine Kombination aus H.264 und WebRTC die beste Lösung für die Videoübertragung in diesem Projekt.
+    Abschließend wurde die Entscheidung getroffen, H.264 als Video-Encoding-Methode zu verwenden, da es eine gute Balance zwischen Qualität, Rechenaufwand und Datenrate bietet. Zur Übertragung der Videodaten wird WebRTC verwendet, da es eine sehr geringe Latenz bietet, was für die Steuerung des Fahrzeugs von entscheidender Bedeutung ist. Somit ist eine Kombination aus H.264 und WebRTC die beste Lösung für die Videoübertragung in diesem Projekt.
     
     
     \subsection{Geplante Features} % vielleicht vor Softwarekomponenten? Weil da werden schon Features erwähnt
