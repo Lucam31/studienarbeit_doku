@@ -54,7 +54,7 @@ Die gewählte Hardware für das Fahrzeug hat einen erheblichen Einfluss auf das 
         Auf die Verwendung von Encodern wurde bewusst verzichtet, da diese in der Regel teurer und komplexer in der Ansteuerung sind als Hall-Sensoren. Zudem bieten Hall-Sensoren eine ausreichende Genauigkeit für die geplanten Fahrassistenzsysteme, weshalb die Entscheidung getroffen wurde, einen Hall-Sensor zu verwenden.
 
         \subsubsection{Raspberry Pi Camera Module}
-        Das Raspberry Pi Camera Module ist eine Kamera, die speziell für die Verwendung mit dem Raspberry Pi entwickelt wurde. Mit einer Auflösung von \SI{12}{\mega\pixel} und einem Blickwinkel von \SI{75}{\degree} ist sie ideal für die Erfassung von Bildern und Videos in diesem Projekt. Die Kamera wird an der Vorderseite des Fahrzeugs montiert, um die Umgebung zu erfassen und die geplanten Fahrassistenzsysteme wie Follow the line zu ermöglichen.
+        Das Raspberry Pi Camera Module ist eine Kamera, die speziell für die Verwendung mit dem Raspberry Pi entwickelt wurde. Mit einer Auflösung von \SI{12}{\mega\pixel} und einem Blickwinkel von \SI{75}{\degree} ist sie ideal für die Erfassung von Bildern und Videos in diesem Projekt. Die Kamera wird an der Vorderseite des Fahrzeugs montiert, um die Umgebung zu erfassen und die geplanten Fahrassistenzsysteme wie \emph{Follow the line} zu ermöglichen.
 
         \subsubsection{Ultraschallsensor}
         Ein Ultraschallsensor wird als Frühwarnsystem zur Hinderniserkennung eingesetzt. Der Sensor wird ebenfalls an der Vorderseite des Fahrzeugs positioniert, dass dieser den Bereich vor dem Fahrzeug überwachen kann. Wenn ein Hindernis erkannt wird und die Gefahr einer Kollision besteht, kann automatisch eine Notbremsung eingeleitet werden, um diese zu verhindern.
@@ -74,8 +74,8 @@ Die gewählte Hardware für das Fahrzeug hat einen erheblichen Einfluss auf das 
 Auch die Softwarearchitektur hat einen erheblichen Einfluss auf die Entwicklung des Fahrzeugs und ist ein wichtiger Bestandteil des Projekts. Das Konzept für die Softwarearchitektur umfasst die geplante Struktur der Software, die Kommunikation zwischen den verschiedenen Komponenten und die geplanten Software-Features.
 
     \subsection{Architektur-Übersicht}
-    Die Software folgt einer klassischen Client-Server-Architektur, wie in Abbildung \ref{fig:software_overview} dargestellt. Der Benutzer interagiert über eine Weboberfläche, die als Client-Komponente fungiert, mit dem Server. Der Raspberry Pi bildet die Server-Seite und verwaltet sämtliche Hardwareschnittstellen, sowie die Verarbeitung von Sensordaten und Fahrassistenzsystemen.
-
+    Die Software folgt einer klassischen \emph{Client-Server-Architektur}, wie in Abbildung \ref{fig:software_overview} dargestellt. Der Benutzer interagiert über eine Weboberfläche, die als Client-Komponente fungiert, mit dem Server. Der Raspberry Pi bildet die Server-Seite und verwaltet sämtliche Hardwareschnittstellen, sowie die Verarbeitung von Sensordaten und Fahrassistenzsystemen.
+    
      \begin{figure}[H]
         \centering
         \includegraphics[width=0.7\textwidth]{images/04Konzept/software_overview.drawio.pdf}
@@ -86,8 +86,8 @@ Auch die Softwarearchitektur hat einen erheblichen Einfluss auf die Entwicklung 
     \subsection{Kommunikationsmodell}
     Die bidirektionale Echtzeit-Kommunikation zwischen Weboberfläche und Backend erfolgt über Websocket-Verbindungen. Die Entscheidung Websockets zu verwenden, wurde getroffen, da sie eine persistente Verbindung ermöglichen, die für die Echtzeit-Übertragung von Sensordaten und Steuerbefehlen notwendig ist. Websockets haben im Vergleich zu herkömmlichen \ac{HTTP}-Requests eine geringere Latenz und eine höhere Effizienz bei der Übertragung von Daten, da nicht für jeden Datenaustausch eine neue Verbindung aufgebaut werden muss. Zudem ermöglichen Websockets eine einfache Implementierung von Ereignis-basierter Kommunikation, was für die Steuerung des Fahrzeugs und das Empfangen von Daten von Vorteil ist.
 
-    \subsection{Systemmodularität}
-    Das Backend wird modular aufgebaut, um die Wartbarkeit und Erweiterbarkeit der Software zu gewährleisten. Es wird in verschiedene Module unterteilt, die jeweils für bestimmte Funktionen verantwortlich sind. Das \textit{Websocket} Modul ist für die Verwaltung der Websocket-Verbindung und die spezifische Implementierung zur Verarbeitung von eingehenden und ausgehenden Nachrichten verantwortlich. Das \textit{Driver} Modul enthält den Lowlevel Code, um die einzelnen \ac{GPIO}-Pins des Raspberry Pi anzusteuern beziehungsweise auszulesen. Der \textit{Controller} verwendet das Driver Modul um abstrakte Funktionen zu definieren, mit dem die Motoren vereinfacht angesteurt werden können. Ebenfalls liest der \textit{Controller} die Sensordaten des Hall-Sensors und des Ultraschallsensors aus, um die Geschwindigkeit zu berechnen und die Notbremsung durchzuführen.
+    \subsection{Modulare Softwarearchitektur}
+    Das Backend wird modular aufgebaut, um die Wartbarkeit und Erweiterbarkeit der Software zu gewährleisten. Es wird in verschiedene Module unterteilt, die jeweils für bestimmte Funktionen verantwortlich sind. Das \emph{Websocket} Modul ist für die Verwaltung der Websocket-Verbindung und die spezifische Implementierung zur Verarbeitung von eingehenden und ausgehenden Nachrichten verantwortlich. Das \emph{Driver} Modul enthält den Lowlevel Code, um die einzelnen \ac{GPIO}-Pins des Raspberry Pi anzusteuern beziehungsweise auszulesen. Der \emph{Controller} verwendet das Driver Modul um abstrakte Funktionen zu definieren, mit dem die Motoren vereinfacht angesteurt werden können. Ebenfalls liest der \emph{Controller} die Sensordaten des Hall-Sensors und des Ultraschallsensors aus, um die Geschwindigkeit zu berechnen und die Notbremsung durchzuführen.
 
 
     \subsection{Vergleich von Kodierungsformaten und übertragungsprotokollen} \label{sec:video_encoding_comparison}
@@ -97,7 +97,7 @@ Auch die Softwarearchitektur hat einen erheblichen Einfluss auf die Entwicklung 
         \centering
         \begin{tabular}{|l|c|c|c|}
             \hline
-            \textbf{Kriterium} & \textbf{MJPEG} & \textbf{H.264} & \textbf{AV1} \\
+            \textbf{Kriterium} & \textbf{MJPEG} & \textbf{H.264} & \textbf{\ac{AV1}} \\
             \hline
             Qualität & Hoch & Hoch & Hoch \\
             \hline
@@ -110,13 +110,13 @@ Auch die Softwarearchitektur hat einen erheblichen Einfluss auf die Entwicklung 
         \label{tab:video_encoding_comparison}
     \end{table}
 
-    Grundsätzlich bieten alle drei Methoden eine hohe Qualität, unterscheiden sich jedoch deutlich im Rechenaufwand und in der Menge der Daten die bei gegebener Qualität übertragen werden können. MJPEG bietet eine hohe Qualität bei geringem Rechenaufwand, jedoch ist die Datenrate im Vergleich zu H.264 und AV1 deutlich höher. Das hat zur Folge, dass MJPEG zur Übertragung von Videodaten mit hoher Qualität wesentlich mehr Bandbreite benötigt als die anderen beiden Methoden. 
+    Grundsätzlich bieten alle drei Methoden eine hohe Qualität, unterscheiden sich jedoch deutlich im Rechenaufwand und in der Menge der Daten die bei gegebener Qualität übertragen werden können. MJPEG bietet eine hohe Qualität bei geringem Rechenaufwand, jedoch ist die Datenrate im Vergleich zu H.264 und \ac{AV1} deutlich höher. Das hat zur Folge, dass MJPEG zur Übertragung von Videodaten mit hoher Qualität wesentlich mehr Bandbreite benötigt als die anderen beiden Methoden. 
     
-    H.264 bietet eine gute Balance zwischen Qualität, Rechenaufwand und Datenrate. AV1 bietet zwar eine sehr hohe Qualität, jedoch ist der Rechenaufwand für die Kodierung deutlich höher als bei den anderen beiden Methoden. Da seit dem Raspberry Pi 5 keine dedizierten Hardware-Encoder mehr verbaut sind, muss die Kodierung der Videodaten vollständig von der \ac{CPU} übernommen werden, was bei AV1 zu einer erheblichen Belastung der \ac{CPU} führen würde. Daher ist AV1 für die Videoübertragung in diesem Projekt nicht geeignet.
+    H.264 bietet eine gute Balance zwischen Qualität, Rechenaufwand und Datenrate. \ac{AV1} bietet zwar eine sehr hohe Qualität, jedoch ist der Rechenaufwand für die Kodierung deutlich höher als bei den anderen beiden Methoden. Da seit dem Raspberry Pi 5 keine dedizierten Hardware-Encoder mehr verbaut sind, muss die Kodierung der Videodaten vollständig von der \ac{CPU} übernommen werden, was bei \ac{AV1} zu einer erheblichen Belastung der \ac{CPU} führen würde. Daher ist \ac{AV1} für die Videoübertragung in diesem Projekt nicht geeignet.
     
-    Zur Übertragung der Videodaten stehen WebRTC und HLS zur Auswahl. HLS ist ein Streaming-Protokoll, das auf \ac{HTTP} basiert und für die Übertragung von Videodaten über das Internet entwickelt wurde. Es bietet eine hohe Kompatibilität mit verschiedenen Geräten und Plattformen, jedoch ist die Latenz bei der Übertragung von Videodaten mit HLS im Vergleich zu WebRTC deutlich höher. WebRTC hingegen ist ein Echtzeit-Kommunikationsprotokoll, das speziell für die Übertragung von Audio- und Videodaten in Echtzeit entwickelt wurde. Es bietet eine sehr geringe Latenz und eine hohe Qualität, jedoch ist die Komplexität der Implementierung im Vergleich zu HLS höher.
+    Zur Übertragung der Videodaten stehen \ac{WebRTC} und \ac{HLS} zur Auswahl. \ac{HLS} ist ein Streaming-Protokoll, das auf \ac{HTTP} basiert und für die Übertragung von Videodaten über das Internet entwickelt wurde. Es bietet eine hohe Kompatibilität mit verschiedenen Geräten und Plattformen, jedoch ist die Latenz bei der Übertragung von Videodaten mit \ac{HLS} im Vergleich zu \ac{WebRTC} deutlich höher. \ac{WebRTC} hingegen ist ein Echtzeit-Kommunikationsprotokoll, das speziell für die Übertragung von Audio- und Videodaten in Echtzeit entwickelt wurde. Es bietet eine sehr geringe Latenz und eine hohe Qualität, jedoch ist die Komplexität der Implementierung im Vergleich zu \ac{HLS} höher.
 
-    Abschließend wurde die Entscheidung getroffen, H.264 als Video-Encoding-Methode zu verwenden, da es eine gute Balance zwischen Qualität, Rechenaufwand und Datenrate bietet. Zur Übertragung der Videodaten wird WebRTC verwendet, da es eine sehr geringe Latenz bietet, was für die Steuerung des Fahrzeugs von entscheidender Bedeutung ist. Somit ist eine Kombination aus H.264 und WebRTC die beste Lösung für die Videoübertragung in diesem Projekt.
+    Abschließend wurde die Entscheidung getroffen, H.264 als Video-Encoding-Methode zu verwenden, da es eine gute Balance zwischen Qualität, Rechenaufwand und Datenrate bietet. Zur Übertragung der Videodaten wird \ac{WebRTC} verwendet, da es eine sehr geringe Latenz bietet, was für die Steuerung des Fahrzeugs von entscheidender Bedeutung ist. Somit ist eine Kombination aus H.264 und \ac{WebRTC} die beste Lösung für die Videoübertragung in diesem Projekt.
     
     
     \subsection{Geplante Features} % vielleicht vor Softwarekomponenten? Weil da werden schon Features erwähnt

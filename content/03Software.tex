@@ -24,7 +24,7 @@ In diesem Abschnitt werden die verwendeten Programmiersprachen und deren Eigensc
     \subsection{Verwendete Bibliotheken und Frameworks}
     Für die Entwicklung der Software werden verschiedene Bibliotheken und Frameworks verwendet, um die geplanten Funktionalitäten umzusetzen und die Entwicklung zu erleichtern:
         \subsubsection{OpenCV} OpenCV ist eine Open-Source-Bibliothek, die eine Vielzahl von Funktionen für die Bildverarbeitung und -analyse bietet. Dadurch können Merkmale und Muster in Bildern erkannt und verarbeitet werden. OpenCV unterstützt verschiedene Algorithmen und Techniken, wie z.B. Kantenerkennung, Objekterkennung und Farberkennung, was es zu einer leistungsstarken Bibliothek für eine Vielzahl von Anwendungen macht \cite{OpenCVIntroduction}.
-        \subsubsection{gpiozero} Diese Python-Bibliothek ermöglicht die einfache Steuerung von GPIO-Pins auf dem Raspberry Pi. Sie bietet eine benutzerfreundliche \ac{API}, um Sensoren und Aktoren anzusteuern, was die Entwicklung von Hardware-Interaktionen erleichtert. Im Gegensatz zu der RPi.GPIO Bibliothek läuft gpiozero auch auf dem Raspberry Pi 5, da diese Bibliothek auf der libgpiod Bibliothek basiert, welche die \ac{GPIO}-Schnittstelle des Raspberry Pi 5 unterstützt. RPi.GPIO hingegen ist nicht mit der neuen \ac{GPIO}-Schnittstelle kompatibel und kann daher nicht auf dem Raspberry Pi 5 verwendet werden \cite{GpiozeroGpiozero201}.
+        \subsubsection{gpiozero} Diese Python-Bibliothek ermöglicht die einfache Steuerung von \ac{GPIO}-Pins auf dem Raspberry Pi. Sie bietet eine benutzerfreundliche \ac{API}, um Sensoren und Aktoren anzusteuern, was die Entwicklung von Hardware-Interaktionen erleichtert. Im Gegensatz zu der RPi.GPIO Bibliothek läuft gpiozero auch auf dem Raspberry Pi 5, da diese Bibliothek auf der libgpiod Bibliothek basiert, welche die \ac{GPIO}-Schnittstelle des Raspberry Pi 5 unterstützt. RPi.GPIO hingegen ist nicht mit der neuen \ac{GPIO}-Schnittstelle kompatibel und kann daher nicht auf dem Raspberry Pi 5 verwendet werden \cite{GpiozeroGpiozero201}.
         \subsubsection{React} React ist eine JavaScript-Bibliothek zur Erstellung von Benutzeroberflächen, die von Facebook entwickelt wurde. Sie ermöglicht die Entwicklung von interaktiven und dynamischen Webanwendungen durch die Verwendung von Komponenten, die den aktuellen Zustand verwalten und effizient aktualisieren können \cite{React}.
         \subsubsection{PySide6} PySide6 ist eine Python-Bibliothek für die Anbindung an das Qt-Framework, das zur Entwicklung von plattformübergreifenden Anwendungen verwendet wird. Es bietet eine umfangreiche Sammlung von Widgets und Tools, um grafische Benutzeroberflächen zu erstellen. Außerdem ermöglicht es die Integration von weiteren Funktionen wie beispielsweise Websockets \cite{QtPython}. 
     % gpiozero, react, PySide6, OpenCV
@@ -50,7 +50,7 @@ In diesem Abschnitt werden die Technologien und Tools beschrieben, die für die 
     \end{figure}
 
 \section{Videoübertragung}
-% WebRTC, H264, MJPEG, HLS
+% WebRTC, H264, MJPEG, \ac{HLS}
 % Hardwareencoder
 % In Konzept dann Vergleich und Begründung, warum wir uns für die gewählte Lösung entschieden haben
 Ein weiterer wichtiger Teil des Projekts ist die Videoübertragung von der Kamera zur Weboberfläche. Zur Übertragung von Vidodaten gibt es verschiedene Möglichkeiten, welche sich in der Qualität, Latenz und Komplexität unterscheiden. In diesem Abschnitt werden die verschiedenen Möglichkeiten zur Videoübertragung beschrieben, um später eine fundierte Entscheidung für die Implementierung treffen zu können.  
@@ -71,24 +71,24 @@ Ein weiterer wichtiger Teil des Projekts ist die Videoübertragung von der Kamer
 
         Um ein Einsteigen inmitten des Streams zu ermöglichen, sendet H.264 regelmäßig sogenannte I-Frames, die wie bei \ac{MJPEG} jedes Bild vollständig kodieren. Zwischen diesen Keyframes werden dann die Unterschiede in P-Frames kodiert, wodurch die Datenrate reduziert wird, aber dennoch ein Einsteigen inmitten des Streams möglich ist.
 
-        \subsubsection{AV1}
-        AV1 ein vergleichsweise neues Video-Kodierungsformat, das von der Alliance for Open Media entwickelt wurde. Es bietet eine höhere Komprimierung als H.264, was zu einer besseren Videoqualität bei niedrigeren Bitraten führt. Allerdings ist die Kodierung und Dekodierung von AV1 deutlich rechenintensiver als bei H.264, was zu einer höheren \ac{CPU}-Last führen kann \cite{PerformanceAnalysisH264}. 
+        \subsubsection{\acl{AV1}}
+        \ac{AV1} ist ein vergleichsweise neues Video-Kodierungsformat, das von der Alliance for Open Media entwickelt wurde. Es bietet eine höhere Komprimierung als H.264, was zu einer besseren Videoqualität bei niedrigeren Bitraten führt. Allerdings ist die Kodierung und Dekodierung von \ac{AV1} deutlich rechenintensiver als bei H.264, was zu einer höheren \ac{CPU}-Last führen kann \cite{PerformanceAnalysisH264}. 
 
-        Der Raspberry Pi 5 besitzt zwar einen Hardware-Decoder für AV1, jedoch keinen Hardware-Encoder, wodurch die Kodierung von Videodaten in AV1 auf dem Raspberry Pi 5 rein Software-basiert erfolgen muss.
+        Der Raspberry Pi 5 besitzt zwar einen Hardware-Decoder für \ac{AV1}, jedoch keinen Hardware-Encoder, wodurch die Kodierung von Videodaten in \ac{AV1} auf dem Raspberry Pi 5 rein Software-basiert erfolgen muss.
 
     \subsection{Übertragungsprotokolle}
     Um Videodaten zu übertragen gibt es ebenfalls verschiedene Protokolle, die im Folgenden beschrieben werden.
 
-        \subsubsection{WebRTC}
-        WebRTC ist ein Protokoll, das speziell für die Echtzeitkommunikation von Audio- und Videodaten über das Internet entwickelt wurde. Zur Übertragung der Daten wird \ac{UDP} verwendet. Dies hat den Vorteil, dass auf verlorene Pakete nicht gewartet wird, sondern die Übertragung fortgesetzt wird. Dabei ist die Latenz sehr gering, was insbesondere für die Livevideoübertragung von Vorteil ist \cite[Kapitel~1 und Kapitel~2]{RealTimeCommunicationWebRTC}, \cite{JavaScriptSessionEstablishment}.
+        \subsubsection{\acl{WebRTC}}
+        \ac{WebRTC} ist ein Protokoll, das speziell für die Echtzeitkommunikation von Audio- und Videodaten über das Internet entwickelt wurde. Zur Übertragung der Daten wird \ac{UDP} verwendet. Dies hat den Vorteil, dass auf verlorene Pakete nicht gewartet wird, sondern die Übertragung fortgesetzt wird. Dabei ist die Latenz sehr gering, was insbesondere für die Livevideoübertragung von Vorteil ist \cite[Kapitel~1 und Kapitel~2]{RealTimeCommunicationWebRTC}, \cite{JavaScriptSessionEstablishment}.
 
-        \subsubsection{HLS}
-        HLS ist ein von Apple entwickeltes Protokoll, das auf \ac{HTTP} und somit auch \ac{TCP} basiert. Die Videodaten werden in kleine Segmente aufgeteilt und über \ac{HTTP} übertragen. Da \ac{TCP} eine zuverlässige Übertragung gewährleistet, werden verlorene Pakete automatisch erneut gesendet. Dies hat zwar den Vorteil, dass die Daten zuverlässig und in der richtigen Reihenfolge ankommen, hat aber auch den Nachteil, dass die Latenz deutlich höher ist als bei WebRTC, da auf verlorene Pakete gewartet werden muss. HLS Puffert die Videodaten, welche in Segmente aufgeteilt werden zwischen. Als Pufferlänge werden von Apple sechs Sekunden empfohlen \cite[Abschnitt~7.5]{HTTPLiveStreaminga}, \cite{HTTPLiveStreaming}. 
+        \subsubsection{\acl{HLS}}
+        \ac{HLS} ist ein von Apple entwickeltes Protokoll, das auf \ac{HTTP} und somit auch \ac{TCP} basiert. Die Videodaten werden in kleine Segmente aufgeteilt und über \ac{HTTP} übertragen. Da \ac{TCP} eine zuverlässige Übertragung gewährleistet, werden verlorene Pakete automatisch erneut gesendet. Dies hat zwar den Vorteil, dass die Daten zuverlässig und in der richtigen Reihenfolge ankommen, hat aber auch den Nachteil, dass die Latenz deutlich höher ist als bei \ac{WebRTC}, da auf verlorene Pakete gewartet werden muss. \ac{HLS} Puffert die Videodaten, welche in Segmente aufgeteilt werden zwischen. Als Pufferlänge werden von Apple sechs Sekunden empfohlen \cite[Abschnitt~7.5]{HTTPLiveStreaminga}, \cite{HTTPLiveStreaming}. 
 
         \subsubsection{Implementierung via WebSockets}
         Eine weitere Möglichkeit zur Übertragung von Videodaten ist eine eigene Implementierung mittels Websockets (siehe Abschnitt \ref{sec:websockets}). 
 
-        Dies bringt jedoch mehrere Nachteile mit sich. Zum einen muss die Kodierung und Übertragung der Videodaten selbst implementiert werden, was deutlich komplexer ist als die Verwendung eines bestehenden Protokolls wie WebRTC oder HLS. Zum anderen ist die Latenz bei einer eigenen Implementierung in der Regel höher als bei WebRTC, da WebRTC speziell für die Echtzeitkommunikation optimiert ist. Zudem müssen zusätzliche Mechanismen zur Fehlerbehandlung und Synchronisierung implementiert werden, um eine zuverlässige Übertragung zu gewährleisten. Daher ist eine eigene Implementierung mittels Websockets in der Regel nicht die beste Wahl für die Übertragung von Videodaten, insbesondere wenn eine hohe Qualität und niedrige Latenz erforderlich sind.
+        Dies bringt jedoch mehrere Nachteile mit sich. Zum einen muss die Kodierung und Übertragung der Videodaten selbst implementiert werden, was deutlich komplexer ist als die Verwendung eines bestehenden Protokolls wie \ac{WebRTC} oder \ac{HLS}. Zum anderen ist die Latenz bei einer eigenen Implementierung in der Regel höher als bei \ac{WebRTC}, da \ac{WebRTC} speziell für die Echtzeitkommunikation optimiert ist. Zudem müssen zusätzliche Mechanismen zur Fehlerbehandlung und Synchronisierung implementiert werden, um eine zuverlässige Übertragung zu gewährleisten. Daher ist eine eigene Implementierung mittels Websockets in der Regel nicht die beste Wahl für die Übertragung von Videodaten, insbesondere wenn eine hohe Qualität und niedrige Latenz erforderlich sind.
 
 
     \subsection{PID-Regler} \label{sec:pid_regler}
