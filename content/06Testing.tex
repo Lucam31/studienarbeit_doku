@@ -124,8 +124,9 @@ In diesem Abschnitt werden die Ergebnisse der Tests evaluiert und mögliche Fehl
     \subsection{Follow the line}
     Das Follow the line Feature funktioniert insgesamt gut, jedoch gibt es Einschränkungen bei der Erkennung von Linien mit einer Breite von 0,5cm und bei Unterbrechungen der Linie von mehr als 10cm. Diese Einschränkungen könnten durch eine Kamera mit einem größeren Sichtfeld oder einer Anpassung der Position der Kamera verbessert werden. Dadurch könnten mehr Pixel erfasst werden, um der Linie auch bei schmaleren Linien oder größeren Unterbrechungen zu folgen. 
 
-    Bei direkter Sonneneinstrahlung gibt es teilweise Schwierigkeiten bei der Erkennung der Linie, was auf die Überbelichtung der Kamera zurückzuführen ist. Bei einem binären Bild haben dadurch alle Pixel einen sehr ähnlichen Wert und können nicht mehr genau unterschieden werden. Eine mögliche Verbesserung wäre die Verwendung einer Kamera mit einem höheren Dynamikumfang oder die Integration von Filtern auf der Linse, um die Auswirkungen von direkter Sonneneinstrahlung zu reduzieren. 
+    Bei direkter Sonneneinstrahlung gibt es Schwierigkeiten bei der Erkennung der Linie, was auf die Überbelichtung der Kamera zurückzuführen ist. Durch diese Überbelichtung werden die Pixel der orangenen Linie ausgewaschen. Der Sättigungswert der Pixel fällt so weit herab, sodass dieser unter dem Schwellenwert liegt, um im Binärbild als Teil der Linie erkannt zu werden. Eine mögliche Verbesserung wäre die Verwendung einer Kamera mit einem höheren Dynamikumfang oder die Integration von Filtern auf der Linse, um die Auswirkungen von direkter Sonneneinstrahlung zu reduzieren. 
 
+    Eine andere Lösung könnte die Anpassung der Position der Kamera sein, um eine dauerhaft gleichmäßige Beleuchtung zu garantieren. Die Kamera könnte unterhalb des Fahrzeuges in einer schwarzen Box und einem Lichtring montiert werden. Dardurch könnte unabhängig von der Umgebungsbeleuchtung eine gleichmäßige Ausleuchtung der Linie gewährleistet werden, was die Erkennungsgenauigkeit verbessern würde.
 
 % Tests für:
 % - Notbremsung:
