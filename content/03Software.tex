@@ -91,16 +91,47 @@ Ein weiterer wichtiger Teil des Projekts ist die Videoübertragung von der Kamer
         Dies bringt jedoch mehrere Nachteile mit sich. Zum einen muss die Kodierung und Übertragung der Videodaten selbst implementiert werden, was deutlich komplexer ist als die Verwendung eines bestehenden Protokolls wie \ac{WebRTC} oder \ac{HLS}. Zum anderen ist die Latenz bei einer eigenen Implementierung in der Regel höher als bei \ac{WebRTC}, da \ac{WebRTC} speziell für die Echtzeitkommunikation optimiert ist. Zudem müssen zusätzliche Mechanismen zur Fehlerbehandlung und Synchronisierung implementiert werden, um eine zuverlässige Übertragung zu gewährleisten. Daher ist eine eigene Implementierung mittels Websockets in der Regel nicht die beste Wahl für die Übertragung von Videodaten, insbesondere wenn eine hohe Qualität und niedrige Latenz erforderlich sind.
 
 
-    \subsection{PID-Regler} \label{sec:pid_regler}
-    In einem System können einzelne Parameter, wie die Temperatur, Geschwindigkeit und Position, von dem eigentlichen Sollwert abweichen. Um diese Abweichung zu minimieren, kann ein PID-Regler verwendet werden. Dieser misst den aktuellen Fehler, auch Regelabweichung $e(t) = w(t) - y(t)$ genannt, und berechnet daraus die Stellgröße $u(t)$, sodass die Regelgröße $y(t)$ den Sollwert $w(t)$ erreicht.
+\section{PID-Regler} \label{sec:pid_regler}
+In einem System können einzelne Parameter, wie die Temperatur, Geschwindigkeit und Position, von dem eigentlichen Sollwert abweichen. Um diese Abweichung zu minimieren, kann ein PID-Regler verwendet werden. Dieser misst den aktuellen Fehler, auch Regelabweichung $e(t) = w(t) - y(t)$ genannt, und berechnet daraus die Stellgröße $u(t)$, sodass die Regelgröße $y(t)$ den Sollwert $w(t)$ erreicht.
 
-    Der PID-Regler besteht aus drei Komponenten: 
-    \begin{itemize}
-        \item \textbf{Proportionalanteil (P)}: Dieser Anteil ist proportional zum aktuellen Fehler. Er berechnet sich als $ u_P = K_P \cdot e(t)$, wobei $K_P$ der Proportionale Faktor ist. Eigenschaften des Proportionalanteils sind, dass er schnell auf Fehler reagiert, aber alleine nicht in der Lage ist, den Fehler vollständig zu eliminieren, da er nur die Stellgröße proportional zum aktuellen Fehler anpasst. Daher kann es zu einem sogenannten stationären Fehler kommen, bei dem die Regelgröße einen konstanten Abstand zum Sollwert aufweist.
-        
-        \item \textbf{Integralanteil (I)}: Dieser Anteil berücksichtigt die Summe aller vergangenen Fehler. Er berechnet sich als $ u_I = K_I \cdot \int e(\tau) d\tau$, wobei $K_I$ der Integrationsfaktor ist. Solange der Fehler nicht null ist, wächst das Integral weiter an, wodurch der Regler die Stellgröße so lange anpasst, bis der Fehler vollständig eliminiert ist. Dadurch kann der stationäre Fehler, der durch den Proportionalanteil verursacht wird, beseitigt werden. Allerdings kann ein zu hoher Integrationsfaktor zu einem Überschwingen führen, da die Stellgröße zu stark angepasst wird. Ein solches Überschwingen kann dazu führen, dass die Regelgröße den Sollwert überschreitet und wieder zurückschwingt, was zu Instabilität im System führen kann.
-        
-        \item \textbf{Differentialanteil (D)}: Dieser Anteil berücksichtigt die Änderungsrate des Fehlers. Er berechnet sich als $ u_D = K_D \cdot \frac{de(t)}{dt}$, wobei $K_D$ der Differenzierungsfaktor ist. Der Differentialanteil hilft dabei, das System zu stabilisieren und Überschwingen zu reduzieren. Da er bei schneller Änderung des Fehlers die Stellgröße verkleinert und dadurch ein Überschwingen verhindert. Allerdings kann ein zu hoher Differenzierungsfaktor zu einem trägen System führen, da die Stellgröße zu stark reduziert wird, wodurch das System langsamer auf Fehler reagiert.
-    \end{itemize}
+Der PID-Regler besteht aus drei Komponenten: 
+\begin{itemize}
+    \item \textbf{Proportionalanteil (P)}: Dieser Anteil ist proportional zum aktuellen Fehler. Er berechnet sich als $ u_P = K_P \cdot e(t)$, wobei $K_P$ der Proportionale Faktor ist. Eigenschaften des Proportionalanteils sind, dass er schnell auf Fehler reagiert, aber alleine nicht in der Lage ist, den Fehler vollständig zu eliminieren, da er nur die Stellgröße proportional zum aktuellen Fehler anpasst. Daher kann es zu einem sogenannten stationären Fehler kommen, bei dem die Regelgröße einen konstanten Abstand zum Sollwert aufweist.
+    
+    \item \textbf{Integralanteil (I)}: Dieser Anteil berücksichtigt die Summe aller vergangenen Fehler. Er berechnet sich als $ u_I = K_I \cdot \int e(\tau) d\tau$, wobei $K_I$ der Integrationsfaktor ist. Solange der Fehler nicht null ist, wächst das Integral weiter an, wodurch der Regler die Stellgröße so lange anpasst, bis der Fehler vollständig eliminiert ist. Dadurch kann der stationäre Fehler, der durch den Proportionalanteil verursacht wird, beseitigt werden. Allerdings kann ein zu hoher Integrationsfaktor zu einem Überschwingen führen, da die Stellgröße zu stark angepasst wird. Ein solches Überschwingen kann dazu führen, dass die Regelgröße den Sollwert überschreitet und wieder zurückschwingt, was zu Instabilität im System führen kann.
+    
+    \item \textbf{Differentialanteil (D)}: Dieser Anteil berücksichtigt die Änderungsrate des Fehlers. Er berechnet sich als $ u_D = K_D \cdot \frac{de(t)}{dt}$, wobei $K_D$ der Differenzierungsfaktor ist. Der Differentialanteil hilft dabei, das System zu stabilisieren und Überschwingen zu reduzieren. Da er bei schneller Änderung des Fehlers die Stellgröße verkleinert und dadurch ein Überschwingen verhindert. Allerdings kann ein zu hoher Differenzierungsfaktor zu einem trägen System führen, da die Stellgröße zu stark reduziert wird, wodurch das System langsamer auf Fehler reagiert.
+\end{itemize}
 
-    Die Gesamtstellgröße des PID-Reglers berechnet sich als Summe der drei Anteile: $ u(t) = u_P + u_I + u_D$. Durch die richtige Einstellung der Faktoren $K_P$, $K_I$ und $K_D$ kann der PID-Regler so angepasst werden, dass das System schnell auf Fehler reagiert, den stationären Fehler eliminiert und Überschwingen minimiert \cite[S. 832 ff.]{HandbuchElektrotechnik}.
+Die Gesamtstellgröße des PID-Reglers berechnet sich als Summe der drei Anteile: $ u(t) = u_P + u_I + u_D$. Durch die richtige Einstellung der Faktoren $K_P$, $K_I$ und $K_D$ kann der PID-Regler so angepasst werden, dass das System schnell auf Fehler reagiert, den stationären Fehler eliminiert und Überschwingen minimiert \cite[S. 832 ff.]{HandbuchElektrotechnik}.
+
+\section{HSV} \label{sec:hsv_colorspace}
+Der HSV-Farbraum ist ein Farbsystem, das die Farbwahrnehmung des menschlichen Auges besser widerspiegelt als der RGB-Farbraum. Im HSV-Farbraum wird die Farbe durch drei Komponenten beschrieben \cite[S. 129]{ExperimentalComparisonRGB}:
+
+\begin{itemize}
+    \item \textbf{Hue (H)}: Diese Komponente beschreibt den Farbton und wird in Grad angegeben, wobei \SI{0}{\degree} für Rot, \SI{120}{\degree} für Grün und \SI{240}{\degree} für Blau steht. Der Hue-Wert gibt nur an, welche Farbe vorliegt und ist unabhängig von der Helligkeit und Sättigung.
+    
+    \item \textbf{Saturation (S)}: Diese Komponente beschreibt die Farbsättigung und wird als Prozentsatz angegeben. Ein Wert von \SI{0}{\percent} bedeutet, dass die Farbe vollständig entsättigt ist (also Grau), während ein Wert von \SI{100}{\percent} bedeutet, dass die Farbe vollständig gesättigt ist (also die reine Farbe).
+    
+    \item \textbf{Value (V)}: Diese Komponente beschreibt die Helligkeit der Farbe und wird ebenfalls als Prozentsatz angegeben. Ein Wert von \SI{0}{\percent} bedeutet, dass die Farbe vollständig dunkel ist (also Schwarz), während ein Wert von \SI{100}{\percent} bedeutet, dass die Farbe vollständig hell ist (also die volle Helligkeit der Farbe).
+\end{itemize}
+
+In der Regel wird der HSV-Farbraum wie in Abbildung \ref{fig:HSV_cone} dargestellt, wobei der Hue-Wert als Winkel um die vertikale Achse dargestellt wird, die Sättigung als Abstand von der vertikalen Achse und die Helligkeit als Höhe über der horizontalen Ebene. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/03Software/HSV_cone.png}
+    \caption{HSV-Farbraum dargestellt als Kegel \cite{HSVFarbraum}}
+    \label{fig:HSV_cone}
+\end{figure}
+
+\section{Morphologische Operatoren}
+Morphologische Operatoren sind eine Klasse von nicht linearen Bildverarbeitungsoperationen, die auf der Form und Struktur von Objekten in einem Bild basieren. 
+
+    \subsection{Dilatation}
+    Die Dilatation ist ein morphologischer Operator, der die Form von Objekten in einem Bild erweitert. Ein Strukturelement mit bestimmter Form und Größe wird über das Bild bewegt. Der Ankerpixel des Strukturelements wird dabei auf jedes Pixel des Bildes gelegt. Wenn mindestens ein Pixel des Strukturelements ein Pixel des Bildes berührt, wird der Ankerpixel im Ergebnisbild auf 1 gesetzt. Dadurch werden die Objekte im Bild erweitert \cite[S. 14 - 16]{MorphologischeBildverarbeitung}.
+
+    \subsection{Erosion}
+    Die Erosion ist das Gegenstück zur Dilatation und dient dazu, die Form von Objekten in einem Bild zu verkleinern. Ein Strukturelement wird über das Bild bewegt, wobei der Ankerpixel auf jedes Pixel des Bildes gelegt wird. Wenn das Strukturelement vollständig in das Bild hineinpasst, wird der Ankerpixel im Ergebnisbild auf 1 gesetzt, andernfalls auf 0. Dadurch werden die Objekte im Bild verkleinert \cite[S. 13 und 14]{MorphologischeBildverarbeitung}.
+
+    \subsection{Closing} \label{sec:closing}
+    Das Closing ist eine Kombination aus Dilatation und Erosion, bei der zuerst die Dilatation und anschließend die Erosion angewendet wird. Es dient dazu, kleine Löcher in Objekten zu schließen und Lücken zwischen Objekten zu füllen. Durch die folgende Erosion auf die Dilatation wird die vorherige Vergrößerung des Objekts wieder rückgängig gemacht, Lücken oder Löcher bleiben aber geschlossen \cite[S. 18 und 19]{MorphologischeBildverarbeitung}.
