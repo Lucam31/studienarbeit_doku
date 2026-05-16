@@ -97,7 +97,7 @@ Ein weiterer wichtiger Teil des Projekts ist die Videoübertragung von der Kamer
         Dies bringt jedoch mehrere Nachteile mit sich. Zum einen muss die Kodierung und Übertragung der Videodaten selbst implementiert werden, was deutlich komplexer ist als die Verwendung eines bestehenden Protokolls wie WebRTC oder HLS. Zum anderen ist die Latenz bei einer eigenen Implementierung in der Regel höher als bei WebRTC, da WebRTC speziell für die Echtzeitkommunikation optimiert ist. Zudem müssen zusätzliche Mechanismen zur Fehlerbehandlung und Synchronisierung implementiert werden, um eine zuverlässige Übertragung zu gewährleisten. Daher ist eine eigene Implementierung mittels Websockets in der Regel nicht die beste Wahl für die Übertragung von Videodaten, insbesondere wenn eine hohe Qualität und niedrige Latenz erforderlich sind.
 
 
-    \subsection{PID-Regler}
+    \subsection{PID-Regler} \label{sec:pid_regler}
     In einem System können einzelne Parameter, wie die Temperatur, Geschwindigkeit und Position, von dem eigentlichen Sollwert abweichen. Um diese Abweichung zu minimieren, kann ein PID-Regler verwendet werden. Dieser misst den aktuellen Fehler, auch Regelabweichung $e(t) = w(t) - y(t)$ genannt, und berechnet daraus die Stellgröße $u(t)$, sodass die Regelgröße $y(t)$ den Sollwert $w(t)$ erreicht.
 
     Der PID-Regler besteht aus drei Komponenten: 

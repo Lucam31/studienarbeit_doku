@@ -1,10 +1,10 @@
 \chapter{Testen des Fahrzeugs und der Assistenzsysteme}
 \label{chap:testing}
-In diesem Kapitel werden die Teststrategie, die Definition der Testfälle als auch die Durchführung und Auswertung der Tests beschrieben. Ziel ist es, die Funktionalität des Fahrzeugs und der implementierten Features zu überprüfen.
+In diesem Kapitel werden die Teststrategie, die Definition der Testfälle als auch die Durchführung und Auswertung der Tests beschrieben. Ziel ist es, die Funktionalität des Fahrzeugs und der implementierten Features zu testen.
 
 \section{Teststrategie} 
 Die Teststrategie für das Fahrzeug und die Fahrassistenzsysteme umfasst zwei Phasen, um sicherzustellen, dass alle Funktionen wie vorgesehen arbeiten. Zunächst werden die einzelnen Funktionen des Fahrzeugs möglichst isoliert getestet, um sicherzustellen, dass sie korrekt implementiert sind. Dabei werden verschiedene Testfälle definiert, die die Funktionalität in unterschiedlichen Situationen überprüfen. \\
-Anschließend wird das Fahrzeug im Ganzen getestet, um die Interaktion der verschiedenen Funktionen unter realen Bedingungen zu überprüfen. 
+Anschließend wird das Fahrzeug im Ganzen getestet, um die Interaktion der verschiedenen Funktionen unter realen Bedingungen zu testen. 
 % erstmal fernsteuerung (vorwärts, rückwärts, links, rechts), dann steuerung auf unterschiedlichen untergründen, dann ultraschallsensor, dann hall sensor, dann notbremsung (ultraschall + hall sensor), dann follow the line, dann generell rumfahren und schauen
 
 \section{Definition der Testfälle}
@@ -13,20 +13,20 @@ Die Definition der Testfälle erfolgt jeweils für die einzelnen Funktionen des 
     \subsection{Fernsteuerung}
     Zuerst wird die grundlegende Funktionalität der Fernsteuerung getestet, während die anderen Funktionen deaktiviert sind, um sicherzustellen, dass das Fahrzeug auf die Steuerbefehle korrekt reagiert. Dazu werden die folgenden Testfälle definiert:
     \begin{itemize}
-        \item Vorwärtsfahren - Das Fahrzeug soll auf das Kommando \enquote{Vorwärts} reagieren und sich mit der entsprechenden Geschwindigkeit geradeaus bewegen.
-        \item Rückwärtsfahren - Das Fahrzeug soll auf das Kommando \enquote{Rückwärts} reagieren und sich mit der entsprechenden Geschwindigkeit rückwärts bewegen.
-        \item Linksabbiegen - Das Fahrzeug soll auf das Kommando \enquote{Links} reagieren und die Motoren in die entsprechende Richtung drehen.
-        \item Rechtsabbiegen - Das Fahrzeug soll auf das Kommando \enquote{Rechts} reagieren und die Motoren in die entsprechende Richtung drehen.
+        \item Vorwärtsfahren: Das Fahrzeug soll auf das Kommando \enquote{Vorwärts} reagieren und sich mit der entsprechenden Geschwindigkeit geradeaus bewegen.
+        \item Rückwärtsfahren: Das Fahrzeug soll auf das Kommando \enquote{Rückwärts} reagieren und sich mit der entsprechenden Geschwindigkeit rückwärts bewegen.
+        \item Linksabbiegen: Das Fahrzeug soll auf das Kommando \enquote{Links} reagieren und die Motoren in die entsprechende Richtung drehen.
+        \item Rechtsabbiegen: Das Fahrzeug soll auf das Kommando \enquote{Rechts} reagieren und die Motoren in die entsprechende Richtung drehen.
     \end{itemize}
-    Diese Testfälle werden unter verschiedenen Bedingungen durchgeführt, beispielsweise auf unterschiedlichen Untergründen und bei unterschiedlichen Geschwindigkeiten, um mögliche Bewegungseinschränkungen festzustellen. Als Untergründe werden Fliesen, Teppich, Parkett, Karton und Linoleum verwendet, um sowohl glatte als auch unebene Oberflächen zu testen. Zudem werden die Testfälle bei voller Geschwindigkeit und halber Geschwindigkeit durchgeführt, um die Reaktionsfähigkeit des Fahrzeugs zu überprüfen.
+    Diese Testfälle werden unter verschiedenen Bedingungen durchgeführt, beispielsweise auf unterschiedlichen Untergründen und Geschwindigkeiten, um mögliche Bewegungseinschränkungen festzustellen. Als Untergründe werden Fliesen, Teppich, Parkett, Karton und Linoleum verwendet, um sowohl glatte als auch unebene Oberflächen zu testen. Zudem werden die Testfälle bei voller Geschwindigkeit und halber Geschwindigkeit durchgeführt, um die Reaktionsfähigkeit des Fahrzeugs zu prüfen.
 
     \subsection{Notbremssystem}
     Um die Notbremsung zu testen, werden zuerst die dafür benötigten Sensoren, also der Ultraschallsensor und der Hall-Sensor, einzeln getestet, um mögliche Fehlerquellen vorab zu identifizieren. Anschließend wird die Notbremsung selbst getestet, indem das Fahrzeug auf ein Hindernis zufährt und die Reaktion des Systems beobachtet wird. 
 
         \subsubsection{Ultraschallsensor}
-        Um den Ultraschallsensor zu testen, werden verschiedene Objekte aus unterschiedlichen Materialien und Entfernungen vor den Sensor gehalten, um die Zuverlässigkeit und Genauigkeit der Entfernungsmessung zu überprüfen. Die gemessenen Entfernungen werden in der Konsole ausgegeben und mit den tatsächlichen Werten verglichen, um die Genauigkeit zu bewerten. Für die Tests werden folgende Parameter definiert:
+        Um den Ultraschallsensor zu testen, werden verschiedene Objekte aus unterschiedlichen Materialien und Entfernungen vor den Sensor gehalten, um die Zuverlässigkeit und Genauigkeit der Entfernungsmessung zu überprüfen. Die gemessenen Entfernungen werden in der Konsole ausgegeben und mit den tatsächlichen Werten verglichen. Für die Tests werden folgende Parameter definiert:
         \begin{itemize}
-            \item Objekte: Als Objekte werden, wie in Abbildung \ref{fig:ultraschallsensor_test} zu sehen, eine Wand, ein Stück Holz, ein Stück Schaumstoff und ein Eierkarton verwendet. Dadurch kann die Leistung des Sensors bei unterschiedlichen Materialien bewertet werden. Dabei wird erwartet, dass der Sensor bei der Wand und dem Holz zuverlässige Messwerte liefert. Beim Schaumstoff hingegen wird eine unzuverlässige Messung erwartet, da der Schaumstoff Schall absorbiert. Der Eierkarton könnte aufgrund seiner Struktur zu einer Streuung der Schallwellen führen, was ebenfalls zu ungenauen Messungen führen könnte.
+            \item Objekte: Als Objekte werden, wie in Abbildung \ref{fig:ultraschallsensor_test} zu sehen, eine Wand, ein Stück Holz, ein Stück Schaumstoff und ein Eierkarton verwendet. Dadurch kann die Leistung des Sensors bei unterschiedlichen Materialien bewertet werden. Die Objekte wurden so gewählt, dass sie unterschiedliche Eigenschaften hinsichtlich der Schallreflexion aufweisen.
             \item Entfernungen: Die Objekte werden in Abständen von 50cm, 100cm und 200cm vor den Sensor gehalten, um die Genauigkeit der Messungen über verschiedene Distanzen zu überprüfen.
         \end{itemize}
         Für die Tests werden alle möglichen Kombinationen der Parameter getestet, um die Zuverlässigkeit und Genauigkeit des Ultraschallsensors unter verschiedenen Bedingungen zu bewerten.
@@ -39,7 +39,7 @@ Die Definition der Testfälle erfolgt jeweils für die einzelnen Funktionen des 
         \end{figure}
 
         \subsubsection{Hall-Sensor}
-        Der Hall-Sensor wird unter verschiedenen Geschwindigkeiten getestet. Dafür wird das Fahrzeug mit halber und voller Geschwindigkeit sowohl vorwärts, rückwärts als auch um Kurven bewegt, um die Funktionalität des Sensors bei unterschiedlichen Bewegungsrichtungen und Geschwindigkeiten zu überprüfen. Um die tatsächlichen Geschwindigkeiten zu ermitteln, wird die Zeit gemessen, die das Fahrzeug für eine bestimmte Strecke benötigt und diese mit der gemessenen Geschwindigkeit des Hall-Sensors verglichen.
+        Der Hall-Sensor wird unter verschiedenen Geschwindigkeiten getestet. Dafür wird das Fahrzeug mit halber und voller Geschwindigkeit sowohl vorwärts, rückwärts als auch um Kurven bewegt, um die Funktionalität des Sensors bei unterschiedlichen Bewegungsrichtungen und Geschwindigkeiten zu überprüfen. Um die tatsächlichen Geschwindigkeiten zu ermitteln, wird die Zeit gemessen, die das Fahrzeug für eine bestimmte Strecke benötigt und die Geschwindigkeit berechnet. Diese wird anschließend mit der gemessenen Geschwindigkeit des Hall-Sensors verglichen.
 
         \subsubsection{Notbremsung}
         Nachdem die Sensoren einzeln getestet wurden, wird die Notbremsung selbst getestet, indem die Bedingungen der Tests für die Sensoren miteinander kombiniert werden. Das Fahrzeug wird auf unterschiedliche Hindernisse aus unterschiedlichen Distanzen zufahren. Dabei wird beobachtet, ob die Notbremsung rechtzeitig eingeleitet wird, um eine Kollision zu verhindern, und ob das Fahrzeug bei der Notbremsung stabil bleibt.
@@ -50,12 +50,12 @@ Die Definition der Testfälle erfolgt jeweils für die einzelnen Funktionen des 
 \section{Durchführung der Tests}
 Zunächst werden die Tests für die Fernsteuerung durchgeführt, gefolgt von den Tests für das Notbremssystem und schließlich die Tests für das Follow the line Feature. 
     \subsection{Fernsteuerung}
-    Das Testen der Fernsteuerung zeigt, dass das Fahrzeug korrekt auf die Steuerbefehle reagiert und sich in die gewünschte Richtung bewegt. Die Bewegungen sind dabei auf allen getesteten Untergründen möglich, jedoch kam es teilweise zu Komplikationen auf Karton. Hier rutschen die Reifen des Fahrzeugs, wenn die Steigung zu hoch ist oder Unebenheiten das Fahrzeug blockieren. Auf den anderen Untergründen funktioniert die Fernsteuerung hingegen zuverlässig, sowohl bei voller Geschwindigkeit als auch bei halber Geschwindigkeit.
+    Das Fahrzeug reagiert bei den Tests der Fernsteuerung korrekt auf die Steuerbefehle und bewegt sich in die gewünschte Richtung. Die Bewegungen sind dabei auf allen getesteten Untergründen möglich, jedoch kam es teilweise zu Komplikationen auf Karton. Hier rutschen die Reifen des Fahrzeugs, wenn die Steigung zu hoch ist oder Unebenheiten das Fahrzeug blockieren. Auf den anderen Untergründen funktioniert die Fernsteuerung hingegen zuverlässig, sowohl bei voller Geschwindigkeit als auch bei halber Geschwindigkeit.
 
     \subsection{Notbremssystem}
     Die definierten Testfälle für das Notbremssystem werden in der Reihenfolge durchgeführt in der sie definiert wurden, um mögliche Fehlerquellen frühzeitig zu identifizieren.
         \subsubsection{Ultraschallsensor}
-        Die Tests für den Ultraschallsensor ergeben, dass der Sensor bei der Wand und dem Holz zuverlässige Messwerte liefert, während beim Eierkarton nur bei sehr präziser Platzierung des Kartons vor dem Sensor nutzbare Messwerte erzielt werden können. Diese waren dann auch relativ genau, jedoch kam es schnell zu einer Streuung der Messwerte auf einen Bereich bis zu 400cm. Beim Schaumstoff hingegen werden keine verwertbaren Daten erfasst. In der Tabelle \ref{tab:ultraschallsensor_ergebnisse} sind die Ergebnisse der Tests für den Ultraschallsensor zusammengefasst. \\
+        Die Tests für den Ultraschallsensor ergeben, dass der Sensor bei der Wand und dem Holz zuverlässige Messwerte liefert, während beim Eierkarton nur bei sehr präziser Platzierung des Kartons vor dem Sensor nutzbare Messwerte erzielt werden können. Diese waren dann ebenfalls genau, jedoch kam es schnell zu einer Streuung der Messwerte auf einen Bereich bis zu 400cm. Beim Schaumstoff hingegen werden keine verwertbaren Daten erfasst. In der Tabelle \ref{tab:ultraschallsensor_ergebnisse} sind die Ergebnisse der Tests für den Ultraschallsensor zusammengefasst.
         Generell ist aufgefallen, dass der Ultraschallsensor nur im rechten Winkel zum Hindernis funktioniert und bei einer seitlichen Annäherung an das Hindernis keine Werte erfasst.
         \begin{table}[H]
             \centering
@@ -67,7 +67,7 @@ Zunächst werden die Tests für die Fernsteuerung durchgeführt, gefolgt von den
                 \hline
                 \textbf{100cm} & 98,3cm (Ausreißer: 96-98cm) & 98,3cm (Ausreißer: 96-98cm) & Keine verwertbaren Daten & 96-104cm (Streuung bis zu 400cm) \\
                 \hline
-                \textbf{200cm} & 198cm (Ausreißer: 120-160cm) & 198cm (Ausreißer: 120-160cm) & Keine verwertbaren Daten & manchmal 205cm (meistens Streuung von 120-400cm) \\
+                \textbf{200cm} & 198cm (Ausreißer: 120-160cm) & 198cm (Ausreißer: 120-160cm) & Keine verwertbaren Daten & Manchmal 205cm (meistens Streuung von 120-400cm) \\
                 \hline
             \end{tabular}
             \caption{Ergebnisse der Tests für den Ultraschallsensor}
@@ -75,47 +75,45 @@ Zunächst werden die Tests für die Fernsteuerung durchgeführt, gefolgt von den
         \end{table}
 
         \subsubsection{Hall-Sensor}
-        Die Tests für den Hall-Sensor zeigen, dass die gemessenen Geschwindigkeiten nur geringfügig von den tatsächlichen Geschwindigkeiten abweichen. Diese Abweichungen betragen ca. 0,5 km/h. Sowohl bei der Vorwärts- als auch bei der Rückwärtsbewegung und bei Kurvenfahrten werden ähnliche Geschwindigkeiten gemessen, was in der Tabelle \ref{tab:hall_sensor_ergebnisse} zusammengefasst ist.
+        Die gemessenen Geschwindigkeiten des Hall-Sensors weichen nur geringfügig von den tatsächlichen Geschwindigkeiten ab. Diese Abweichungen betragen ca. 0,1 km/h. Sowohl bei der Vorwärts- als auch bei der Rückwärtsbewegung und bei Kurvenfahrten werden ähnliche Geschwindigkeiten gemessen, was in der Tabelle \ref{tab:hall_sensor_ergebnisse} zusammengefasst ist.
         \begin{table}[H]
-            \centering
-            \begin{tabular}{|l|c|c|}
+            \begin{tabular}{|l|ll|ll|}
                 \hline
-                \textbf{Bewegungsrichtung} & \textbf{Volle Geschwindigkeit} & \textbf{Halbe Geschwindigkeit} \\
-                \hline
-                Vorwärts & 2,4 km/h & 1,2 km/h \\
-                \hline
-                Rückwärts & 2,4 km/h & 1,2 km/h \\
-                \hline
-                Kurvenfahrt & 2,3 km/h & 1,1 km/h \\
-                \hline
+                \multirow{2}{*}{\textbf{Bewegungsrichtung}} & \multicolumn{2}{l|}{\textbf{Volle Geschwindigkeit}}           & \multicolumn{2}{l|}{\textbf{Halbe Geschwindigkeit}}           \\ \cline{2-5} 
+                                                            & \multicolumn{1}{l|}{\textbf{Tatsächlich}} & \textbf{Gemessen} & \multicolumn{1}{l|}{\textbf{Tatsächlich}} & \textbf{Gemessen} \\ \hline
+                \textbf{Vorwärts}                                    & \multicolumn{1}{l|}{2,4 km/h}             & 2,3 km/h          & \multicolumn{1}{l|}{1,2 km/h}             & 1,1 km/h          \\ \hline
+                \textbf{Rückwärts}                                   & \multicolumn{1}{l|}{2,4 km/h}             & 2,3 km/h          & \multicolumn{1}{l|}{1,2 km/h}             & 1,1 km/h          \\ \hline
+                \textbf{Kurvenfahrt}                                 & \multicolumn{1}{l|}{2,3 km/h}             & 2,2 km/h          & \multicolumn{1}{l|}{1,1 km/h}             & 1,1 km/h          \\ \hline
             \end{tabular}
             \caption{Ergebnisse der Tests für den Hall-Sensor}
             \label{tab:hall_sensor_ergebnisse}
         \end{table}
 
         \subsubsection{Notbremsung}
-        Die Tests für die Notbremsung zeigen, dass das System für die meisten getesteten Szenarien rechtzeitig reagiert und das Fahrzeug zum Stillstand bringt, bevor es das Hindernis erreicht. Es gibt jedoch einige Fälle, bei denen die Notbremsung zu spät oder gar nicht ausgelöst wird. Dazu gehören alle Szenarien, bei denen der Schaumstoff als Hindernis verwendet wird. Auch unter Verwendung des Eierkartons als Hindernis kommt es teilweise zu einer verzögerten oder gar keiner Reaktion.  \\
+        In den meisten getesteten Szenarien reagiert das System rechtzeitig und bringt das Fahrzeug zum Stillstand, bevor es das Hindernis erreicht. Es gibt jedoch einige Fälle, bei denen die Notbremsung zu spät oder gar nicht ausgelöst wird. Dazu gehören alle Szenarien, bei denen der Schaumstoff als Hindernis verwendet wird. Auch unter Verwendung des Eierkartons als Hindernis kommt es teilweise zu einer verzögerten oder gar keiner Reaktion.
+
         Bei der Verwendung von Holz und der Wand als Hindernis kommt es zu keinen Komplikationen und die Notbremsung wird zuverlässig ausgelöst. Auch die Stabilität des Fahrzeugs während der Notbremsung ist in allen Szenarien gegeben, da das Fahrzeug bei der Notbremsung nicht ins Schleudern gerät, vom Kurs abkommt oder umkippt.
 
     \subsection{Follow the line}
-    Die Tests für das Follow the line Feature zeigen, dass das System die Linie unter verschiedenen Bedingungen zuverlässig erkennt und dem Verlauf der Linie folgt. Es gibt jedoch einige Einschränkungen, insbesondere bei der Erkennung von Linien mit einer Breite von 0,5cm, da hier nicht mehr genug Pixel erkannt werden, um der Linie bis zum Ende zu folgen. Daher stoppt das Fahrzeug einige Zentimeter vor dem Ende der Linie. Zudem führt eine Unterbrechung der Linie von mehr als 10cm dazu, dass das Fahrzeug die Linie verliert. Unterbrechungen von bis zu 10cm können jedoch überwunden werden, da das Fahrzeug in diesem Fall noch genug Informationen hat, um der Linie zu folgen. \\
-    Die Tests zeigen auch, dass das System bei unterschiedlichen Lichtverhältnissen gut funktioniert, jedoch bei direkter Sonneneinstrahlung teilweise Schwierigkeiten hat, die Linie zu erkennen. In einem beleuchteten Raum und in einem dunklen Raum funktioniert die Linienerkennung hingegen zuverlässig.
+    Die Tests für das Follow the line Feature zeigen, dass das System die Linie unter verschiedenen Bedingungen zuverlässig erkennt und dem Verlauf der Linie folgt. Es gibt jedoch einige Einschränkungen, insbesondere bei der Erkennung von Linien mit einer Breite von 0,5cm, da hier nicht mehr genug Pixel erkannt werden, um der Linie bis zum Ende zu folgen. Daher stoppt das Fahrzeug einige Zentimeter vor dem Ende der Linie. Zudem führt eine Unterbrechung der Linie von mehr als 10cm dazu, dass das Fahrzeug die Linie verliert. Unterbrechungen von bis zu 10cm können jedoch überwunden werden, da das Fahrzeug in diesem Fall noch genug Informationen hat, um der Linie zu folgen.
+
+    Die Tests zeigen auch, dass das System bei unterschiedlichen Lichtverhältnissen gut funktioniert, es jedoch bei direkter Sonneneinstrahlung teilweise zu Schwierigkeiten bei der Linienerkennung führen kann. In einem beleuchteten und einem dunklen Raum funktioniert die Linienerkennung hingegen zuverlässig.
 
 \section{Evaluation der Testergebnisse}
 In diesem Abschnitt werden die Ergebnisse der Tests evaluiert und mögliche Fehlerquellen, sowie Verbesserungsmöglichkeiten diskutiert.
 
     \subsection{Fernsteuerung}
-    Die Fernsteuerung selbst weist keine Fehler auf, da das Fahrzeug auf die Steuerbefehle korrekt reagiert. Jedoch gibt es Probleme bei der Bewegung auf Karton, da die Reifen des Fahrzeugs hier teilweise rutschen. Dies liegt daran, dass die Reifen aus synthetischen Polymeren bestehen, die auf glatten Oberflächen wie Karton nicht genügend Reibung erzeugen, um sich stabil fortzubewegen. Eine mögliche Verbesserung wäre die Verwendung von Gummireifen, die eine bessere Haftung auf glatten Oberflächen bieten würden.
+    Die Fernsteuerung selbst weist keine Fehler auf, da das Fahrzeug auf die Steuerbefehle korrekt reagiert. Jedoch gibt es Probleme bei der Bewegung auf Karton, da die Reifen des Fahrzeugs hier teilweise rutschen. Dies liegt daran, dass die Reifen aus synthetischen Polymeren bestehen, die auf glatten Oberflächen wie Karton nicht genügend Traktion erzeugen, um sich stabil fortzubewegen. Eine mögliche Verbesserung wäre die Verwendung von Gummireifen, die eine bessere Haftung auf glatten Oberflächen bieten würden.
 
     \subsection{Notbremssystem}
-    Die Tests für das Notbremssystem zeigen, dass die Sensoren in den meisten Fällen zuverlässig funktionieren, jedoch gibt es Einschränkungen bei der Verwendung von bestimmten Materialien als Hindernis.
+    Die Tests für das Notbremssystem zeigen, dass die Sensoren in den meisten Fällen zuverlässig funktionieren, jedoch gibt es Einschränkungen bei der Verwendung von bestimmten Materialien als Hindernis. Um diese Probleme zu untersuchen, werden zuerst die Ergebnisse der Tests für die Sensorik analysiert.
         \subsubsection{Ultraschallsensor}
-        Dass der Ultraschallsensor im Winkel nicht funktioniert, liegt daran, dass die Schallwellen nicht direkt zum Sensor zurückreflektiert werden, wenn das Hindernis nicht im rechten Winkel zum Sensor steht. Dadurch werden keine oder nur sehr schwache Signale am Sensor empfangen, was zu unbrauchbaren Messwerten führt. Eine Lösung dafür wäre die Nutzung mehrerer Sensoren, die in verschiedenen Winkeln zum Fahrzeug positioniert sind, um eine umfassendere Abdeckung des Bereichs vor dem Fahrzeug zu gewährleisten. 
+        Dass der Ultraschallsensor im Winkel nicht funktioniert, liegt daran, dass die Schallwellen nicht direkt zurück zum Sensor reflektiert werden, wenn das Hindernis nicht im rechten Winkel zum Sensor steht. Dadurch werden keine oder nur sehr schwache Signale am Sensor empfangen, was zu unbrauchbaren Messwerten führt. Eine Lösung dafür wäre die Nutzung mehrerer Sensoren, die in verschiedenen Winkeln zum Fahrzeug positioniert sind, um eine umfassendere Abdeckung des Bereichs vor dem Fahrzeug zu gewährleisten. 
 
-        Der Ultraschallsensor liefert zuverlässige Messwerte bei der Wand und dem Holz, jedoch nicht bei Schaumstoff und Eierkarton. Dies liegt daran, dass der Schaumstoff Schall sehr gut absorbiert und somit keine oder nur sehr schwache Signale am Ultraschallsensor empfangen werden. Dadurch sind die Messwerte unbrauchbar.
+        Der Ultraschallsensor liefert zuverlässige Messwerte bei der Wand und dem Holz, jedoch nicht bei Schaumstoff und Eierkarton. Dies liegt daran, dass der Schaumstoff Schall sehr gut absorbiert und somit keine oder nur wenige der ausgesendeten Signale wieder am Ultraschallsensor empfangen werden. Dadurch sind die Messwerte unbrauchbar.
 
         Der Eierkarton sorgt durch die pyramidenartige Struktur zwischen den Kammern für eine Streuung der Schallwellen, was zu ungenauen Messungen führen kann. (Quelle Eierkartons)
-        Eine mögliche Verbesserung wäre die Verwendung von zusätzlichen Sensoren, wie z.B. einem Infrarot-Sensor, um die Hinderniserkennung zu verbessern, insbesondere bei Materialien, die Schall absorbieren oder streuen.
+        Eine mögliche Verbesserung wäre die Verwendung von zusätzlichen Sensoren, um die Hinderniserkennung zu verbessern, insbesondere bei Materialien, die Schall absorbieren oder streuen.
 
         \subsubsection{Hall-Sensor}
         Der Hall-Sensor liefert insgesamt zuverlässige Messwerte, jedoch gibt es eine geringe Abweichung von den tatsächlichen Geschwindigkeiten. Diese Abweichungen könnten durch die Nutzung mehrerer Magneten im Rad und die Kalibrierung des Sensors reduziert werden, um eine genauere Geschwindigkeitsmessung zu ermöglichen. Da die Abweichungen jedoch relativ gering sind, beeinträchtigt dies die Funktionalität des Notbremssystems nicht wesentlich.

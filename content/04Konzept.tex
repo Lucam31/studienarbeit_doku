@@ -90,7 +90,7 @@ Auch die Softwarearchitektur hat einen erheblichen Einfluss auf die Entwicklung 
     Das Backend wird modular aufgebaut, um die Wartbarkeit und Erweiterbarkeit der Software zu gewährleisten. Es wird in verschiedene Module unterteilt, die jeweils für bestimmte Funktionen verantwortlich sind. Das \textit{Websocket} Modul ist für die Verwaltung der Websocket-Verbindung und die spezifische Implementierung zur Verarbeitung von eingehenden und ausgehenden Nachrichten verantwortlich. Das \textit{Driver} Modul enthält den Lowlevel Code, um die einzelnen \ac{GPIO}-Pins des Raspberry Pi anzusteuern beziehungsweise auszulesen. Der \textit{Controller} verwendet das Driver Modul um abstrakte Funktionen zu definieren, mit dem die Motoren vereinfacht angesteurt werden können. Ebenfalls liest der \textit{Controller} die Sensordaten des Hall-Sensors und des Ultraschallsensors aus, um die Geschwindigkeit zu berechnen und die Notbremsung durchzuführen.
 
 
-    \subsection{Vergleich von Kodierungsformaten und übertragungsprotokollen}
+    \subsection{Vergleich von Kodierungsformaten und übertragungsprotokollen} \label{sec:video_encoding_comparison}
     % Tabelle mit Vor- und Nachteilen der verschiedenen Methoden, sowie die geplante Methode und Begründung für die Wahl
     Nachdem im vorherigen Kapitel einige Übertragungsformate und Codecs vorgestellt wurden, wird in diesem Abschnitt ein Vergleich der verschiedenen Methoden durchgeführt, um die beste Lösung für die Videoübertragung zu finden. Dabei werden die Vor- und Nachteile der verschiedenen Methoden in Tabelle \ref{tab:video_encoding_comparison} aufgezeigt und anschließend gegenübergestellt, um eine fundierte Entscheidung treffen zu können.
     \begin{table}[H]
